@@ -1,0 +1,20 @@
+Change Component Designator: OldDesignator=BLCD NewDesignator=P3
+Change Component Designator: OldDesignator=FLASH NewDesignator=U2
+Change Component Designator: OldDesignator=ISPC NewDesignator=P5
+Change Component Designator: OldDesignator=KEYB NewDesignator=U4
+Change Component Designator: OldDesignator=LCD NewDesignator=P1
+Change Component Designator: OldDesignator=LED NewDesignator=P2
+Change Component Designator: OldDesignator=PIC NewDesignator=U6
+Change Component Designator: OldDesignator=QTZ NewDesignator=Y1
+Change Component Designator: OldDesignator=RASP NewDesignator=U3
+Change Component Designator: OldDesignator=REGU NewDesignator=U7
+Change Component Designator: OldDesignator=RFID NewDesignator=U1
+Added Member To Class: ClassName=Clavier Member=Component U4 clavier
+Added Member To Class: ClassName=PIC Member=Component U6 PIC32_1
+Added Room: Name=Clavier
+Added Room: Name=Flash
+Added Room: Name=LCD
+Added Room: Name=Led
+Added Room: Name=PIC
+Added Room: Name=Raspberry Pi
+Added Room: Name=RFID
