@@ -1,0 +1,12 @@
+Added Component: Designator=U3(RASPB)
+Added Pin To Net: NetName=5V Pin=U3-2
+Added Pin To Net: NetName=5V Pin=U3-4
+Added Pin To Net: NetName=GND Pin=U3-6
+Added Pin To Net: NetName=NetU3_8 Pin=U3-8
+Added Pin To Net: NetName=NetU3_10 Pin=U3-10
+Added Pin To Net: NetName=GND Pin=U3-14
+Added Pin To Net: NetName=GND Pin=U3-20
+Added Pin To Net: NetName=GND Pin=U3-25
+Added Pin To Net: NetName=GND Pin=U3-34
+Added Pin To Net: NetName=GND Pin=U3-39
+Added Member To Class: ClassName=Raspberry Pi Member=Component U3 Raspberry_pi_zero_w

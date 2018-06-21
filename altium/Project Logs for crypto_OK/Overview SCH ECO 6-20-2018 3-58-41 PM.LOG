@@ -1,0 +1,11 @@
+Change Component Designator: OldDesignator=P1 NewDesignator=LCD
+Change Component Designator: OldDesignator=P2 NewDesignator=LED
+Change Component Designator: OldDesignator=P3 NewDesignator=BLCD
+Change Component Designator: OldDesignator=P5 NewDesignator=ISPC
+Change Component Designator: OldDesignator=U1 NewDesignator=RFID
+Change Component Designator: OldDesignator=U2 NewDesignator=Flash
+Change Component Designator: OldDesignator=U3 NewDesignator=RASP
+Change Component Designator: OldDesignator=U4 NewDesignator=KEYB
+Change Component Designator: OldDesignator=U6 NewDesignator=PIC
+Change Component Designator: OldDesignator=U7 NewDesignator=REGU
+Change Component Designator: OldDesignator=Y1 NewDesignator=QTZ
