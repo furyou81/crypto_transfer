@@ -32,8 +32,19 @@
 
 
 int test;
-u8 pin[4];
+u8 pin[5];
 u8 compteur = 0;
+
+void init_pin()
+{
+    u8 i = 0;
+    while (i < 4)
+    {
+        pin[i] = 0xC4;
+        i++;
+    }
+    pin[i] = '\0';
+}
 
 void check_input(u8 letter)
 {
@@ -51,7 +62,7 @@ void check_input(u8 letter)
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
 {
     u8  res = 'E'; // code erreur
-    if (PORTBbits.RB0 == BUT_UP /*|| compteur > 3*/)
+    if (PORTBbits.RB0 == BUT_UP)
     {
           test = 0;
     }
@@ -62,7 +73,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
         set_col(0, 0, 0, 0);
     }
 
-    if (PORTBbits.RB1 == BUT_UP || compteur > 3)
+    if (PORTBbits.RB1 == BUT_UP)
     {
           test = 0;
     }
@@ -73,7 +84,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
         set_col(0, 0, 0, 0);
     }
 
-    if (PORTBbits.RB2 == BUT_UP || compteur > 3)
+    if (PORTBbits.RB2 == BUT_UP)
     {
           test = 0;
     }
@@ -84,7 +95,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
         set_col(0, 0, 0, 0);
     }
 
-    if (PORTBbits.RB3 == BUT_UP || compteur > 3)
+    if (PORTBbits.RB3 == BUT_UP)
     {
           test = 0;
     }

@@ -269,7 +269,7 @@
           <property key="wpo-lto" value="false"/>
         </C32Global>
       </item>
-      <item path="keyboard1.c" ex="false" overriding="false">
+      <item path="keyboard1.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>
@@ -283,7 +283,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="keyboard2.c" ex="false" overriding="false">
+      <item path="keyboard2.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>
@@ -297,7 +297,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="lcd_I2C.c" ex="false" overriding="false">
+      <item path="lcd_I2C.c" ex="true" overriding="false">
         <C32>
         </C32>
         <C32-AR>
@@ -339,7 +339,7 @@
         <C32Global>
         </C32Global>
       </item>
-      <item path="spi.c" ex="true" overriding="false">
+      <item path="spi.c" ex="false" overriding="false">
         <C32>
         </C32>
         <C32-AR>

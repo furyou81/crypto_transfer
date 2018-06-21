@@ -15,8 +15,10 @@
  */
 
 u8 bug = 0;
-u8 state = 0;
 Menu screen = MAIN;
+extern u8 pin[5];
+extern u8 amount[13];
+extern u8 aff_amount[14];
 
 void init_i2c()
 {
@@ -135,6 +137,14 @@ void write_words(char str[], u8 new_line, u8 rank)
     }
 }
 
+int ft_strlen(char str[])
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+        i++;
+}
 
 /*Max tab[10]*/
 void  write_nb(u32 nb)
@@ -172,23 +182,18 @@ void write_line(char str[], u8 new_line, u32 rank)
     bug = 1;
 }
 
-void bruit()
+void    write_pin()
 {
+    u8 i = 0;
 
-    write_line("BRUIT", 1, 0);
-}
-
-void change_screen(Menu str)
-{
-    bug = 0;
-    start_i2c();
-    write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
-//    write_i2c(0x02);
- //   write_i2c(0x40);
-    write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
-    //write_i2c(0x13);
-    choose_screen(str);
-    stop_i2c();
+    while (i < 4)
+    {
+        if (pin[i] == 0xC4)
+            write_i2c(pin[i]);
+        else
+            write_i2c('*');
+        i++;
+    }
 }
 
 void choose_screen(Menu str)
@@ -198,40 +203,60 @@ void choose_screen(Menu str)
         // write : str | new_line | rank
         write_line("HOME", 1, 0); // string + nombre de lignes a sauter
         write_line("MAKE TRADE", 1, 1);
-        write_line("OLD TRADES", 1, 2);
-        write_line("ADD KEY", 1, 3);
+        write_line("OLD TRADES", 2, 2);
     }
     else if (str == MAKE_TRADE1)
     {
         // write : str | new_line | rank
-        write_line("MAKE TRADE", 2, 0);
-        write_line("ACCOUNT NUM?", 1, 0);
+        write_line("   ", 1, 0);
+        write_line("  PIN:   ", 0, 0);
+        write_pin();
+        write_line("      ", 0, 0);
+        write_line("", 1, 0);
+        write_line("        A to ACCEPT", 1, 0);
     }
     else if (str == MAKE_TRADE2)
     {
         // write : str | new_line | rank
-        write_line("MAKE TRADE", 2, 0);
-        write_line("LOOKING FOR CARD...", 1, 0);
+        write_line(" MAKE TRADE", 2, 0);
+        write_line("LOOKING FOR CARD...", 2, 0);
     }
     else if (str == MAKE_TRADE3)
     {
         // write : str | new_line | rank
-        write_line("MAKE TRADE", 2, 0);
-        write_line("SCANNING CARD", 1, 0);
-    }
-    else if (str == OLD_TRADES)
+        write_line(" MAKE TRADE", 2, 0);
+        write_line("SCANNING CARD", 2, 0);
+    } 
+    else if (str == AMOUNT)
     {
         // write : str | new_line | rank
-        write_line("OLD TRADES", 1, 0);
+        write_line("  AMOUNT:", 2, 0);
+        init_aff_amount();
+        write_line(aff_amount, 0, 0);
+        write_line(" ETH", 0, 0);
+        write_line("          A to ACCEPT", 1, 0);
     }
     else
     {
-        write_line("ADD_KEY", 1, 0);
-
+        // write : str | new_line | rank
+        write_line(" OLD TRADES", 2, 0);
     }
 }
 
-
+void change_screen(Menu str)
+{
+    bug = 0;
+    init_i2c();
+    start_i2c();
+    write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+//    write_i2c(0x02);
+ //   write_i2c(0x40);
+    //write_i2c(0x01);
+    write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
+    //write_i2c(0x13);
+    choose_screen(str);
+    stop_i2c();
+}
 
 int main(void) {
     TRISDbits.TRISD0 = 0;
@@ -246,13 +271,15 @@ int main(void) {
 
     init_keyboard();
     start_i2c();
-    write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
-    write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
-    int i = 0;
+        write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+       // write_i2c(0x81);
+       write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
+        //write_i2c(0x13);
+       init_pin();
+       init_amount();
+       choose_screen(screen);
+       stop_i2c();
     while(1) {
-        if (screen == MAIN)
-            change_screen(screen);
-        stop_i2c();
     }
     return (EXIT_SUCCESS);
 }

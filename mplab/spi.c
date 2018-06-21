@@ -153,20 +153,6 @@ u8 readID()
     return (d);
 }
 
-void change_status()
-{
-    on();
-    rSPI(WREN);
-    while(SPI2STATbits.SPIBUSY);
-    rSPI(EWSR); //enable chage status
-    off();
-    while(SPI2STATbits.SPIBUSY);
-    on();
-    rSPI(WRSR);
-    rSPI(0xE2);
-    off();
-}
-
 void change_status2()
 {
     on();
@@ -199,17 +185,17 @@ void sector_erase(u32 adress)
     on();
         rSPI(WREN);
     off();
-    TMR2 = 0;
-    while (TMR2 < 1000);
+    wait_ready();;
     on();
     rSPI(SECTOR_ERRASE);
     rSPI((adress & (0xFF << 15)) >> 15);
     rSPI((adress & (0xFF << 7)) >> 7);
     rSPI(adress & (0xFF));
-    while(SPI2STATbits.SPIBUSY);
+    
   //  TMR2 = 0;
   //  while (TMR2 < 10000);
     off();
+	wait_ready();
    // TMR2 = 0;
     //while (TMR2 < 1000);
 }
@@ -220,12 +206,11 @@ void chiperrase()
     on();
     rSPI(WREN);
     off();
-    TMR2 = 0;
-    while (TMR2 < 1000);
+    wait_ready();
     on();
     rSPI(ERRASE);
-    while(SPI2STATbits.SPIBUSY);
     off();
+	wait_ready();
 
 }
 void write_disable()
@@ -239,7 +224,7 @@ void write_disable()
 void writeSPI(u8 data, u32 adress)
 {
    // chiperrase();
-    sector_erase(adress);
+    //sector_erase(adress);
     wait_ready();
     on();
     volatile u8 trash;
@@ -257,6 +242,7 @@ void writeSPI(u8 data, u32 adress)
     // while(SPI2STATbits.SPIBUSY);
     //write_disable();
     off();
+	wait_ready();
 }
 
 u8 readSPI(u8 address)
@@ -273,10 +259,138 @@ u8 readSPI(u8 address)
     base(tab[0]);
 
     off();
-    return 0;
+    return (0);
+}
+
+u8 checkSPI(u8 address)
+{
+    on();
+    u8 tab[50];
+    volatile u8 trash;
+    trash = rSPI(READ);
+    trash = rSPI((address & (0xFF << 15)) >> 15);
+    trash = rSPI((address & (0xFF << 7)) >> 7);
+    trash = rSPI(address & (0xFF));
+    tab[0] = (rSPI(0x04)); // nimporte quoi
+    //tab[1] = (rSPI(0x8));
+
+    off();
+    return (tab[0]);
+}
+
+void	read_zone(u32 depart, u32 fin)
+{
+	u32 i = depart;
+	u8 ret;
+
+	while (i < fin)
+	{
+		if (i % 20 == 0)
+		{
+			send_char('|');
+			send_char(' ');
+		}
+		ret = readSPI(i);
+		i++;
+	}
+}
+
+u32		init_adr()
+{
+	u32 i = 0;
+	u8 ret;
+
+	while ((ret = checkSPI(i)) != 0xFF)
+		i += 20;
+	return (i);
+}
+
+int		ft_strlen(u8 tab[])
+{
+	u8 i = 0;
+
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+void	set_space_before(u8 line, u8 str[], u8 tab[])
+{
+	u8 len = ft_strlen(str[]);
+	u8 i = line * 20;
+	u8 k = 0;
+	while (i + len < 20 + line * 20)
+	{
+		tab[i] = ' ';
+		i++;
+	}
+	while (str[k])
+	{
+		tab[i] = str[k];
+		k++;
+		i++;
+	}
+}
+
+void	set_space_after(u8 line, u8 str[], u8 tab[])
+{
+	u8 len = ft_strlen(str[]);
+	u8 i = line * 20;
+	u8 k = 0;
+	while (str[k])
+	{
+		tab[i] = str[k];
+		k++;
+		i++;
+	}
+	while (i < 20 + line * 20)
+	{
+		tab[i] = ' ';
+		i++;
+	}
+}
+
+u8	get_transaction(u32 nb_trans)
+{
+	u8 tab[80];
+
+	if (nb_trans > 0)
+	{
+		set_space_before(0, "B to UP");
+	}
+	else
+	{
+		set_space_before(0, "");
+	}
+	set_space_after(0, "");
+}
+
+void	write_line_SPI(u8 str[])
+{
+	u8 i = 0;
+	u8 ret;
+	u32 adress = init_adr();
+	while (str[i])
+	{
+		writeSPI(str[i], adress);
+		i++;
+		adress++;
+	}
+	while (i < 20)
+	{
+		writeSPI(' ', adress);
+		adress++;
+		i++;
+	}
 }
 
 
+
+void	send_transaction(u8 date[], u8 amount[])
+{
+	write_line_SPI(date);
+	write_line_SPI(amount);
+}
 
 int main(void) {
   //  TRISDbits.TRISD6 = 0; // CE / CS
@@ -286,15 +400,24 @@ int main(void) {
     u8 ret;
     initSPI();
 
-    read_status();
+    //read_status();
     change_status2();
 
-    read_status();
+    //read_status();
 
-    writeSPI(0xaa, 0x09);
+    /*writeSPI(0xaa, 0x09);
     ret = readSPI(0x09);
     writeSPI(0xBB, 0x0a);
-    ret = readSPI(0x0a);
+    ret = readSPI(0x0a);*/
+	//writeSPI("A", 0);
+	//writeSPI("A", 1);
+	//writeSPI("A", 2);
+	chiperrase();
+	write_line_SPI("COUCOU");
+	write_line_SPI("COUCOU");
+	//sector_erase(0);
+	read_zone(0, 60);
+	//readSPI(1);
 
     while(1)
     {

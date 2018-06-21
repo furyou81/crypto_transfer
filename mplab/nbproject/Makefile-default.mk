@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=lcd_I2C.c uart.c keyboard2.c keyboard1.c uartRFID.c
+SOURCEFILES_QUOTED_IF_SPACED=spi.c uart.c uartRFID.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/lcd_I2C.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/keyboard2.o ${OBJECTDIR}/keyboard1.o ${OBJECTDIR}/uartRFID.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/lcd_I2C.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/keyboard2.o.d ${OBJECTDIR}/keyboard1.o.d ${OBJECTDIR}/uartRFID.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/uartRFID.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/spi.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/uartRFID.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/lcd_I2C.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/keyboard2.o ${OBJECTDIR}/keyboard1.o ${OBJECTDIR}/uartRFID.o
+OBJECTFILES=${OBJECTDIR}/spi.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/uartRFID.o
 
 # Source Files
-SOURCEFILES=lcd_I2C.c uart.c keyboard2.c keyboard1.c uartRFID.c
+SOURCEFILES=spi.c uart.c uartRFID.c
 
 
 CFLAGS=
@@ -94,29 +94,17 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/lcd_I2C.o: lcd_I2C.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/spi.o: spi.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lcd_I2C.o.d 
-	@${RM} ${OBJECTDIR}/lcd_I2C.o 
-	@${FIXDEPS} "${OBJECTDIR}/lcd_I2C.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/lcd_I2C.o.d" -o ${OBJECTDIR}/lcd_I2C.o lcd_I2C.c   
+	@${RM} ${OBJECTDIR}/spi.o.d 
+	@${RM} ${OBJECTDIR}/spi.o 
+	@${FIXDEPS} "${OBJECTDIR}/spi.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/spi.o.d" -o ${OBJECTDIR}/spi.o spi.c   
 	
 ${OBJECTDIR}/uart.o: uart.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/uart.o.d 
 	@${RM} ${OBJECTDIR}/uart.o 
 	@${FIXDEPS} "${OBJECTDIR}/uart.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/uart.o.d" -o ${OBJECTDIR}/uart.o uart.c   
-	
-${OBJECTDIR}/keyboard2.o: keyboard2.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/keyboard2.o.d 
-	@${RM} ${OBJECTDIR}/keyboard2.o 
-	@${FIXDEPS} "${OBJECTDIR}/keyboard2.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/keyboard2.o.d" -o ${OBJECTDIR}/keyboard2.o keyboard2.c   
-	
-${OBJECTDIR}/keyboard1.o: keyboard1.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/keyboard1.o.d 
-	@${RM} ${OBJECTDIR}/keyboard1.o 
-	@${FIXDEPS} "${OBJECTDIR}/keyboard1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/keyboard1.o.d" -o ${OBJECTDIR}/keyboard1.o keyboard1.c   
 	
 ${OBJECTDIR}/uartRFID.o: uartRFID.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -125,29 +113,17 @@ ${OBJECTDIR}/uartRFID.o: uartRFID.c  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} "${OBJECTDIR}/uartRFID.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/uartRFID.o.d" -o ${OBJECTDIR}/uartRFID.o uartRFID.c   
 	
 else
-${OBJECTDIR}/lcd_I2C.o: lcd_I2C.c  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/spi.o: spi.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/lcd_I2C.o.d 
-	@${RM} ${OBJECTDIR}/lcd_I2C.o 
-	@${FIXDEPS} "${OBJECTDIR}/lcd_I2C.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/lcd_I2C.o.d" -o ${OBJECTDIR}/lcd_I2C.o lcd_I2C.c   
+	@${RM} ${OBJECTDIR}/spi.o.d 
+	@${RM} ${OBJECTDIR}/spi.o 
+	@${FIXDEPS} "${OBJECTDIR}/spi.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/spi.o.d" -o ${OBJECTDIR}/spi.o spi.c   
 	
 ${OBJECTDIR}/uart.o: uart.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/uart.o.d 
 	@${RM} ${OBJECTDIR}/uart.o 
 	@${FIXDEPS} "${OBJECTDIR}/uart.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/uart.o.d" -o ${OBJECTDIR}/uart.o uart.c   
-	
-${OBJECTDIR}/keyboard2.o: keyboard2.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/keyboard2.o.d 
-	@${RM} ${OBJECTDIR}/keyboard2.o 
-	@${FIXDEPS} "${OBJECTDIR}/keyboard2.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/keyboard2.o.d" -o ${OBJECTDIR}/keyboard2.o keyboard2.c   
-	
-${OBJECTDIR}/keyboard1.o: keyboard1.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/keyboard1.o.d 
-	@${RM} ${OBJECTDIR}/keyboard1.o 
-	@${FIXDEPS} "${OBJECTDIR}/keyboard1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/keyboard1.o.d" -o ${OBJECTDIR}/keyboard1.o keyboard1.c   
 	
 ${OBJECTDIR}/uartRFID.o: uartRFID.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
