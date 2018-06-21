@@ -5,29 +5,6 @@
  * Created on May 20, 2018, 3:28 PM
  */
 
-// DEVCFG2
-#pragma config FPLLIDIV = DIV_2         // PLL Input Divider (2x Divider)
-#pragma config FPLLMUL = MUL_20         // PLL Multiplier (20x Multiplier)
-#pragma config FPLLODIV = DIV_4         // System PLL Output Clock Divider (PLL Divide by 4)
-
-// DEVCFG1
-#pragma config FNOSC = FRCPLL           // Oscillator Selection Bits (Fast RC Osc with PLL)
-#pragma config FSOSCEN = OFF            // Secondary Oscillator Enable (Disabled)
-#pragma config IESO = OFF               // Internal/External Switch Over (Disabled)
-#pragma config POSCMOD = OFF            // Primary Oscillator Configuration (Primary osc disabled)
-#pragma config OSCIOFNC = ON            // CLKO Output Signal Active on the OSCO Pin (Enabled)
-#pragma config FPBDIV = DIV_1           // Peripheral Clock Divisor (Pb_Clk is Sys_Clk/1)
-#pragma config FCKSM = CSDCMD           // Clock Switching and Monitor Selection (Clock Switch Disable, FSCM Disabled)
-#pragma config WDTPS = PS1048576        // Watchdog Timer Postscaler (1:1048576)
-#pragma config FWDTEN = OFF             // Watchdog Timer Enable (WDT Disabled (SWDTEN Bit Controls))
-
-// DEVCFG0
-#pragma config DEBUG = OFF              // Background Debugger Enable (Debugger is disabled)
-#pragma config ICESEL = ICS_PGx2        // ICE/ICD Comm Channel Select (ICE EMUC2/EMUD2 pins shared with PGC2/PGD2)
-#pragma config PWP = OFF                // Program Flash Write Protect (Disable)
-#pragma config BWP = OFF                // Boot Flash Write Protect bit (Protection Disabled)
-#pragma config CP = OFF                 // Code Protect (Protection Disabled)
-
 #include "crypto.h"
 
 #define READID 0x90
@@ -305,64 +282,50 @@ u32		init_adr()
 	return (i);
 }
 
-int		ft_strlen(u8 tab[])
+/*int		ft_strlen(u8 tab[])
 {
 	u8 i = 0;
 
 	while (tab[i])
 		i++;
 	return (i);
-}
+}*/
 
-void	set_space_before(u8 line, u8 str[], u8 tab[])
+void	set_space_before(u8 str[], u8 tab[])
 {
-	u8 len = ft_strlen(str[]);
-	u8 i = line * 20;
+	u8 len = ft_strlen(str);
 	u8 k = 0;
-	while (i + len < 20 + line * 20)
+	u8 i = 0;
+	while (k + len < 20)
 	{
-		tab[i] = ' ';
-		i++;
+		tab[k] = ' ';
+		k++;
 	}
-	while (str[k])
+	while (str[i])
 	{
-		tab[i] = str[k];
+		tab[k] = str[i];
 		k++;
 		i++;
 	}
-}
-
-void	set_space_after(u8 line, u8 str[], u8 tab[])
-{
-	u8 len = ft_strlen(str[]);
-	u8 i = line * 20;
-	u8 k = 0;
-	while (str[k])
-	{
-		tab[i] = str[k];
-		k++;
-		i++;
-	}
-	while (i < 20 + line * 20)
-	{
-		tab[i] = ' ';
-		i++;
-	}
+	tab[k] = '\0';
 }
 
 u8	get_transaction(u32 nb_trans)
 {
-	u8 tab[80];
+	u8 tab[20];
 
 	if (nb_trans > 0)
 	{
-		set_space_before(0, "B to UP");
+		set_space_before("B to UP", tab);
+		write_line(tab, 1, 0);
 	}
 	else
 	{
-		set_space_before(0, "");
+		write_line("", 1, 0);
 	}
-	set_space_after(0, "");
+	write_line("FUJIMOTO LE BOSS", 1, 0);
+	write_line("FUJIMOTO LE BOSS", 1, 0);
+	write_line("", 1, 0);
 }
 
 void	write_line_SPI(u8 str[])
@@ -384,44 +347,13 @@ void	write_line_SPI(u8 str[])
 	}
 }
 
-
-
-void	send_transaction(u8 date[], u8 amount[])
-{
-	write_line_SPI(date);
-	write_line_SPI(amount);
-}
-
-int main(void) {
-  //  TRISDbits.TRISD6 = 0; // CE / CS
-
-    TMR2 = 0;
-    T2CONbits.ON = 1;
-    u8 ret;
+void	flash(void) {
     initSPI();
 
     //read_status();
     change_status2();
-
-    //read_status();
-
-    /*writeSPI(0xaa, 0x09);
-    ret = readSPI(0x09);
-    writeSPI(0xBB, 0x0a);
-    ret = readSPI(0x0a);*/
-	//writeSPI("A", 0);
-	//writeSPI("A", 1);
-	//writeSPI("A", 2);
 	chiperrase();
-	write_line_SPI("COUCOU");
-	write_line_SPI("COUCOU");
-	//sector_erase(0);
+	write_line_SPI("12/12/2018          ");
+	write_line_SPI("12,564878787 ETH    ");
 	read_zone(0, 60);
-	//readSPI(1);
-
-    while(1)
-    {
-        ;
-    }
-    return (EXIT_SUCCESS);
 }

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=build-18-06_aprem
+PROJECTNAME=mplab
 
 # Active Configuration
 DEFAULTCONF=default

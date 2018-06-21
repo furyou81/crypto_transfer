@@ -6,8 +6,8 @@
 CND_BASEDIR=`pwd`
 # default configuration
 CND_ARTIFACT_DIR_default=dist/default/production
-CND_ARTIFACT_NAME_default=build-18-06_aprem.production.hex
-CND_ARTIFACT_PATH_default=dist/default/production/build-18-06_aprem.production.hex
+CND_ARTIFACT_NAME_default=mplab.production.hex
+CND_ARTIFACT_PATH_default=dist/default/production/mplab.production.hex
 CND_PACKAGE_DIR_default=${CND_DISTDIR}/default/package
-CND_PACKAGE_NAME_default=build-18-06aprem.tar
-CND_PACKAGE_PATH_default=${CND_DISTDIR}/default/package/build-18-06aprem.tar
+CND_PACKAGE_NAME_default=mplab.tar
+CND_PACKAGE_PATH_default=${CND_DISTDIR}/default/package/mplab.tar
