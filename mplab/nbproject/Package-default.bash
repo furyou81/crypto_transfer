@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/build-18-06_aprem.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=build-18-06_aprem.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=build-18-06aprem/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/mplab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=mplab.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=mplab/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/build-18-06aprem/bin
+makeDirectory ${TMPDIR}/mplab/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/build-18-06aprem.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/mplab.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/build-18-06aprem.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mplab.tar *
 checkReturnCode
 
 # Cleanup

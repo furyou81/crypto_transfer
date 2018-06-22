@@ -14,6 +14,7 @@
  *
  */
 
+u8 nb_transaction = 0;
 u8 bug = 0;
 Menu screen = MAIN;
 extern u8 pin[5];
@@ -91,18 +92,6 @@ void writeEeprom(void)
     start_i2c();
 
     write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
-    /*while (!IFS0bits.I2C1SIF)
-    {
-        j = 1;
-    }*/
-     /*Page write*/
-   // int i = 0;
-    /*24LC02 can only write up to 8 bytes at a time*/
-   //   I2C1TRN = 'a';
-   /*Wait for transmit buffer empty - indicates that write is completed*/
- //   while (I2C1STATbits.TBF == HIGH);
-    /*Generate ACK event*/
-    //while (I2C1CONbits.ACKEN == 1);
     stop_i2c();
 }
 
@@ -144,6 +133,7 @@ int ft_strlen(char str[])
     i = 0;
     while (str[i])
         i++;
+	return (i);
 }
 
 /*Max tab[10]*/
@@ -198,6 +188,8 @@ void    write_pin()
 
 void choose_screen(Menu str)
 {
+	u8 tmp[21];
+
     if (str == MAIN)
     {
         // write : str | new_line | rank
@@ -236,15 +228,32 @@ void choose_screen(Menu str)
         write_line(" ETH", 0, 0);
         write_line("          A to ACCEPT", 1, 0);
     }
-    else
+    else if (str == OLD_TRADES)
     {
-        // write : str | new_line | rank
-        write_line(" OLD TRADES", 2, 0);
+        get_date(nb_transaction, tmp);
+		if (nb_transaction == 0)
+            write_line("  ", 1, 0);
+        else
+            write_line("            B to UP", 1, 0);
+		write_line(tmp, 0, 0);
+		u8 test = nb_transaction;
+		get_amount(nb_transaction, tmp);
+		write_line(tmp, 0, 0);
+		if (count_max_transaction() - 1 > nb_transaction)
+            write_line("         D to DOWN", 1, 0);
+		else
+			write_line("   ", 1, 0);
+    }
+	else
+    {
+        write_line("ERROR", 1, 0);
     }
 }
 
 void change_screen(Menu str)
 {
+	u8 tmp[20];
+
     bug = 0;
     init_i2c();
     start_i2c();
@@ -254,11 +263,13 @@ void change_screen(Menu str)
     //write_i2c(0x01);
     write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
     //write_i2c(0x13);
-    choose_screen(str);
+	if (screen != OLD_TRADES)
+		nb_transaction = 0;
+	choose_screen(str);
     stop_i2c();
 }
 
-int main(void) {
+void lcd(void) {
     TRISDbits.TRISD0 = 0;
 
 
@@ -279,7 +290,4 @@ int main(void) {
        init_amount();
        choose_screen(screen);
        stop_i2c();
-    while(1) {
-    }
-    return (EXIT_SUCCESS);
 }

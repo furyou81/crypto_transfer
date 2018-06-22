@@ -110,11 +110,14 @@ void base10(u32 nb)
     send_char('}'); // espace
 }
 
-void start_transaction(u32 amount) {
-    init_interrupt_rfid();
-    TMR2 = 0;
-    while (TMR2 < 20000);
+void start_transaction(u8 amount[]) {
+    //TMR2 = 0;
+    //while (TMR2 < 20000);
     send_string("new_transaction");
-    base10(amount); // on envoi le montant de la transaction
-    cmd_rfid("er2,8");
+	send_char('{');
+    send_string("amount:");
+	send_string(amount);
+	send_char('}');
+	//base10(amount); // on envoi le montant de la transaction
+    
 }

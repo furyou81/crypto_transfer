@@ -10,6 +10,7 @@ extern u8 compteur;
 u8 amount[13];
 u8 aff_amount[14];
 u8 index_amount = 0;
+extern u8 nb_transaction;
 
 void    init_amount()
 {
@@ -38,6 +39,7 @@ void    init_aff_amount()
         i++;
         j++;
     }
+	aff_amount[i] = '\0';
 }
 
 void    decale_amount()
@@ -145,6 +147,9 @@ u8    check_line1()
     {
         if (screen == AMOUNT && index_amount > 0)
         {
+			start_transaction(aff_amount);
+			init_aff_amount(aff_amount);
+			init_amount(amount);
             screen = MAKE_TRADE1;
             change_screen(screen);
         }
@@ -152,6 +157,11 @@ u8    check_line1()
         {
             screen = MAKE_TRADE2;
             change_screen(screen);
+			init_interrupt_rfid();
+			cmd_rfid("er2,8");
+			init_pin(pin);
+			compteur = 0;
+			
         }
         return('A');
     }
@@ -217,6 +227,11 @@ u8    check_line2()
     set_col(1, 1, 1, 0);
     if (PORTBbits.RB1 == BUT_DOWN)
     {
+		if (screen == OLD_TRADES && nb_transaction > 0)
+		{
+			nb_transaction--;
+			change_screen(screen);
+		}
         return('B');
     }
     return('E');
@@ -326,11 +341,22 @@ u8    check_line4()
     set_col(1, 1, 0, 1);
     if (PORTBbits.RB3 == BUT_DOWN)
     {
+		if (screen == OLD_TRADES || screen == AMOUNT || screen == MAKE_TRADE1)
+		{
+			screen = MAIN;
+			change_screen(screen);
+		}
         return('#');
     }
     set_col(1, 1, 1, 0);
     if (PORTBbits.RB3 == BUT_DOWN)
     {
+		u8 test = count_max_transaction();
+		if (screen == OLD_TRADES && test - 1 > nb_transaction)
+		{
+			nb_transaction++;
+			change_screen(screen);
+		}
         return('D');
     }
     return('E');

@@ -5,29 +5,6 @@
  * Created on May 20, 2018, 3:28 PM
  */
 
-// DEVCFG2
-#pragma config FPLLIDIV = DIV_2         // PLL Input Divider (2x Divider)
-#pragma config FPLLMUL = MUL_20         // PLL Multiplier (20x Multiplier)
-#pragma config FPLLODIV = DIV_4         // System PLL Output Clock Divider (PLL Divide by 4)
-
-// DEVCFG1
-#pragma config FNOSC = FRCPLL           // Oscillator Selection Bits (Fast RC Osc with PLL)
-#pragma config FSOSCEN = OFF            // Secondary Oscillator Enable (Disabled)
-#pragma config IESO = OFF               // Internal/External Switch Over (Disabled)
-#pragma config POSCMOD = OFF            // Primary Oscillator Configuration (Primary osc disabled)
-#pragma config OSCIOFNC = ON            // CLKO Output Signal Active on the OSCO Pin (Enabled)
-#pragma config FPBDIV = DIV_1           // Peripheral Clock Divisor (Pb_Clk is Sys_Clk/1)
-#pragma config FCKSM = CSDCMD           // Clock Switching and Monitor Selection (Clock Switch Disable, FSCM Disabled)
-#pragma config WDTPS = PS1048576        // Watchdog Timer Postscaler (1:1048576)
-#pragma config FWDTEN = OFF             // Watchdog Timer Enable (WDT Disabled (SWDTEN Bit Controls))
-
-// DEVCFG0
-#pragma config DEBUG = OFF              // Background Debugger Enable (Debugger is disabled)
-#pragma config ICESEL = ICS_PGx2        // ICE/ICD Comm Channel Select (ICE EMUC2/EMUD2 pins shared with PGC2/PGD2)
-#pragma config PWP = OFF                // Program Flash Write Protect (Disable)
-#pragma config BWP = OFF                // Boot Flash Write Protect bit (Protection Disabled)
-#pragma config CP = OFF                 // Code Protect (Protection Disabled)
-
 #include "crypto.h"
 
 #define READID 0x90
@@ -245,7 +222,7 @@ void writeSPI(u8 data, u32 adress)
 	wait_ready();
 }
 
-u8 readSPI(u8 address)
+u8 readSPI(u32 address)
 {
     on();
     u8 tab[50];
@@ -262,7 +239,7 @@ u8 readSPI(u8 address)
     return (0);
 }
 
-u8 checkSPI(u8 address)
+u8 checkSPI(u32 address)
 {
     on();
     u8 tab[50];
@@ -298,77 +275,38 @@ void	read_zone(u32 depart, u32 fin)
 u32		init_adr()
 {
 	u32 i = 0;
-	u8 ret;
+	u32 ret;
 
 	while ((ret = checkSPI(i)) != 0xFF)
 		i += 20;
 	return (i);
 }
 
-int		ft_strlen(u8 tab[])
+void    get_date(u8 trans, u8 date[])
 {
-	u8 i = 0;
-
-	while (tab[i])
-		i++;
-	return (i);
+    u8 i = 0;
+    while (i < 20)
+    {
+        date[i] = checkSPI(trans * 40 + i);
+        i++;
+    }
+    date[i] = '\0';
 }
 
-void	set_space_before(u8 line, u8 str[], u8 tab[])
+void    get_amount(u8 trans, u8 tmp[])
 {
-	u8 len = ft_strlen(str[]);
-	u8 i = line * 20;
-	u8 k = 0;
-	while (i + len < 20 + line * 20)
-	{
-		tab[i] = ' ';
-		i++;
-	}
-	while (str[k])
-	{
-		tab[i] = str[k];
-		k++;
-		i++;
-	}
-}
-
-void	set_space_after(u8 line, u8 str[], u8 tab[])
-{
-	u8 len = ft_strlen(str[]);
-	u8 i = line * 20;
-	u8 k = 0;
-	while (str[k])
-	{
-		tab[i] = str[k];
-		k++;
-		i++;
-	}
-	while (i < 20 + line * 20)
-	{
-		tab[i] = ' ';
-		i++;
-	}
-}
-
-u8	get_transaction(u32 nb_trans)
-{
-	u8 tab[80];
-
-	if (nb_trans > 0)
-	{
-		set_space_before(0, "B to UP");
-	}
-	else
-	{
-		set_space_before(0, "");
-	}
-	set_space_after(0, "");
+    u8 i = 0;
+    while (i < 20)
+    {
+        tmp[i] = checkSPI(trans * 40 + i + 20);
+        i++;
+    }
+    tmp[i] = '\0';
 }
 
 void	write_line_SPI(u8 str[])
 {
-	u8 i = 0;
-	u8 ret;
+	u32 i = 0;
 	u32 adress = init_adr();
 	while (str[i])
 	{
@@ -384,44 +322,54 @@ void	write_line_SPI(u8 str[])
 	}
 }
 
-
-
-void	send_transaction(u8 date[], u8 amount[])
+u32	count_max_transaction()
 {
-	write_line_SPI(date);
-	write_line_SPI(amount);
+	u32 ret;
+	u32 adr;
+
+	adr = init_adr();
+	ret = adr / 40;
+	return (ret);
 }
 
-int main(void) {
-  //  TRISDbits.TRISD6 = 0; // CE / CS
-
-    TMR2 = 0;
-    T2CONbits.ON = 1;
-    u8 ret;
+void	flash(void) {
     initSPI();
 
     //read_status();
     change_status2();
-
-    //read_status();
-
-    /*writeSPI(0xaa, 0x09);
-    ret = readSPI(0x09);
-    writeSPI(0xBB, 0x0a);
-    ret = readSPI(0x0a);*/
-	//writeSPI("A", 0);
-	//writeSPI("A", 1);
-	//writeSPI("A", 2);
 	chiperrase();
-	write_line_SPI("COUCOU");
-	write_line_SPI("COUCOU");
-	//sector_erase(0);
-	read_zone(0, 60);
-	//readSPI(1);
-
-    while(1)
-    {
-        ;
-    }
-    return (EXIT_SUCCESS);
+	base(1);
+	base(1);
+	base(1);
+	base(1);
+	base(1);
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 10/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 10/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+//read_zone(0, 300);
 }

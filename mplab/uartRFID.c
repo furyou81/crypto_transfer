@@ -1,6 +1,6 @@
 #include "crypto.h"
 
-
+extern Menu screen;
 
 //RF2 => U1RX
 //RF3 => U1TX
@@ -55,16 +55,16 @@ void send_string_rfid(char *s)
 
 void cmd_rfid(char *cmd)
 {
- //   send_string_rfid(cmd);
-    //send_char_rfid(13); // ENTER
-    send_char_rfid('e');
-    send_char_rfid('r');
-    send_char_rfid('2');
-    send_char_rfid(',');
-    send_char_rfid('8');
+    send_string_rfid(cmd);
     send_char_rfid(13); // ENTER
-    TMR2 = 0;
-    while (TMR2 < 1000);
+    //send_char_rfid('e');
+    //send_char_rfid('r');
+    //send_char_rfid('2');
+    //send_char_rfid(',');
+    //send_char_rfid('8');
+    //send_char_rfid(13); // ENTER
+    //TMR2 = 0;
+    //while (TMR2 < 1000);
 }
 
 void read_rfid()
@@ -112,6 +112,8 @@ void send_transaction_amount(u32 amount) {
 
 void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {
     read_rfid();
+	screen = MAIN;
+	change_screen(screen);
          __builtin_disable_interrupts(); //pas d'interruptions possible
     IEC0bits.U1RXIE = 0; // disable interrupt on UART1
     __builtin_enable_interrupts();
