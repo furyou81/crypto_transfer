@@ -222,7 +222,7 @@ void writeSPI(u8 data, u32 adress)
 	wait_ready();
 }
 
-u8 readSPI(u8 address)
+u8 readSPI(u32 address)
 {
     on();
     u8 tab[50];
@@ -239,7 +239,7 @@ u8 readSPI(u8 address)
     return (0);
 }
 
-u8 checkSPI(u8 address)
+u8 checkSPI(u32 address)
 {
     on();
     u8 tab[50];
@@ -275,63 +275,38 @@ void	read_zone(u32 depart, u32 fin)
 u32		init_adr()
 {
 	u32 i = 0;
-	u8 ret;
+	u32 ret;
 
 	while ((ret = checkSPI(i)) != 0xFF)
 		i += 20;
 	return (i);
 }
 
-/*int		ft_strlen(u8 tab[])
+void    get_date(u8 trans, u8 date[])
 {
-	u8 i = 0;
-
-	while (tab[i])
-		i++;
-	return (i);
-}*/
-
-void	set_space_before(u8 str[], u8 tab[])
-{
-	u8 len = ft_strlen(str);
-	u8 k = 0;
-	u8 i = 0;
-	while (k + len < 20)
-	{
-		tab[k] = ' ';
-		k++;
-	}
-	while (str[i])
-	{
-		tab[k] = str[i];
-		k++;
-		i++;
-	}
-	tab[k] = '\0';
+    u8 i = 0;
+    while (i < 20)
+    {
+        date[i] = checkSPI(trans * 40 + i);
+        i++;
+    }
+    date[i] = '\0';
 }
 
-u8	get_transaction(u32 nb_trans)
+void    get_amount(u8 trans, u8 tmp[])
 {
-	u8 tab[20];
-
-	if (nb_trans > 0)
-	{
-		set_space_before("B to UP", tab);
-		write_line(tab, 1, 0);
-	}
-	else
-	{
-		write_line("", 1, 0);
-	}
-	write_line("FUJIMOTO LE BOSS", 1, 0);
-	write_line("FUJIMOTO LE BOSS", 1, 0);
-	write_line("", 1, 0);
+    u8 i = 0;
+    while (i < 20)
+    {
+        tmp[i] = checkSPI(trans * 40 + i + 20);
+        i++;
+    }
+    tmp[i] = '\0';
 }
 
 void	write_line_SPI(u8 str[])
 {
 	u8 i = 0;
-	u8 ret;
 	u32 adress = init_adr();
 	while (str[i])
 	{
@@ -347,13 +322,33 @@ void	write_line_SPI(u8 str[])
 	}
 }
 
+u8	count_max_transaction()
+{
+	u8 ret;
+	u8 adr;
+
+	adr = init_adr();
+	ret = adr / 40;
+	return (ret);
+}
+
 void	flash(void) {
     initSPI();
 
     //read_status();
     change_status2();
 	chiperrase();
-	write_line_SPI("12/12/2018          ");
-	write_line_SPI("12,564878787 ETH    ");
-	read_zone(0, 60);
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 12/12/2018         ");
+	write_line_SPI(" 12,564878787 ETH   ");
+	write_line_SPI(" 06/02/2018         ");
+	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 09/08/2018         ");
+	write_line_SPI(" 66,994878787 ETH   ");
+	read_zone(0, 300);
 }

@@ -133,7 +133,7 @@ int ft_strlen(char str[])
     i = 0;
     while (str[i])
         i++;
-	return (i)
+	return (i);
 }
 
 /*Max tab[10]*/
@@ -188,7 +188,7 @@ void    write_pin()
 
 void choose_screen(Menu str)
 {
-	u8 tmp[20];
+	u8 tmp[21];
 
     if (str == MAIN)
     {
@@ -230,21 +230,30 @@ void choose_screen(Menu str)
     }
     else if (str == OLD_TRADES)
     {
-        // write : str | new_line | rank
-        write_line(" OLD TRADES", 2, 0);
+        get_date(nb_transaction, tmp);
+		if (nb_transaction == 0)
+            write_line("  ", 1, 0);
+        else
+            write_line("            B to UP", 1, 0);
+		write_line(tmp, 0, 0);
+		u8 test = nb_transaction;
+		get_amount(nb_transaction, tmp);
+		write_line(tmp, 0, 0);
+		if (count_max_transaction() - 1 > nb_transaction)
+            write_line("         D to DOWN", 1, 0);
+		else
+			write_line("   ", 1, 0);
     }
 	else
-	{
-		if (nb_transaction == 0)
-			write_line("  ", 1, 0);
-		else
-			write_line("            B to UP", 1, 0);
-
-	}
+    {
+        write_line("ERROR", 1, 0);
+    }
 }
 
 void change_screen(Menu str)
 {
+	u8 tmp[20];
+
     bug = 0;
     init_i2c();
     start_i2c();
@@ -254,7 +263,9 @@ void change_screen(Menu str)
     //write_i2c(0x01);
     write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
     //write_i2c(0x13);
-    choose_screen(str);
+	if (screen != OLD_TRADES)
+		nb_transaction = 0;
+	choose_screen(str);
     stop_i2c();
 }
 
