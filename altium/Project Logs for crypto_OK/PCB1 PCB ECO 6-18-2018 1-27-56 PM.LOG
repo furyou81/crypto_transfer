@@ -1,0 +1,34 @@
+Change Component Designator: OldDesignator=BLCD NewDesignator=P3
+Change Component Designator: OldDesignator=ISPC NewDesignator=P5
+Change Component Designator: OldDesignator=KEYB NewDesignator=U4
+Change Component Designator: OldDesignator=LCD NewDesignator=P1
+Change Component Designator: OldDesignator=LED NewDesignator=P2
+Change Component Designator: OldDesignator=PIC NewDesignator=U6
+Change Component Designator: OldDesignator=QTZ NewDesignator=Y1
+Change Component Designator: OldDesignator=RASP NewDesignator=U3
+Change Component Designator: OldDesignator=REGU NewDesignator=U7
+Change Component Designator: OldDesignator=RFID NewDesignator=U1
+Added Component: Designator=U2(flash)
+Added Pin To Net: NetName=NetU2_1 Pin=U2-1
+Added Pin To Net: NetName=NetU2_2 Pin=U2-2
+Added Pin To Net: NetName=3.3V Pin=U2-3
+Added Pin To Net: NetName=GND Pin=U2-4
+Added Pin To Net: NetName=NetU2_5 Pin=U2-5
+Added Pin To Net: NetName=NetU2_6 Pin=U2-6
+Added Pin To Net: NetName=3.3V Pin=U2-7
+Added Pin To Net: NetName=3.3V Pin=U2-8
+Added Member To Class: ClassName=LCD Member=Component P1 LCD
+Added Member To Class: ClassName=Led Member=Component P2 ledRGB
+Added Member To Class: ClassName=LCD Member=Component P3 lcd backlight
+Added Member To Class: ClassName=RFID Member=Component U1 UEXT connector
+Added Member To Class: ClassName=Flash Member=Component U2 Flash
+Added Member To Class: ClassName=Raspberry Pi Member=Component U3 Raspberry_pi_zero_w
+Added Member To Class: ClassName=Clavier Member=Component U4 clavier
+Added Member To Class: ClassName=PIC Member=Component U6 PIC32_1
+Added Room: Name=Clavier
+Added Room: Name=Flash
+Added Room: Name=LCD
+Added Room: Name=Led
+Added Room: Name=PIC
+Added Room: Name=Raspberry Pi
+Added Room: Name=RFID

@@ -39,7 +39,10 @@ int main(void)
     init_keyboard();
 	lcd();
 	flash();
+<<<<<<< HEAD
 	init_uart_rfid();
+=======
+>>>>>>> 50ae3133c708ee1f7b655807d9a3ae683639db74
     while (1);
     return (EXIT_SUCCESS);
 }

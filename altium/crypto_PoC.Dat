@@ -1,0 +1,24 @@
+Field=Designator~String~Designator~500|Field=Comment~String~Comment~200|Field=FABRIQUANT~String~FABRIQUANT~100|Field=FOURNISSEUR~String~FOURNISSEUR~100|Field=REF FABRIQUANT~String~REF FABRIQUANT~100|Field=REF FOURNISSEUR~String~REF FOURNISSEUR~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~crypto_PoC.PrjPcb|ReportField=ProjectFullPath~C:\Users\bocal\Desktop\crypto 3\crypto_PoC.PrjPcb|ReportField=Title~Bill of Materials For Project [crypto_PoC.PrjPcb] (No PCB Document Selected)|ReportField=TotalQuantity~23|ReportField=ReportTime~11:34:45 AM|ReportField=ReportDate~5/3/2018|ReportField=ReportDateTime~5/3/2018 11:34:45 AM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~5/3/2018|ReportField=CurrentTime~11:14:16 AM|ReportField=Date~|ReportField=DocumentFullPathAndName~C:\Users\bocal\Desktop\crypto 3\CLAVIER.SchDoc|ReportField=DocumentName~CLAVIER.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~5/3/2018|ReportField=Organization~|ReportField=ProjectName~crypto_PoC.PrjPcb|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~crypto_PoC.PrjPcb|ReportField=DataSourceFullPath~C:\Users\bocal\Desktop\crypto 3\crypto_PoC.PrjPcb
+U1|RFID|OLIMEX|FARNELL|MOD-RFID1356MIFARE|MOD-RFID1356MIFARE
+U2|Flash refdu comp|MICROCHIP|FARNELL|SST25VF010A-33-4C-SAE|1829949
+U3|Raspberry_pi_zero_w|||X|
+U4|clavier|MULTICOMP|FARNELL|MCAK1604NBWB|1182239
+C1|Cap||||
+C2|Cap||||
+C3|Cap||||
+C4|Cap||||
+C5|Cap||||
+C6|Cap||||
+C7|Cap||||
+C8|Cap||||
+P1|LCD Connector|MIDAS|FARNELL|MCCOG42005A6W-BNMLWI|2218946
+R1|Res2||||
+R2|Res2||||
+R3|Res2||||
+R4|Res2||||
+R5|Res2||||
+R6|Res2||||
+R7|Res2||||
+R8|Res2||||
+R9|Res2||||
+RGB|LEDRBG|BROADCOM LIMITED|FARNELL|ASMB-MTB0-0A3A2|2401105

@@ -306,7 +306,11 @@ void    get_amount(u8 trans, u8 tmp[])
 
 void	write_line_SPI(u8 str[])
 {
+<<<<<<< HEAD
 	u32 i = 0;
+=======
+	u8 i = 0;
+>>>>>>> 50ae3133c708ee1f7b655807d9a3ae683639db74
 	u32 adress = init_adr();
 	while (str[i])
 	{
@@ -322,10 +326,17 @@ void	write_line_SPI(u8 str[])
 	}
 }
 
+<<<<<<< HEAD
 u32	count_max_transaction()
 {
 	u32 ret;
 	u32 adr;
+=======
+u8	count_max_transaction()
+{
+	u8 ret;
+	u8 adr;
+>>>>>>> 50ae3133c708ee1f7b655807d9a3ae683639db74
 
 	adr = init_adr();
 	ret = adr / 40;
@@ -338,11 +349,14 @@ void	flash(void) {
     //read_status();
     change_status2();
 	chiperrase();
+<<<<<<< HEAD
 	base(1);
 	base(1);
 	base(1);
 	base(1);
 	base(1);
+=======
+>>>>>>> 50ae3133c708ee1f7b655807d9a3ae683639db74
 	write_line_SPI(" 12/12/2018         ");
 	write_line_SPI(" 12,564878787 ETH   ");
 	write_line_SPI(" 06/02/2018         ");
@@ -355,6 +369,7 @@ void	flash(void) {
 	write_line_SPI(" 53,564878787 ETH   ");
 	write_line_SPI(" 09/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
+<<<<<<< HEAD
 	write_line_SPI(" 10/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
 	write_line_SPI(" 12/12/2018         ");
@@ -372,4 +387,7 @@ void	flash(void) {
 	write_line_SPI(" 10/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
 //read_zone(0, 300);
+=======
+	read_zone(0, 300);
+>>>>>>> 50ae3133c708ee1f7b655807d9a3ae683639db74
 }
