@@ -1,0 +1,38 @@
+Field=Designator~String~Designator~500|Field=Comment~String~Comment~200|Field=FABRIQUANT~String~FABRIQUANT~100|Field=FOURNISSEUR~String~FOURNISSEUR~100|Field=REF FABRIQUANT~String~REF FABRIQUANT~100|Field=REF FOURNISSEUR~String~REF FOURNISSEUR~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~crypto_OK.PrjPcb|ReportField=ProjectFullPath~Z:\Documents\CRYPTO\altium\crypto_OK.PrjPcb|ReportField=Title~Bill of Materials For Project [crypto_OK.PrjPcb] (No PCB Document Selected)|ReportField=TotalQuantity~37|ReportField=ReportTime~2:29:37 PM|ReportField=ReportDate~6/25/2018|ReportField=ReportDateTime~6/25/2018 2:29:37 PM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~6/25/2018|ReportField=CurrentTime~2:29:29 PM|ReportField=Date~|ReportField=DocumentFullPathAndName~Z:\Documents\CRYPTO\altium\Overview.SchDoc|ReportField=DocumentName~Overview.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~6/20/2018|ReportField=Organization~|ReportField=ProjectName~crypto_OK.PrjPcb|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~crypto_OK.PrjPcb|ReportField=DataSourceFullPath~Z:\Documents\CRYPTO\altium\crypto_OK.PrjPcb
+P3|ISCP||||
+P4|UEXT connector|OLIMEX|OLIMEX|MOD-RFID1356MIFARE|MOD-RFID1356MIFARE
+U1|ledRGB|MIDAS|FARNELL|AMB-MTB0-0A3A2|2401105
+U2|Flash|MICROCHIP|FARNELL|SST25VF010A-33-4C-SAE|1829949
+U3|PIC32_1||||
+U4|regulateur|TEXAS INSTRUMENTS|FARNELL|LM1117DT-3.3/NOPB|1469048
+U5|clavier|MULTICOMP|FARNELL|MCAK1604NBWB|1182239
+U6|alim||||
+U7|Raspberry_pi_zero_w|||X|
+C1|Cap||||
+C2|Cap||||
+C3|Cap||||
+C4|Cap||||
+C5|Cap||||
+C6|Cap||||
+C7|Cap||||
+C8|Cap||||
+C9|Cap||||
+C10|Cap||||
+C11|Cap||||
+C13|Cap||||
+C17|Cap||||
+C18|Cap||||
+C19|Cap||||
+C21|Cap||||
+Y1|Quartz 8MHz|FOX ELECTRONICS|FARNELL|FOXSDLF/080-20|2063972
+P2|lcd backlight||||
+P1|LCD|MIDAS|FARNELL|MCCOG42005A6W-BNMLWI|2218946
+C14|Cap Pol1|TDK|FARNELL|C1608X5R0J106K080AB|2346889
+C20|Cap Pol1|TDK|FARNELL|C1608X5R0J106K080AB|2346889
+R1|Res2||||
+R2|Res2||||
+R3|Res2||||
+R4|Res2||||
+R5|Res2||||
+R6|Res2||||
+R7|Res2||||
