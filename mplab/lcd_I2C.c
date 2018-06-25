@@ -195,7 +195,8 @@ void choose_screen(Menu str)
         // write : str | new_line | rank
         write_line("HOME", 1, 0); // string + nombre de lignes a sauter
         write_line("MAKE TRADE", 1, 1);
-        write_line("OLD TRADES", 2, 2);
+        write_line("HISTORY", 1, 2);
+		write_line("ACCOUNTS", 1, 3);
     }
     else if (str == MAKE_TRADE1)
     {
@@ -216,7 +217,7 @@ void choose_screen(Menu str)
     else if (str == MAKE_TRADE3)
     {
         // write : str | new_line | rank
-        write_line(" MAKE TRADE", 2, 0);
+        write_line("  ", 2, 0);
         write_line("SCANNING CARD", 2, 0);
     } 
     else if (str == AMOUNT)
@@ -230,23 +231,60 @@ void choose_screen(Menu str)
     }
     else if (str == OLD_TRADES)
     {
-        get_date(nb_transaction, tmp);
 		if (nb_transaction == 0)
             write_line("  ", 1, 0);
         else
             write_line("            B to UP", 1, 0);
-		write_line(tmp, 0, 0);
-		u8 test = nb_transaction;
-		get_amount(nb_transaction, tmp);
-		write_line(tmp, 0, 0);
+		if (count_max_transaction() > 0)
+		{
+			get_date(nb_transaction, tmp);
+			write_line(tmp, 0, 0);
+		}
+		else
+			write_line("      NONE", 1, 0);
+		if (count_max_transaction() > 0)
+		{
+			get_amount(nb_transaction, tmp);
+			write_line(tmp, 0, 0);
+		}
+		else
+			write_line(" ", 1, 0);
 		if (count_max_transaction() - 1 > nb_transaction)
             write_line("         D to DOWN", 1, 0);
 		else
 			write_line("   ", 1, 0);
     }
+	else if (str == HISTORY)
+	{
+		write_line("HISTORY:", 1, 0);
+        write_line("OLD TRADES", 1, 1);
+        write_line("RESET", 2, 2);
+	}
+	else if (str == RESET)
+	{
+		write_line("Are you sure?:", 1, 0);
+        write_line("YES", 1, 1);
+        write_line("NO", 2, 2);
+	}
+	else if (str == ACCOUNT)
+	{
+		write_line("  ", 1, 0);
+		write_line("CUSTOMER", 1, 1);
+        write_line("SELLER", 1, 2);
+		write_line(" ", 1, 0);
+	}
+	else if (str == CLIENT)
+	{
+		write_line("   ", 1, 0);
+        write_line("  PIN:   ", 0, 0);
+        write_pin();
+        write_line("      ", 0, 0);
+        write_line("", 1, 0);
+        write_line("        A to ACCEPT", 1, 0);
+	}
 	else
     {
-        write_line("ERROR", 1, 0);
+        write_line("  ERROR", 4, 0);
     }
 }
 

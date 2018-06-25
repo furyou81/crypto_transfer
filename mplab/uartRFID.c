@@ -87,6 +87,24 @@ void read_rfid()
         send_char(buf[i++]);
 }
 
+void read_ras()
+{
+    u8 c;
+    u8 buf[500];
+    u32 i = 0;
+
+   while ((c = read_char()) && c != '\0')
+   {
+       buf[i] = c;
+       i++;
+       if (i == 499)
+           break ;
+       //send_char(c);
+   }
+    buf[i] = '\0';
+	//cmd_rfid();
+}
+
 void base_rfid(u8 c)
 {
     u8 base[16] = "0123456789ABCDEF";
