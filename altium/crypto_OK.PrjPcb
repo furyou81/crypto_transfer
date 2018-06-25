@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=
+OutputPath=Project Outputs for crypto_OK
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -279,34 +279,38 @@ DocumentPath=Project Outputs for crypto_OK\Design Rule Check - PCB1.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.DRR
+DocumentPath=Project Outputs for crypto_OK\Design Rule Check - PCB2.html
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.EXTREP
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.LDP
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.REP
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument6]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.RUL
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.REP
 DItemRevisionGUID=
 
 [GeneratedDocument7]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.TXT
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.RUL
 DItemRevisionGUID=
 
 [GeneratedDocument8]
-DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB1.txt
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument9]
+DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB1.txt
+DItemRevisionGUID=
+
+[GeneratedDocument10]
 DocumentPath=Schlib1.cmp
 DItemRevisionGUID=
 
@@ -321,7 +325,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=
+OutputDir=Project Outputs for crypto_OK
 
 [OutputGroup1]
 Name=Netlist Outputs

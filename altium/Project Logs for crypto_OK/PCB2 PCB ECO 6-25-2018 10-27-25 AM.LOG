@@ -1,0 +1,6 @@
+Added Component: Designator=P3(ISCP)
+Added Pin To Net: NetName=GND Pin=P3-GND
+Added Pin To Net: NetName=PGEC3 Pin=P3-PGC
+Added Pin To Net: NetName=PGED3 Pin=P3-PGD
+Added Pin To Net: NetName=MCLR Pin=P3-RST
+Added Pin To Net: NetName=3.3V Pin=P3-VCC
