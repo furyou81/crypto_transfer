@@ -10,7 +10,7 @@ extern Menu screen;
 void    init_uart_rfid()
 {
     U1MODEbits.BRGH = 1;                // 1 => Baud Rate = 38400 (0=> Baud Rate = 9600)
-    U1BRG = 129;
+    U1BRG = 132;
     U1MODEbits.SIDL = 0;                // Continue operation in SLEEP mode
     U1MODEbits.IREN = 0;                // IrDA is disabled
    // U1MODEbits.RTSMD = 0;               // U1RTS pin is in Flow Control mode

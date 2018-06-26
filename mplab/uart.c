@@ -10,7 +10,7 @@
 void    init_uart()
 {
     U2MODEbits.BRGH = 1;                // 1 => Baud Rate = 38400 (0=> Baud Rate = 9600)
-    U2BRG = 129;
+    U2BRG = 130;
     U2MODEbits.SIDL = 0;                // Continue operation in SLEEP mode
     U2MODEbits.IREN = 0;                // IrDA is disabled
     U2MODEbits.RTSMD = 0;               // U1RTS pin is in Flow Control mode

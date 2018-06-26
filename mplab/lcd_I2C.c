@@ -282,6 +282,11 @@ void choose_screen(Menu str)
         write_line("", 1, 0);
         write_line("        A to ACCEPT", 1, 0);
 	}
+	else if (screen == CLIENT2)
+	{
+		write_line("  ", 1, 0);
+		write_line("LOOKING FOR CARD...", 3, 0);
+	}
 	else
     {
         write_line("  ERROR", 4, 0);

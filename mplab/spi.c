@@ -377,6 +377,6 @@ void	flash(void) {
 	write_line_SPI(" 66,994878787 ETH   ");
 //read_zone(0, 300);
 
-	read_zone(0, 300);
+	//read_zone(0, 300);
 
 }

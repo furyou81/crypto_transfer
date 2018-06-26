@@ -39,7 +39,7 @@ int main(void)
     init_keyboard();
 	lcd();
 	flash();
-
+	init_uart();
 	init_uart_rfid();
 
     while (1);

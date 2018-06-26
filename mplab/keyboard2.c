@@ -188,16 +188,19 @@ u8    check_line1()
         }
         else if ((screen == MAKE_TRADE1 || screen == CLIENT) && compteur > 3)
         {
-            screen = MAKE_TRADE2;
-            change_screen(screen);
 			if (screen == MAKE_TRADE1)
 			{
-				cmd_rfid("er2,9");
+				screen = MAKE_TRADE2;
+				change_screen(screen);
 				init_interrupt_rfid();
+				init_uart_rfid();
+				send_string("CHANGE RFID");
+				cmd_rfid("ew2,1234");
 			}
 			else
 			{
-
+				screen = CLIENT2;
+				change_screen(screen);
 				init_interrupt_rfid();
 			}
 			init_pin(pin);
