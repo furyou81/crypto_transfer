@@ -1,7 +1,7 @@
 #include "crypto.h"
 
 extern Menu screen;
-
+u8 done = 0;
 //RF2 => U1RX
 //RF3 => U1TX
 
@@ -10,7 +10,7 @@ extern Menu screen;
 void    init_uart_rfid()
 {
     U1MODEbits.BRGH = 1;                // 1 => Baud Rate = 38400 (0=> Baud Rate = 9600)
-    U1BRG = 132;
+    U1BRG = 130;
     U1MODEbits.SIDL = 0;                // Continue operation in SLEEP mode
     U1MODEbits.IREN = 0;                // IrDA is disabled
    // U1MODEbits.RTSMD = 0;               // U1RTS pin is in Flow Control mode
@@ -30,7 +30,9 @@ void send_char_rfid(char c)
 {
     U1STAbits.UTXEN = 1;                // Make sure transmitter is enabled
     while(U1STAbits.UTXBF);             // Wait while buffer is full
-    U1TXREG = c;                        // Transmit character
+    U1TXREG = c;
+	TMR2 = 0;
+	while (TMR2 < 10000);// Transmit character
 }
 
 char read_char_rfid(void)
@@ -87,22 +89,74 @@ void read_rfid()
         send_char(buf[i++]);
 }
 
-void read_ras()
+void	read_ras(char *buf)
 {
     u8 c;
-    u8 buf[500];
     u32 i = 0;
 
    while ((c = read_char()) && c != '\0')
    {
        buf[i] = c;
        i++;
-       if (i == 499)
-           break ;
-       //send_char(c);
    }
     buf[i] = '\0';
-	//cmd_rfid();
+}
+
+void	send_private_key(char *buf)
+{
+	u8 compteur = 1;
+	u8 i = 0;
+	u8 k = 0;
+
+	done = 0;
+	
+	while (compteur < 3)
+	{
+		k = i;
+		
+		send_string_rfid("ew");
+		send_char_rfid(compteur + 48);
+		send_char_rfid(',');
+		while (i < 32 + k && buf[i])
+		{
+			send_char_rfid(buf[i]);
+			i++;
+		}
+		send_char_rfid(13);
+		init_interrupt_rfid();
+		while (done == 0);
+		done = 0;
+		compteur++;
+	}
+	
+}
+
+void	send_public_key(char *buf)
+{
+	u8 compteur = 4;
+	u8 i = 0;
+	u8 k = 0;
+
+	while (compteur < 6)
+	{
+		k = i;
+
+		send_string_rfid("ew");
+		send_char_rfid(compteur + 48);
+		send_char_rfid(',');
+		while (i < 32 + k && buf[i])
+		{
+			send_char_rfid(buf[i]);
+			i++;
+		}
+		send_char_rfid(13);
+		init_interrupt_rfid();
+		while (done == 0);
+		done = 0;
+		compteur++;
+	}
+	screen = MAIN;
+	change_screen(screen);
 }
 
 void base_rfid(u8 c)
@@ -130,8 +184,15 @@ void send_transaction_amount(u32 amount) {
 
 void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {
     read_rfid();
-	screen = MAIN;
-	change_screen(screen);
+	if (screen == MAKE_TRADE2)
+	{
+		screen = MAIN;
+		change_screen(screen);
+	}
+	else
+	{
+		done = 1;
+	}
          __builtin_disable_interrupts(); //pas d'interruptions possible
     IEC0bits.U1RXIE = 0; // disable interrupt on UART1
     __builtin_enable_interrupts();

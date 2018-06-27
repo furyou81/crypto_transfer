@@ -11,6 +11,11 @@ u8 amount[13];
 u8 aff_amount[14];
 u8 index_amount = 0;
 extern u8 nb_transaction;
+u8 private_key[] = "6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
+u8 public_key[] = "961C0820ac2C7975C54f2225AfbECE63A3273Af3";
+//u8 private_key[500];
+//u8 public_key[500];
+
 
 void    init_amount()
 {
@@ -195,17 +200,24 @@ u8    check_line1()
 				init_interrupt_rfid();
 				init_uart_rfid();
 				send_string("CHANGE RFID");
-				cmd_rfid("ew2,1234");
+				cmd_rfid("er1");
 			}
 			else
 			{
 				screen = CLIENT2;
 				change_screen(screen);
-				init_interrupt_rfid();
+				send_string("create_customer_account");
+				send_string("private_key");
+				//read_ras(private_key);
+				send_private_key(private_key);
+				//send_string("public_key");
+				//read_ras(public_key);
+				//send_public_key(public_key);
 			}
 			init_pin(pin);
 			compteur = 0;
         }
+		
         return('A');
     }
     return('E');
