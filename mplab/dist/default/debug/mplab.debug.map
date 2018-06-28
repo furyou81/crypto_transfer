@@ -114,23 +114,23 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000000         0x4670       18032  App's exec code 
-.rodata                 0x9d004670          0x144         324  Read-only const 
-.text.general_exception 0x9d0047b4           0xdc         220   
-.dinit                  0x9d004890           0xc0         192   
-.rodata                 0x9d004950           0xa8         168  Read-only const 
-.text.main_entry        0x9d0049f8           0x4c          76   
-.text._bootstrap_except 0x9d004a44           0x48          72   
-.text._general_exceptio 0x9d004a8c           0x48          72   
-.text                   0x9d004ad4           0x84         132  App's exec code 
-.rodata                 0x9d004b58           0x3c          60  Read-only const 
-.vector_default         0x9d004b94           0x38          56   
-.rodata                 0x9d004bcc           0x44          68  Read-only const 
-.text                   0x9d004c10           0x18          24  App's exec code 
-.text.__exception_handl 0x9d004c28            0xc          12   
-.text._on_reset         0x9d004c34            0x8           8   
-.text._on_bootstrap     0x9d004c3c            0x8           8   
-      Total kseg0_program_mem used  :      0x4c44       19524  3.7% of 0x80000
+.text                   0x9d000000         0x4f88       20360  App's exec code 
+.rodata                 0x9d004f88          0x1b0         432  Read-only const 
+.text.general_exception 0x9d005138           0xdc         220   
+.dinit                  0x9d005214           0xc0         192   
+.rodata                 0x9d0052d4           0xa8         168  Read-only const 
+.text.main_entry        0x9d00537c           0x4c          76   
+.rodata                 0x9d0053c8           0x48          72  Read-only const 
+.text._bootstrap_except 0x9d005410           0x48          72   
+.text._general_exceptio 0x9d005458           0x48          72   
+.text                   0x9d0054a0           0x84         132  App's exec code 
+.vector_default         0x9d005524           0x38          56   
+.rodata                 0x9d00555c           0x44          68  Read-only const 
+.text                   0x9d0055a0           0x18          24  App's exec code 
+.text.__exception_handl 0x9d0055b8            0xc          12   
+.text._on_reset         0x9d0055c4            0x8           8   
+.text._on_bootstrap     0x9d0055cc            0x8           8   
+      Total kseg0_program_mem used  :      0x55d4       21972  4.2% of 0x80000
 
 kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
@@ -195,7 +195,7 @@ section                    address  length [bytes]      (dec)  Description
 .bev_excpt              0xbfc00380           0x10          16  BEV-Exception 
          Total kseg1_boot_mem used  :       0x200         512  43.8% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :      0x4fbc       20412  3.8% of 0x81e00
+         Total Program Memory used  :      0x594c       22860  4.3% of 0x81e00
         --------------------------------------------------------------------------
 
 
@@ -209,12 +209,12 @@ kseg1 Data-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
 reserve_data_0_kseg1    0xa0000000          0x200         512   
-.sbss                   0xa0000200           0x18          24  Small uninit data 
-.bss                    0xa0000218           0x20          32  Uninitialized data 
-.data                   0xa0000238           0x70         112  Initialized data 
-         Total kseg1_data_mem used  :       0x2a8         680  2.1% of 0x8000
+.sbss                   0xa0000200           0x1c          28  Small uninit data 
+.bss                    0xa000021c           0x20          32  Uninitialized data 
+.data                   0xa000023c           0x70         112  Initialized data 
+         Total kseg1_data_mem used  :       0x2ac         684  2.1% of 0x8000
         --------------------------------------------------------------------------
-            Total Data Memory used  :       0x4a8        1192  3.6% of 0x8200
+            Total Data Memory used  :       0x4ac        1196  3.6% of 0x8200
         --------------------------------------------------------------------------
 
 
@@ -222,7 +222,7 @@ Dynamic Data-Memory Reservation
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
 heap                    0xa00002b0           0x10          16  Reserved for heap 
-stack                   0xa00002d8         0x7d20       32032  Reserved for stack 
+stack                   0xa00002d8         0x7d18       32024  Reserved for stack 
 
         --------------------------------------------------------------------------
 
@@ -905,40 +905,41 @@ END GROUP
                 0xa0000200                _data_end = .
                 0xa0000200                _bss_begin = .
 
-.sbss           0xa0000200       0x18
+.sbss           0xa0000200       0x1c
                 0xa0000200                _sbss_begin = .
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
- .sbss          0xa0000200        0x8 build/default/debug/lcd_I2C.o
+ .sbss          0xa0000200        0xc build/default/debug/lcd_I2C.o
                 0xa0000200                nb_transaction
                 0xa0000201                bug
                 0xa0000204                screen
- .sbss          0xa0000208        0x1 build/default/debug/keyboard2.o
-                0xa0000208                index_amount
- .sbss          0xa0000209        0x1 build/default/debug/keyboard1.o
-                0xa0000209                compteur
- .sbss          0xa000020a        0x1 build/default/debug/uartRFID.o
-                0xa000020a                done
+                0xa0000208                progress
+ .sbss          0xa000020c        0x1 build/default/debug/keyboard2.o
+                0xa000020c                index_amount
+ .sbss          0xa000020d        0x1 build/default/debug/keyboard1.o
+                0xa000020d                compteur
+ .sbss          0xa000020e        0x1 build/default/debug/uartRFID.o
+                0xa000020e                done
  *(.scommon)
- *fill*         0xa000020b        0x1 
- .scommon       0xa000020c        0x9 build/default/debug/keyboard1.o
-                0xa000020c                test
-                0xa0000210                pin
-                0xa0000215                _sbss_end = .
-                0xa0000218                . = ALIGN (0x4)
- *fill*         0xa0000215        0x3 
+ *fill*         0xa000020f        0x1 
+ .scommon       0xa0000210        0x9 build/default/debug/keyboard1.o
+                0xa0000210                test
+                0xa0000214                pin
+                0xa0000219                _sbss_end = .
+                0xa000021c                . = ALIGN (0x4)
+ *fill*         0xa0000219        0x3 
 
-.bss            0xa0000218       0x20
+.bss            0xa000021c       0x20
  *(.dynbss)
  *(COMMON)
- COMMON         0xa0000218       0x1e build/default/debug/keyboard2.o
-                0xa0000218                amount
-                0xa0000228                aff_amount
-                0xa0000238                . = ALIGN ((. != 0x0)?0x4:0x1)
- *fill*         0xa0000236        0x2 
-                0xa0000238                . = ALIGN (0x4)
-                0xa0000238                _end = .
-                0xa0000238                _bss_end = .
+ COMMON         0xa000021c       0x1e build/default/debug/keyboard2.o
+                0xa000021c                amount
+                0xa000022c                aff_amount
+                0xa000023c                . = ALIGN ((. != 0x0)?0x4:0x1)
+ *fill*         0xa000023a        0x2 
+                0xa000023c                . = ALIGN (0x4)
+                0xa000023c                _end = .
+                0xa000023c                _bss_end = .
                 0x00008000                _bmxdudba_address = 0x8000
                 0x00008000                _bmxdupba_address = 0x8000
 
@@ -959,21 +960,21 @@ END GROUP
  *(.gptab.bss)
  *(.gptab.sbss)
 
-.mdebug.abi32   0xa0000238        0x0
+.mdebug.abi32   0xa000023c        0x0
  *(.mdebug.abi32)
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/lcd_I2C.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/spi.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/uart.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/keyboard2.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/keyboard1.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/uartRFID.o
- .mdebug.abi32  0xa0000238        0x0 build/default/debug/main_crypto.o
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .mdebug.abi32  0xa0000238        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/lcd_I2C.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/spi.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/uart.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/keyboard2.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/keyboard1.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/uartRFID.o
+ .mdebug.abi32  0xa000023c        0x0 build/default/debug/main_crypto.o
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .mdebug.abi32  0xa000023c        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
 .mdebug.abiN32
  *(.mdebug.abiN32)
@@ -1073,124 +1074,124 @@ END GROUP
                 0x00000180       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
 .debug_pubnames
-                0x00000000      0x694
+                0x00000000      0x6cd
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000       0x30 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
  .debug_pubnames
-                0x00000030       0xf2 build/default/debug/lcd_I2C.o
+                0x00000030      0x12b build/default/debug/lcd_I2C.o
  .debug_pubnames
-                0x00000122      0x15f build/default/debug/spi.o
+                0x0000015b      0x15f build/default/debug/spi.o
  .debug_pubnames
-                0x00000281       0x82 build/default/debug/uart.o
+                0x000002ba       0x82 build/default/debug/uart.o
  .debug_pubnames
-                0x00000303       0xeb build/default/debug/keyboard2.o
+                0x0000033c       0xeb build/default/debug/keyboard2.o
  .debug_pubnames
-                0x000003ee       0xab build/default/debug/keyboard1.o
+                0x00000427       0xab build/default/debug/keyboard1.o
  .debug_pubnames
-                0x00000499      0x110 build/default/debug/uartRFID.o
+                0x000004d2      0x110 build/default/debug/uartRFID.o
  .debug_pubnames
-                0x000005a9       0x1b build/default/debug/main_crypto.o
+                0x000005e2       0x1b build/default/debug/main_crypto.o
  .debug_pubnames
-                0x000005c4       0x33 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+                0x000005fd       0x33 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
  .debug_pubnames
-                0x000005f7       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+                0x00000630       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
  .debug_pubnames
-                0x00000617       0x24 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+                0x00000650       0x24 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
  .debug_pubnames
-                0x0000063b       0x31 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+                0x00000674       0x31 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
  .debug_pubnames
-                0x0000066c       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+                0x000006a5       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_info     0x00000000     0x6029
+.debug_info     0x00000000     0x6392
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0xd2 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_info    0x000000d2      0xfb5 build/default/debug/lcd_I2C.o
- .debug_info    0x00001087      0xd96 build/default/debug/spi.o
- .debug_info    0x00001e1d      0x7cd build/default/debug/uart.o
- .debug_info    0x000025ea      0xd0a build/default/debug/keyboard2.o
- .debug_info    0x000032f4     0x1590 build/default/debug/keyboard1.o
- .debug_info    0x00004884     0x1223 build/default/debug/uartRFID.o
- .debug_info    0x00005aa7      0x16c build/default/debug/main_crypto.o
- .debug_info    0x00005c13       0xe2 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_info    0x00005cf5       0xbc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_info    0x00005db1       0xc4 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_info    0x00005e75       0xde c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_info    0x00005f53       0xd6 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_info    0x000000d2     0x112c build/default/debug/lcd_I2C.o
+ .debug_info    0x000011fe      0xd96 build/default/debug/spi.o
+ .debug_info    0x00001f94      0x7cd build/default/debug/uart.o
+ .debug_info    0x00002761      0xe64 build/default/debug/keyboard2.o
+ .debug_info    0x000035c5     0x1590 build/default/debug/keyboard1.o
+ .debug_info    0x00004b55     0x12bb build/default/debug/uartRFID.o
+ .debug_info    0x00005e10      0x16c build/default/debug/main_crypto.o
+ .debug_info    0x00005f7c       0xe2 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_info    0x0000605e       0xbc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_info    0x0000611a       0xc4 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_info    0x000061de       0xde c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_info    0x000062bc       0xd6 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_abbrev   0x00000000      0xd0b
+.debug_abbrev   0x00000000      0xd04
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_abbrev  0x00000025      0x300 build/default/debug/lcd_I2C.o
- .debug_abbrev  0x00000325      0x227 build/default/debug/spi.o
- .debug_abbrev  0x0000054c      0x158 build/default/debug/uart.o
- .debug_abbrev  0x000006a4      0x202 build/default/debug/keyboard2.o
- .debug_abbrev  0x000008a6      0x16c build/default/debug/keyboard1.o
- .debug_abbrev  0x00000a12      0x1e1 build/default/debug/uartRFID.o
- .debug_abbrev  0x00000bf3       0x5f build/default/debug/main_crypto.o
- .debug_abbrev  0x00000c52       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_abbrev  0x00000c77       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_abbrev  0x00000c9c       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_abbrev  0x00000cc1       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_abbrev  0x00000ce6       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_abbrev  0x00000025      0x2e1 build/default/debug/lcd_I2C.o
+ .debug_abbrev  0x00000306      0x227 build/default/debug/spi.o
+ .debug_abbrev  0x0000052d      0x158 build/default/debug/uart.o
+ .debug_abbrev  0x00000685      0x202 build/default/debug/keyboard2.o
+ .debug_abbrev  0x00000887      0x16c build/default/debug/keyboard1.o
+ .debug_abbrev  0x000009f3      0x1f9 build/default/debug/uartRFID.o
+ .debug_abbrev  0x00000bec       0x5f build/default/debug/main_crypto.o
+ .debug_abbrev  0x00000c4b       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_abbrev  0x00000c70       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_abbrev  0x00000c95       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_abbrev  0x00000cba       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_abbrev  0x00000cdf       0x25 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_line     0x00000000      0xe0a
+.debug_line     0x00000000      0xec8
  *(.debug_line)
  .debug_line    0x00000000       0x8a c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_line    0x0000008a      0x1f3 build/default/debug/lcd_I2C.o
- .debug_line    0x0000027d      0x208 build/default/debug/spi.o
- .debug_line    0x00000485      0x12f build/default/debug/uart.o
- .debug_line    0x000005b4      0x254 build/default/debug/keyboard2.o
- .debug_line    0x00000808      0x13a build/default/debug/keyboard1.o
- .debug_line    0x00000942      0x196 build/default/debug/uartRFID.o
- .debug_line    0x00000ad8       0x64 build/default/debug/main_crypto.o
- .debug_line    0x00000b3c       0x97 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_line    0x00000bd3       0x84 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_line    0x00000c57       0x88 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_line    0x00000cdf       0x95 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_line    0x00000d74       0x96 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_line    0x0000008a      0x266 build/default/debug/lcd_I2C.o
+ .debug_line    0x000002f0      0x203 build/default/debug/spi.o
+ .debug_line    0x000004f3      0x133 build/default/debug/uart.o
+ .debug_line    0x00000626      0x27c build/default/debug/keyboard2.o
+ .debug_line    0x000008a2      0x13a build/default/debug/keyboard1.o
+ .debug_line    0x000009dc      0x1ba build/default/debug/uartRFID.o
+ .debug_line    0x00000b96       0x64 build/default/debug/main_crypto.o
+ .debug_line    0x00000bfa       0x97 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x00000c91       0x84 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_line    0x00000d15       0x88 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_line    0x00000d9d       0x95 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_line    0x00000e32       0x96 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_frame    0x00000000      0x9c8
+.debug_frame    0x00000000      0xa1c
  *(.debug_frame)
  .debug_frame   0x00000000       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_frame   0x00000020      0x17c build/default/debug/lcd_I2C.o
- .debug_frame   0x0000019c      0x29c build/default/debug/spi.o
- .debug_frame   0x00000438      0x100 build/default/debug/uart.o
- .debug_frame   0x00000538      0x10c build/default/debug/keyboard2.o
- .debug_frame   0x00000644      0x100 build/default/debug/keyboard1.o
- .debug_frame   0x00000744      0x1a8 build/default/debug/uartRFID.o
- .debug_frame   0x000008ec       0x2c build/default/debug/main_crypto.o
- .debug_frame   0x00000918       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_frame   0x00000940       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_frame   0x00000960       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_frame   0x00000980       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_frame   0x000009a8       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_frame   0x00000020      0x1d0 build/default/debug/lcd_I2C.o
+ .debug_frame   0x000001f0      0x29c build/default/debug/spi.o
+ .debug_frame   0x0000048c      0x100 build/default/debug/uart.o
+ .debug_frame   0x0000058c      0x10c build/default/debug/keyboard2.o
+ .debug_frame   0x00000698      0x100 build/default/debug/keyboard1.o
+ .debug_frame   0x00000798      0x1a8 build/default/debug/uartRFID.o
+ .debug_frame   0x00000940       0x2c build/default/debug/main_crypto.o
+ .debug_frame   0x0000096c       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_frame   0x00000994       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_frame   0x000009b4       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_frame   0x000009d4       0x28 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_frame   0x000009fc       0x20 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_str      0x00000000      0x266
+.debug_str      0x00000000      0x2b2
  *(.debug_str)
  .debug_str     0x00000000        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_str     0x00000000       0x93 build/default/debug/lcd_I2C.o
- .debug_str     0x00000093       0x55 build/default/debug/spi.o
- .debug_str     0x000000e8       0x15 build/default/debug/uart.o
- .debug_str     0x000000fd       0x7c build/default/debug/keyboard2.o
- .debug_str     0x00000179       0x87 build/default/debug/keyboard1.o
- .debug_str     0x00000200       0x66 build/default/debug/uartRFID.o
- .debug_str     0x00000266        0x0 build/default/debug/main_crypto.o
- .debug_str     0x00000266        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_str     0x00000266        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_str     0x00000266        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_str     0x00000266        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_str     0x00000266        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_str     0x00000000       0xb3 build/default/debug/lcd_I2C.o
+ .debug_str     0x000000b3       0x55 build/default/debug/spi.o
+ .debug_str     0x00000108       0x15 build/default/debug/uart.o
+ .debug_str     0x0000011d       0x9f build/default/debug/keyboard2.o
+ .debug_str     0x000001bc       0x87 build/default/debug/keyboard1.o
+ .debug_str     0x00000243       0x6f build/default/debug/uartRFID.o
+ .debug_str     0x000002b2        0x0 build/default/debug/main_crypto.o
+ .debug_str     0x000002b2        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_str     0x000002b2        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_str     0x000002b2        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_str     0x000002b2        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_str     0x000002b2        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
-.debug_loc      0x00000000     0x1ad4
+.debug_loc      0x00000000     0x1d00
  *(.debug_loc)
- .debug_loc     0x00000000      0x53c build/default/debug/lcd_I2C.o
- .debug_loc     0x0000053c      0x7cd build/default/debug/spi.o
- .debug_loc     0x00000d09      0x3ba build/default/debug/uart.o
- .debug_loc     0x000010c3      0x2ec build/default/debug/keyboard2.o
- .debug_loc     0x000013af      0x1ee build/default/debug/keyboard1.o
- .debug_loc     0x0000159d      0x50b build/default/debug/uartRFID.o
- .debug_loc     0x00001aa8       0x2c build/default/debug/main_crypto.o
+ .debug_loc     0x00000000      0x6cc build/default/debug/lcd_I2C.o
+ .debug_loc     0x000006cc      0x7cd build/default/debug/spi.o
+ .debug_loc     0x00000e99      0x3ba build/default/debug/uart.o
+ .debug_loc     0x00001253      0x2ec build/default/debug/keyboard2.o
+ .debug_loc     0x0000153f      0x1ee build/default/debug/keyboard1.o
+ .debug_loc     0x0000172d      0x5a7 build/default/debug/uartRFID.o
+ .debug_loc     0x00001cd4       0x2c build/default/debug/main_crypto.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1225,14 +1226,15 @@ END GROUP
  .debug_pubtypes
                 0x00000342       0x12 build/default/debug/main_crypto.o
 
-.debug_ranges   0x00000000       0x60
+.debug_ranges   0x00000000       0x90
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
- .debug_ranges  0x00000010       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
- .debug_ranges  0x00000020       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
- .debug_ranges  0x00000030       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
- .debug_ranges  0x00000040       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
- .debug_ranges  0x00000050       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+ .debug_ranges  0x00000010       0x30 build/default/debug/uartRFID.o
+ .debug_ranges  0x00000040       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+ .debug_ranges  0x00000050       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+ .debug_ranges  0x00000060       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+ .debug_ranges  0x00000070       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+ .debug_ranges  0x00000080       0x10 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
 
 .gnu.attributes
                 0x00000000       0x10
@@ -1286,10 +1288,10 @@ LOAD data_init
 .stack          0xa00002d8      0x400
  .stack         0xa00002d8      0x400 stack
 
-.data           0xa0000238       0x70
- .data          0xa0000238       0x70 build/default/debug/keyboard2.o
-                0xa0000238                private_key
-                0xa000027c                public_key
+.data           0xa000023c       0x70
+ .data          0xa000023c       0x70 build/default/debug/keyboard2.o
+                0xa000023c                private_key
+                0xa0000280                public_key
 
 .bss%z1         0x00000000        0x0
  .bss           0x00000000        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
@@ -1660,160 +1662,163 @@ LOAD data_init
 .data%z123      0x00000000        0x0
  .data          0x00000000        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib/./proc/32MX340F512H/crt0_mips32r2.o
 
-.text           0x9d000000     0x4670
- .text          0x9d000000     0x1350 build/default/debug/keyboard2.o
+.text           0x9d000000     0x4f88
+ .text          0x9d000000     0x14f4 build/default/debug/keyboard2.o
                 0x9d000000                init_amount
                 0x9d000074                init_aff_amount
                 0x9d00013c                decale_amount
                 0x9d0001b0                c_amount
                 0x9d000230                set_col
                 0x9d0002e0                check_line1
-                0x9d00093c                check_line2
-                0x9d000cdc                check_line3
-                0x9d0010e0                check_line4
- .text          0x9d001350      0xf2c build/default/debug/spi.o
-                0x9d001350                on
-                0x9d001380                off
-                0x9d0013b4                initSPI
-                0x9d001520                rSPI
-                0x9d0015a0                read_status
-                0x9d001608                read_status_uart
-                0x9d001660                wait_ready
-                0x9d0016bc                readID
-                0x9d001758                change_status2
-                0x9d0017f0                write_enable
-                0x9d001834                sector_erase
-                0x9d0018fc                chiperrase
-                0x9d00196c                write_disable
-                0x9d0019c8                writeSPI
-                0x9d001ac4                readSPI
-                0x9d001b94                checkSPI
-                0x9d001c54                read_zone
-                0x9d001cf8                init_adr
-                0x9d001d5c                get_date
-                0x9d001e04                get_amount
-                0x9d001eb0                write_line_SPI
-                0x9d001f84                count_max_transaction
-                0x9d001fd8                flash
- .text          0x9d00227c      0xdbc build/default/debug/lcd_I2C.o
-                0x9d00227c                init_i2c
-                0x9d002424                start_i2c
-                0x9d002470                stop_i2c
-                0x9d0024a4                write_i2c
-                0x9d0024f0                writeEeprom
-                0x9d002534                write_words
-                0x9d002690                ft_strlen
-                0x9d0026e8                write_nb
-                0x9d0027fc                write_line
-                0x9d002884                write_pin
-                0x9d002920                choose_screen
-                0x9d002f0c                change_screen
-                0x9d002f8c                lcd
- .text          0x9d003038      0x9a0 build/default/debug/uartRFID.o
-                0x9d003038                init_uart_rfid
-                0x9d003148                send_char_rfid
-                0x9d0031c8                read_char_rfid
-                0x9d00320c                send_string_rfid
-                0x9d003284                cmd_rfid
-                0x9d0032c8                read_rfid
-                0x9d0033bc                read_ras
-                0x9d003448                send_private_key
-                0x9d00357c                send_public_key
-                0x9d0036c0                base_rfid
-                0x9d003798                send_transaction_amount
-                0x9d0037d0                IntUart2Handler
-                0x9d003950                init_interrupt_rfid
- .text          0x9d0039d8      0x658 build/default/debug/keyboard1.o
-                0x9d0039d8                init_pin
-                0x9d003a44                check_input
-                0x9d003a70                ChangeNoticeHandler
-                0x9d003d20                init_col
-                0x9d003dc0                init_row
-                0x9d003e80                init_interrupt_keypad
-                0x9d003ff0                init_keyboard
- .text          0x9d004030      0x640 build/default/debug/uart.o
-                0x9d004030                init_uart
-                0x9d004150                send_char
-                0x9d0041b0                read_char
-                0x9d0041f4                send_string
-                0x9d00426c                base
-                0x9d004344                size_nb
-                0x9d0043ac                base10
-                0x9d0045fc                start_transaction
+                0x9d000ae0                check_line2
+                0x9d000e80                check_line3
+                0x9d001284                check_line4
+ .text          0x9d0014f4     0x1380 build/default/debug/lcd_I2C.o
+                0x9d0014f4                init_i2c
+                0x9d00169c                start_i2c
+                0x9d0016e8                stop_i2c
+                0x9d00171c                write_i2c
+                0x9d001768                writeEeprom
+                0x9d0017ac                write_words
+                0x9d001908                ft_strlen
+                0x9d001960                write_nb
+                0x9d001a74                write_line
+                0x9d001afc                write_pin
+                0x9d001b98                progress_bar
+                0x9d001c38                line_priv
+                0x9d001d08                line_pub
+                0x9d001dd8                choose_screen
+                0x9d002748                change_screen
+                0x9d0027c8                lcd
+ .text          0x9d002874      0xef0 build/default/debug/spi.o
+                0x9d002874                on
+                0x9d0028a4                off
+                0x9d0028d8                initSPI
+                0x9d002a44                rSPI
+                0x9d002ac4                read_status
+                0x9d002b2c                read_status_uart
+                0x9d002b84                wait_ready
+                0x9d002be0                readID
+                0x9d002c7c                change_status2
+                0x9d002d14                write_enable
+                0x9d002d58                sector_erase
+                0x9d002e20                chiperrase
+                0x9d002e90                write_disable
+                0x9d002eec                writeSPI
+                0x9d002fe8                readSPI
+                0x9d0030b8                checkSPI
+                0x9d003178                read_zone
+                0x9d00321c                init_adr
+                0x9d003280                get_date
+                0x9d003328                get_amount
+                0x9d0033d4                write_line_SPI
+                0x9d0034a8                count_max_transaction
+                0x9d0034fc                flash
+ .text          0x9d003764      0xb68 build/default/debug/uartRFID.o
+                0x9d003764                init_uart_rfid
+                0x9d003874                send_char_rfid
+                0x9d003918                read_char_rfid
+                0x9d00395c                send_string_rfid
+                0x9d0039d4                cmd_rfid
+                0x9d003a18                read_rfid
+                0x9d003c58                read_ras
+                0x9d003ce4                send_private_key
+                0x9d003e54                send_public_key
+                0x9d003fc0                base_rfid
+                0x9d004098                send_transaction_amount
+                0x9d0040d0                IntUart2Handler
+                0x9d004244                init_interrupt_rfid
+ .text          0x9d0042cc      0x664 build/default/debug/uart.o
+                0x9d0042cc                init_uart
+                0x9d0043ec                send_char
+                0x9d004470                read_char
+                0x9d0044b4                send_string
+                0x9d00452c                base
+                0x9d004604                size_nb
+                0x9d00466c                base10
+                0x9d0048bc                start_transaction
+ .text          0x9d004930      0x658 build/default/debug/keyboard1.o
+                0x9d004930                init_pin
+                0x9d00499c                check_input
+                0x9d0049c8                ChangeNoticeHandler
+                0x9d004c78                init_col
+                0x9d004d18                init_row
+                0x9d004dd8                init_interrupt_keypad
+                0x9d004f48                init_keyboard
 
-.rodata         0x9d004670      0x144
- .rodata        0x9d004670      0x144 build/default/debug/lcd_I2C.o
+.rodata         0x9d004f88      0x1b0
+ .rodata        0x9d004f88      0x1b0 build/default/debug/lcd_I2C.o
 
 .text.general_exception
-                0x9d0047b4       0xdc
+                0x9d005138       0xdc
  .text.general_exception
-                0x9d0047b4       0xdc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(general-exception.o)
-                0x9d0047b4                _general_exception_context
+                0x9d005138       0xdc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(general-exception.o)
+                0x9d005138                _general_exception_context
 
-.dinit          0x9d004890       0xc0
- .dinit         0x9d004890       0xc0 data_init
+.dinit          0x9d005214       0xc0
+ .dinit         0x9d005214       0xc0 data_init
 
-.rodata         0x9d004950       0xa8
- .rodata        0x9d004950       0xa8 build/default/debug/spi.o
+.rodata         0x9d0052d4       0xa8
+ .rodata        0x9d0052d4       0xa8 build/default/debug/spi.o
 
 .text.main_entry
-                0x9d0049f8       0x4c
+                0x9d00537c       0x4c
  .text.main_entry
-                0x9d0049f8       0x4c c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib/./proc/32MX340F512H/crt0_mips32r2.o
-                0x9d004a24                __crt0_exit
+                0x9d00537c       0x4c c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib/./proc/32MX340F512H/crt0_mips32r2.o
+                0x9d0053a8                __crt0_exit
+
+.rodata         0x9d0053c8       0x48
+ .rodata        0x9d0053c8       0x48 build/default/debug/keyboard2.o
 
 .text._bootstrap_exception_handler
-                0x9d004a44       0x48
+                0x9d005410       0x48
  .text._bootstrap_exception_handler
-                0x9d004a44       0x48 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
-                0x9d004a44                _bootstrap_exception_handler
+                0x9d005410       0x48 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-bootstrap-exception-handler.o)
+                0x9d005410                _bootstrap_exception_handler
 
 .text._general_exception_handler
-                0x9d004a8c       0x48
+                0x9d005458       0x48
  .text._general_exception_handler
-                0x9d004a8c       0x48 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
-                0x9d004a8c                _general_exception_handler
+                0x9d005458       0x48 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-general-exception-handler.o)
+                0x9d005458                _general_exception_handler
 
-.text           0x9d004ad4       0x84
- .text          0x9d004ad4       0x44 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\pic32_software_reset.o
-                0x9d004ad4                __pic32_software_reset
- .text          0x9d004b18       0x40 build/default/debug/main_crypto.o
-                0x9d004b18                main
-
-.rodata         0x9d004b58       0x3c
- .rodata        0x9d004b58       0x3c build/default/debug/keyboard2.o
+.text           0x9d0054a0       0x84
+ .text          0x9d0054a0       0x44 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\pic32_software_reset.o
+                0x9d0054a0                __pic32_software_reset
+ .text          0x9d0054e4       0x40 build/default/debug/main_crypto.o
+                0x9d0054e4                main
 
 .vector_default
-                0x9d004b94       0x38
+                0x9d005524       0x38
  .vector_default
-                0x9d004b94       0x38 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
-                0x9d004b94                _DefaultInterrupt
+                0x9d005524       0x38 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)
+                0x9d005524                _DefaultInterrupt
 
-.rodata         0x9d004bcc       0x44
- .rodata        0x9d004bcc       0x2c build/default/debug/uart.o
- .rodata        0x9d004bf8       0x18 build/default/debug/uartRFID.o
+.rodata         0x9d00555c       0x44
+ .rodata        0x9d00555c       0x2c build/default/debug/uart.o
+ .rodata        0x9d005588       0x18 build/default/debug/uartRFID.o
 
-.text           0x9d004c10       0x18
- .text          0x9d004c10       0x18 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-nmi-handler.o)
-                0x9d004c10                _nmi_handler
+.text           0x9d0055a0       0x18
+ .text          0x9d0055a0       0x18 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-nmi-handler.o)
+                0x9d0055a0                _nmi_handler
 
 .text.__exception_handler_break
-                0x9d004c28        0xc
+                0x9d0055b8        0xc
  .text.__exception_handler_break
-                0x9d004c28        0xc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
-                0x9d004c28                __exception_handler_break
+                0x9d0055b8        0xc c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\software-debug-break.o
+                0x9d0055b8                __exception_handler_break
 
 .text._on_reset
-                0x9d004c34        0x8
+                0x9d0055c4        0x8
  .text._on_reset
-                0x9d004c34        0x8 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
-                0x9d004c34                _on_reset
+                0x9d0055c4        0x8 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-reset.o)
+                0x9d0055c4                _on_reset
 
 .text._on_bootstrap
-                0x9d004c3c        0x8
+                0x9d0055cc        0x8
  .text._on_bootstrap
-                0x9d004c3c        0x8 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
-                0x9d004c3c                _on_bootstrap
+                0x9d0055cc        0x8 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(default-on-bootstrap.o)
+                0x9d0055cc                _on_bootstrap
 
 .text%z124      0x00000000        0x0
  .text          0x00000000        0x0 c:/program files (x86)/microchip/xc32/v1.34/bin/bin/../../lib/gcc/pic32mx/4.5.2/../../../../pic32mx/lib\libpic32.a(defaultinterrupt.o)

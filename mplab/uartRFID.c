@@ -1,6 +1,7 @@
 #include "crypto.h"
 
 extern Menu screen;
+extern u8 progress;
 u8 done = 0;
 //RF2 => U1RX
 //RF3 => U1TX
@@ -30,7 +31,10 @@ void send_char_rfid(char c)
 {
     U1STAbits.UTXEN = 1;                // Make sure transmitter is enabled
     while(U1STAbits.UTXBF);             // Wait while buffer is full
-    U1TXREG = c;
+     __builtin_disable_interrupts(); //pas d'interruptions possible
+	U1TXREG = c;
+	while(U1STAbits.UTXBF);
+	__builtin_enable_interrupts();
 	TMR2 = 0;
 	while (TMR2 < 10000);// Transmit character
 }
@@ -74,10 +78,26 @@ void read_rfid()
     u8 c;
     u8 buf[500];
     u32 i = 0;
+	u8 chevron = 0;
 
-   while ((c = read_char_rfid()) && c != '\0')
+   while ((c = read_char_rfid()))
    {
+	   if (c == '>')
+		   chevron++;
+	   if (screen == MAKE_TRADE2 && c == '>')
+		   break ;
+	   if (screen == CLIENT2 && chevron <= 1)
+		   continue ;
+	    if (screen == CLIENT2 && chevron >= 3)
+			break ;
        buf[i] = c;
+	   if (i > 4 && buf[i] == ':' && buf[i - 1] == 'R' && buf[i - 2] == 'R' && buf[i - 3] == 'E')
+	   {
+		   screen = ERROR;
+		   change_screen(screen);
+		   done = 1;
+		   break ;
+	   }
        i++;
        if (i == 499)
            break ;
@@ -126,7 +146,11 @@ void	send_private_key(char *buf)
 		init_interrupt_rfid();
 		while (done == 0);
 		done = 0;
+		if (screen == ERROR)
+			break ;
 		compteur++;
+		progress += 6;
+		change_screen(screen);
 	}
 	
 }
@@ -153,10 +177,13 @@ void	send_public_key(char *buf)
 		init_interrupt_rfid();
 		while (done == 0);
 		done = 0;
+		if (screen == ERROR)
+			break ;
 		compteur++;
+		progress += 6;
+		change_screen(screen);
 	}
-	screen = MAIN;
-	change_screen(screen);
+	
 }
 
 void base_rfid(u8 c)
@@ -193,9 +220,7 @@ void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {
 	{
 		done = 1;
 	}
-         __builtin_disable_interrupts(); //pas d'interruptions possible
     IEC0bits.U1RXIE = 0; // disable interrupt on UART1
-    __builtin_enable_interrupts();
     IFS0bits.U1RXIF = 0;
 }
 

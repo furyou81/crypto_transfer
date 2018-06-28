@@ -30,7 +30,10 @@ void send_char(char c)
 {
     U2STAbits.UTXEN = 1;                // Make sure transmitter is enabled
     while(U2STAbits.UTXBF);             // Wait while buffer is full
-    U2TXREG = c;                        // Transmit character
+    __builtin_disable_interrupts();
+	U2TXREG = c;                        // Transmit character
+	while(U2STAbits.UTXBF);
+    __builtin_enable_interrupts();
 }
 
 char read_char(void)

@@ -10,9 +10,10 @@ extern u8 compteur;
 u8 amount[13];
 u8 aff_amount[14];
 u8 index_amount = 0;
+extern u8 progress;
 extern u8 nb_transaction;
-u8 private_key[] = "6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
-u8 public_key[] = "961C0820ac2C7975C54f2225AfbECE63A3273Af3";
+u8 private_key[] = "0x6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
+u8 public_key[] = "0x961C0820ac2C7975C54f2225AfbECE63A3273Af3";
 //u8 private_key[500];
 //u8 public_key[500];
 
@@ -179,7 +180,7 @@ u8    check_line1()
         return('3');
     }
     set_col(1, 1, 1, 0);
-    if (PORTBbits.RB0 == BUT_DOWN)
+     if (PORTBbits.RB0 == BUT_DOWN)
     {
         if (screen == AMOUNT && index_amount > 0)
         {
@@ -201,23 +202,67 @@ u8    check_line1()
 				init_uart_rfid();
 				send_string("CHANGE RFID");
 				cmd_rfid("er1");
+				screen = MAIN;
+				change_screen(screen);
 			}
 			else
-			{
+			{		
 				screen = CLIENT2;
 				change_screen(screen);
+				init_uart_rfid();
 				send_string("create_customer_account");
 				send_string("private_key");
 				//read_ras(private_key);
 				send_private_key(private_key);
-				//send_string("public_key");
+				send_string("public_key");
 				//read_ras(public_key);
-				//send_public_key(public_key);
+				init_uart_rfid();
+				send_public_key(public_key);
+				if (screen != ERROR)
+				{
+					screen = PRIVATE1;
+					change_screen(screen);
+				}
+				progress = 0;
 			}
 			init_pin(pin);
 			compteur = 0;
         }
-		
+		else if (screen == PRIVATE1)
+		{
+			screen = PRIVATE2;
+			change_screen(screen);
+		}
+		else if (screen == PRIVATE2)
+		{
+			screen = PRIVATE3;
+			change_screen(screen);
+		}
+		else if (screen == PRIVATE3)
+		{
+			screen = PUBLIC1;
+			change_screen(screen);
+		}
+		else if (screen == PUBLIC1)
+		{
+			screen = PUBLIC2;
+			change_screen(screen);
+		}
+		else if (screen == PUBLIC2)
+		{
+			screen = PUBLIC3;
+			change_screen(screen);
+		}
+		else if (screen == PUBLIC3)
+		{
+			screen = MAIN;
+			change_screen(screen);
+		}
+		else if (screen == ERROR)
+		{
+			screen = MAIN;
+			change_screen(screen);
+		}
         return('A');
     }
     return('E');

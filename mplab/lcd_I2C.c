@@ -17,9 +17,12 @@
 u8 nb_transaction = 0;
 u8 bug = 0;
 Menu screen = MAIN;
+u8 progress = 0;
 extern u8 pin[5];
 extern u8 amount[13];
 extern u8 aff_amount[14];
+extern u8 private_key[];
+extern u8 public_key[];
 
 void init_i2c()
 {
@@ -186,6 +189,45 @@ void    write_pin()
     }
 }
 
+void	progress_bar(char *tmp)
+{
+	u8 i = 0;
+
+	while (i < 20)
+	{
+		if (i < progress)
+			tmp[i] = 0x1F;
+		else
+			tmp[i] = ' ';
+		i++;
+	}
+	tmp[i] = '\0';
+}
+
+void	line_priv(char *tmp, u8 k)
+{
+	u8 i = 0;
+
+	while (i < 20 && private_key[i + k * 20])
+	{
+		tmp[i] = private_key[i + k * 20];
+		i++;
+	}
+	tmp[i] = '\0';
+}
+
+void	line_pub(char *tmp, u8 k)
+{
+	u8 i = 0;
+
+	while (i < 20 && public_key[i + k * 20])
+	{
+		tmp[i] = public_key[i + k * 20];
+		i++;
+	}
+	tmp[i] = '\0';
+}
+
 void choose_screen(Menu str)
 {
 	u8 tmp[21];
@@ -284,12 +326,63 @@ void choose_screen(Menu str)
 	}
 	else if (screen == CLIENT2)
 	{
-		write_line("  ", 1, 0);
-		write_line("LOOKING FOR CARD...", 3, 0);
+		write_line("   ", 1, 0);
+		write_line("LOOKING FOR CARD...", 1, 0);
+		progress_bar(tmp);
+		write_line(tmp, 2, 0);
+	}
+	else if (screen == PRIVATE1)
+	{
+		write_line("   ", 1, 0);
+		write_line("Please save priv key", 0, 0);
+		write_line("Can't be recovered", 1, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (screen == PRIVATE2)
+	{
+		write_line("   ", 1, 0);
+		line_priv(tmp, 0);
+		write_line(tmp, 0, 0);
+		line_priv(tmp, 1);
+		write_line(tmp, 0, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (screen == PRIVATE3)
+	{
+		write_line("   ", 1, 0);
+		line_priv(tmp, 2);
+		write_line(tmp, 0, 0);
+		line_priv(tmp, 3);
+		write_line(tmp, 1, 0);
+		write_line("   A to continue", 1, 0);
+	}
+	else if (screen == PUBLIC1)
+	{
+		write_line("   ", 1, 0);
+		write_line("Please save publ key", 0, 0);
+		write_line("Can't be recovered", 1, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (screen == PUBLIC2)
+	{
+		write_line("   ", 1, 0);
+		line_pub(tmp, 0);
+		write_line(tmp, 0, 0);
+		line_pub(tmp, 1);
+		write_line(tmp, 0, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (screen == PUBLIC3)
+	{
+		write_line("   ", 1, 0);
+		line_pub(tmp, 2);
+		write_line(tmp, 2, 0);
+		write_line("   A to continue", 1, 0);
 	}
 	else
     {
-        write_line("  ERROR", 4, 0);
+        write_line("  ERROR", 3, 0);
+		write_line("   A to continue", 1, 0);
     }
 }
 
