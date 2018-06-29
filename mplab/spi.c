@@ -345,7 +345,7 @@ void	flash(void) {
 	write_line_SPI(" 12,564878787 ETH   ");
 	write_line_SPI(" 06/02/2018         ");
 	write_line_SPI(" 53,564878787 ETH   ");
-	write_line_SPI(" 09/08/2018         ");
+	/*write_line_SPI(" 09/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
 	write_line_SPI(" 12/12/2018         ");
 	write_line_SPI(" 12,564878787 ETH   ");
@@ -368,7 +368,7 @@ void	flash(void) {
 	write_line_SPI(" 09/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
 	write_line_SPI(" 10/08/2018         ");
-	write_line_SPI(" 66,994878787 ETH   ");
+	write_line_SPI(" 66,994878787 ETH   ");*/
 //read_zone(0, 300);
 
 	//read_zone(0, 300);

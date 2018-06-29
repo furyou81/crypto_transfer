@@ -2,7 +2,10 @@
 
 extern Menu screen;
 extern u8 progress;
+extern u8 rep[];
 u8 done = 0;
+u8 ras = 0;
+u8 key = 0;
 //RF2 => U1RX
 //RF3 => U1TX
 
@@ -41,10 +44,13 @@ void send_char_rfid(char c)
 
 char read_char_rfid(void)
 {
-    //PORTDbits.RD15 = 0;                // Optional RTS use
-    while(!U1STAbits.URXDA);             // Wait for information to be received
-    //PORTDbits.RD15 = 1;
-    return U1RXREG;                      // Return received character
+	char k;
+
+    __builtin_disable_interrupts();
+	while(!U1STAbits.URXDA);             // Wait for information to be received
+	k = U1RXREG;
+	__builtin_enable_interrupts();
+    return k;
 }
 
 void send_string_rfid(char *s)
@@ -114,12 +120,28 @@ void	read_ras(char *buf)
     u8 c;
     u32 i = 0;
 
-   while ((c = read_char()) && c != '\0')
-   {
-       buf[i] = c;
-       i++;
-   }
+	
+	//while (ras == 0);
+	//ras = 0;
+	while ((c = read_char()) && i < 100)
+	{
+		buf[i] = c;
+		i++;
+	}
+	send_string("yooooo");
     buf[i] = '\0';
+}
+
+void	ft_strcpy(u8 *dst, u8 *src)
+{
+	u8 i = 0;
+
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
 }
 
 void	send_private_key(char *buf)
@@ -233,6 +255,31 @@ void init_interrupt_rfid() {
     IPC6bits.U1IP = 6; // set priority
    // IPC6bits.U1IS = 2;
     IFS0bits.U1RXIF = 0; // clear interrupt flag
+    INTCONbits.MVEC = 1; // interrupt multivector enabled
+    __builtin_enable_interrupts();
+}
+
+void __ISR(_UART2_VECTOR, IPL6SOFT) IntUart3Handler(void) {
+	ras = 1;
+	read_ras(rep);
+	IEC1bits.U2RXIE = 0; // disable interrupt on UART1
+	IFS1bits.U2RXIF = 0;
+}
+
+void init_interrupt_ras() {
+	u8 i = 0;
+     __builtin_disable_interrupts(); //pas d'interruptions possible
+    U2STAbits.URXISEL = 0x0;
+   // U2STAbits.
+	while (i < 100)
+	{
+		rep[i] = 0;
+		i++;
+	}
+    IEC1bits.U2RXIE = 1; // enable interrupt on UART1
+    IPC8bits.U2IP = 6; // set priority
+   // IPC6bits.U1IS = 2;
+    IFS1bits.U2RXIF = 0; // clear interrupt flag
     INTCONbits.MVEC = 1; // interrupt multivector enabled
     __builtin_enable_interrupts();
 }

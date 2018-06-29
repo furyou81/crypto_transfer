@@ -23,6 +23,8 @@ extern u8 amount[13];
 extern u8 aff_amount[14];
 extern u8 private_key[];
 extern u8 public_key[];
+extern u8 rep[];
+extern u8 reponse[];
 
 void init_i2c()
 {
@@ -377,6 +379,12 @@ void choose_screen(Menu str)
 		write_line("   ", 1, 0);
 		line_pub(tmp, 2);
 		write_line(tmp, 2, 0);
+		write_line("   A to continue", 1, 0);
+	}
+	else if (screen == REP)
+	{
+		write_line("   ", 1, 0);
+		write_line(rep, 2, 0);
 		write_line("   A to continue", 1, 0);
 	}
 	else

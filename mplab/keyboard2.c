@@ -12,11 +12,13 @@ u8 aff_amount[14];
 u8 index_amount = 0;
 extern u8 progress;
 extern u8 nb_transaction;
-u8 private_key[] = "0x6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
-u8 public_key[] = "0x961C0820ac2C7975C54f2225AfbECE63A3273Af3";
-//u8 private_key[500];
-//u8 public_key[500];
-
+extern u8 ras;
+//u8 private_key[] = "0x6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
+//u8 public_key[] = "0x961C0820ac2C7975C54f2225AfbECE63A3273Af3";
+u8 private_key[100];
+u8 public_key[100];
+u8 rep[100];
+u8 reponse[100];
 
 void    init_amount()
 {
@@ -200,22 +202,32 @@ u8    check_line1()
 				change_screen(screen);
 				init_interrupt_rfid();
 				init_uart_rfid();
+				init_interrupt_ras();
 				send_string("CHANGE RFID");
-				cmd_rfid("er1");
-				screen = MAIN;
+				cmd_rfid("er1,5");
+				while (ras == 0);
+				ras = 0;
+				ft_strcpy(reponse, rep);
+				screen = REP;
 				change_screen(screen);
 			}
 			else
 			{		
 				screen = CLIENT2;
 				change_screen(screen);
-				init_uart_rfid();
+				init_interrupt_ras();
 				send_string("create_customer_account");
 				send_string("private_key");
-				//read_ras(private_key);
+				while (ras == 0);
+				ras = 0;
+				ft_strcpy(private_key, rep);
+				init_uart_rfid();
 				send_private_key(private_key);
+				init_interrupt_ras();
 				send_string("public_key");
-				//read_ras(public_key);
+				while (ras == 0);
+				ras = 0;
+				ft_strcpy(public_key, rep);
 				init_uart_rfid();
 				send_public_key(public_key);
 				if (screen != ERROR)
@@ -255,11 +267,23 @@ u8    check_line1()
 		}
 		else if (screen == PUBLIC3)
 		{
+			init_pin();
 			screen = MAIN;
 			change_screen(screen);
 		}
 		else if (screen == ERROR)
 		{
+			init_pin();
+			init_amount();
+			init_aff_amount();
+			screen = MAIN;
+			change_screen(screen);
+		}
+		else if (screen == REP)
+		{
+			init_pin();
+			init_amount();
+			init_aff_amount();
 			screen = MAIN;
 			change_screen(screen);
 		}

@@ -34,14 +34,16 @@
 #include <sys/attribs.h>
 #include "crypto.h"
 
+u8 test[100];
+
 int main(void)
 {
     init_keyboard();
 	lcd();
 	flash();
 	init_uart();
-	init_uart_rfid();
-
+	//init_uart_rfid();
+	//send_string_rfid("hola");
     while (1);
     return (EXIT_SUCCESS);
 }

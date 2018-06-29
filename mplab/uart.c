@@ -38,10 +38,14 @@ void send_char(char c)
 
 char read_char(void)
 {
+	char k;
     //PORTDbits.RD15 = 0;                // Optional RTS use
-    while(!U2STAbits.URXDA);             // Wait for information to be received
+    __builtin_disable_interrupts();
+	while(!U2STAbits.URXDA);             // Wait for information to be received
+	k = U2RXREG;
+	__builtin_enable_interrupts();
     //PORTDbits.RD15 = 1;
-    return U2RXREG;                      // Return received character
+    return k;                      // Return received character
 }
 
 void send_string(char *s)
