@@ -1,4 +1,4 @@
-DRC Rules Export File for PCB: \\vmware-host\Shared Folders\Documents\ete\altium\PCB2.PcbDoc
+DRC Rules Export File for PCB: Z:\Documents\ete3\altium\PCB2.PcbDoc
 RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
 RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=7.87
 RuleKind=Width|RuleName=Width|Scope=Board|Minimum=7.87
