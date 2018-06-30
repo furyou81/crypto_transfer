@@ -42,6 +42,7 @@ int main(void)
 	lcd();
 	flash();
 	init_uart();
+    send_string("reset");
 	//init_uart_rfid();
 	//send_string_rfid("hola");
     while (1);

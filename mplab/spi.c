@@ -341,10 +341,10 @@ void	flash(void) {
     //read_status();
     change_status2();
 
-	write_line_SPI(" 12/12/2018         ");
+	/*write_line_SPI(" 12/12/2018         ");
 	write_line_SPI(" 12,564878787 ETH   ");
 	write_line_SPI(" 06/02/2018         ");
-	write_line_SPI(" 53,564878787 ETH   ");
+	write_line_SPI(" 53,564878787 ETH   ");*/
 	/*write_line_SPI(" 09/08/2018         ");
 	write_line_SPI(" 66,994878787 ETH   ");
 	write_line_SPI(" 12/12/2018         ");

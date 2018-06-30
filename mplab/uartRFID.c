@@ -97,7 +97,7 @@ void read_rfid()
 	    if (screen == CLIENT2 && chevron >= 3)
 			break ;
        buf[i] = c;
-	   if (i > 4 && buf[i] == ':' && buf[i - 1] == 'R' && buf[i - 2] == 'R' && buf[i - 3] == 'E')
+	   if (i > 4 && buf[i] == ':' && buf[i - 1] == 'R' && buf[i - 2] == 'R' && buf[i - 3] == 'E' && screen == CLIENT2)
 	   {
 		   screen = ERROR;
 		   change_screen(screen);
@@ -111,8 +111,11 @@ void read_rfid()
    }
     buf[i] = '\0';
     i = 0;
-    while (buf[i])
-        send_char(buf[i++]);
+    if (screen != ERROR)
+    {
+        while (buf[i])
+            send_char(buf[i++]);
+    }
 }
 
 void	read_ras(char *buf)
@@ -233,15 +236,12 @@ void send_transaction_amount(u32 amount) {
 
 void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {
     read_rfid();
-	if (screen == MAKE_TRADE2)
-	{
-		screen = MAIN;
-		change_screen(screen);
-	}
-	else
-	{
-		done = 1;
-	}
+    if (screen == MAKE_TRADE2)
+    {
+        screen = TRANS;
+        change_screen(screen);
+    }
+	done = 1;
     IEC0bits.U1RXIE = 0; // disable interrupt on UART1
     IFS0bits.U1RXIF = 0;
 }

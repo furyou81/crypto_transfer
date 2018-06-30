@@ -310,6 +310,13 @@ void choose_screen(Menu str)
         write_line("YES", 1, 1);
         write_line("NO", 2, 2);
 	}
+    else if (str == SELLER)
+	{
+		write_line(" It will erase your", 1, 0);
+        write_line(" old account:", 1, 0);
+         write_line("YES", 1, 1);
+        write_line("NO", 1, 2);
+	}
 	else if (str == ACCOUNT)
 	{
 		write_line("  ", 1, 0);
@@ -381,10 +388,16 @@ void choose_screen(Menu str)
 		write_line(tmp, 2, 0);
 		write_line("   A to continue", 1, 0);
 	}
+    else if (screen == TRANS)
+	{
+		write_line("   ", 1, 0);
+		write_line("Transaction in", 1, 0);
+		write_line("progress . . .", 2, 0);
+	}
 	else if (screen == REP)
 	{
 		write_line("   ", 1, 0);
-		write_line(rep, 2, 0);
+		write_line(reponse, 2, 0);
 		write_line("   A to continue", 1, 0);
 	}
 	else
