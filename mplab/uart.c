@@ -1,7 +1,7 @@
 #include "crypto.h"
 
 
-
+extern Menu screen;
 //RF4 => U2RX
 //RF5 => U2TX
 
@@ -120,7 +120,10 @@ void base10(u32 nb)
 void start_transaction(u8 amount[]) {
     //TMR2 = 0;
     //while (TMR2 < 20000);
-    send_string("new_transaction");
+    if (screen == AMOUNT2)
+       send_string("refund");
+    else
+        send_string("new_transaction");
 	send_char('{');
     send_string("amount:");
 	send_string(amount);

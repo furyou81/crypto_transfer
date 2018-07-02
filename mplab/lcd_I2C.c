@@ -322,7 +322,7 @@ void choose_screen(Menu str)
 		write_line("  ", 1, 0);
 		write_line("CUSTOMER", 1, 1);
         write_line("SELLER", 1, 2);
-		write_line(" ", 1, 0);
+		write_line("REFUND", 1, 3);
 	}
 	else if (str == CLIENT)
 	{
@@ -400,6 +400,15 @@ void choose_screen(Menu str)
 		write_line(reponse, 2, 0);
 		write_line("   A to continue", 1, 0);
 	}
+    else if (str == AMOUNT2)
+    {
+        // write : str | new_line | rank
+        write_line("  REFUND:", 2, 0);
+        init_aff_amount();
+        write_line(aff_amount, 0, 0);
+        write_line(" ETH", 0, 0);
+        write_line("          A to ACCEPT", 1, 0);
+    }
 	else
     {
         write_line("  ERROR", 3, 0);
