@@ -20,6 +20,7 @@ u8 private_key[100];
 u8 public_key[100];
 u8 rep[100];
 u8 reponse[100];
+u8 point = 0;
 
 void    init_amount()
 {
@@ -64,29 +65,26 @@ void    decale_amount()
 void    spi_amount()
 {
     u8 i = 0;
-    u8 k = 0;
+    u8 k = 1;
     
+    amount_SPI[0] = ' ';
     while (aff_amount[i])
     {
-        amount_SPI[i] = aff_amount[i];
+        amount_SPI[k] = aff_amount[i];
         i++;
+        k++;
     }
-    amount_SPI[i] = ' ';
-    i++;
-    amount_SPI[i] = ' ';
-    i++;
-    amount_SPI[i] = 'E';
-    i++;
-    amount_SPI[i] = 'T';
-    i++;
-    amount_SPI[i] = 'H';
-    i++;
-    amount_SPI[i] = ' ';
-    i++;
-    amount_SPI[i] = ' ';
-    i++;
-    amount_SPI[i] = '\0';
-    i++;
+    amount_SPI[k] = ' ';
+    k++;
+    amount_SPI[k] = 'E';
+    k++;
+    amount_SPI[k] = 'T';
+    k++;
+    amount_SPI[k] = 'H';
+    k++;
+    amount_SPI[k] = ' ';
+    k++;
+    amount_SPI[k] = '\0';
 }
 
 void    c_amount()
@@ -127,7 +125,7 @@ u8    check_line1()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '1';
@@ -171,6 +169,11 @@ u8    check_line1()
 			ras = 0;
 			ft_strcpy(public_key, rep);   
         }
+        else if (screen == SETTINGS)
+        {
+            screen = ACCOUNT;
+            change_screen(screen);
+        }
         return('1');
     }
     set_col(1, 0, 1, 1);
@@ -189,7 +192,7 @@ u8    check_line1()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '2';
@@ -217,6 +220,11 @@ u8    check_line1()
             screen = MAIN;
             change_screen(screen);
         }
+        else if (screen == SETTINGS)
+        {
+            //screen = WIFI;
+            change_screen(screen);
+        }
         return('2');
     }
     set_col(1, 1, 0, 1);
@@ -228,7 +236,7 @@ u8    check_line1()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '3';
@@ -237,8 +245,19 @@ u8    check_line1()
         }
 		else if (screen == MAIN)
         {
-			screen = ACCOUNT;
+			screen = SETTINGS;
             change_screen(screen);
+        }
+        else if (screen == ACCOUNT)
+        {
+            screen = AMOUNT2;
+            change_screen(screen);
+        }
+        else if (screen == SETTINGS)
+        {
+            screen = SHUT_DOWN;
+            change_screen(screen);
+            send_string("shut_down");
         }
         return('3');
     }
@@ -247,43 +266,102 @@ u8    check_line1()
     {
         if (screen == AMOUNT && index_amount > 0)
         {
+            if (screen == AMOUNT)
+            {
+                screen = MAKE_TRADE1;
+                change_screen(screen);
+            }
 			aff_amount[4] = '.';
 			start_transaction(aff_amount);
             spi_amount();
 			init_aff_amount(aff_amount);
 			init_amount(amount);
-            screen = MAKE_TRADE1;
-            change_screen(screen);
 			index_amount = 0;
         }
-        else if ((screen == MAKE_TRADE1 || screen == CLIENT) && compteur > 3)
+        else if (((screen == MAKE_TRADE1 || screen == CLIENT) && compteur > 3) || (screen == AMOUNT2))
         {
-			if (screen == MAKE_TRADE1)
+			if (screen == MAKE_TRADE1 || screen == AMOUNT2)
 			{
+                u8 i = 0;
+                Menu tmp = screen;
+                if (screen == AMOUNT2)
+                {
+                    aff_amount[4] = '.';
+                    start_transaction(aff_amount);
+                    spi_amount();
+                    init_aff_amount(aff_amount);
+                    init_amount(amount);
+                    index_amount = 0;              
+                }
 				screen = MAKE_TRADE2;
 				change_screen(screen);
 				init_interrupt_rfid();
 				init_uart_rfid();
 				init_interrupt_ras();
 				cmd_rfid("er1,5");
-				while (ras == 0);
+                u32 time = 0;
+                TMR2 = 0;
+				while (ras == 0)
+                {
+                    if (TMR2 > 50000)
+                    {
+                        time++;
+                        TMR2 = 0;
+                    }
+                    if (time > 300)
+                    {
+                        time = 0;
+                        point++;
+                        point %= 3;
+                        change_screen(TRANS);
+                    }
+                }
 				ras = 0;
 				ft_strcpy(reponse, rep);
                 init_interrupt_ras();
                 send_string("check_transaction");
-    			while (ras == 0);
+                TMR2 = 0;
+                point = 0;
+    			while (ras == 0)
+                {
+                    if (TMR2 > 50000)
+                    {
+                        time++;
+                        TMR2 = 0;
+                    }
+                    if (time > 300)
+                    {
+                        time = 0;
+                        point++;
+                        point %= 3;
+                        change_screen(TRANS);
+                    }
+                }
 				ras = 0;
 				ft_strcpy(reponse, rep);
 				screen = REP;
 				change_screen(screen);
                 init_interrupt_ras();
+                while (i < 100)
+                {
+                    rep[i] = 0;
+                    reponse[i] = 0;
+                    i++;
+                }
                 send_string("date");
 				while (ras == 0);
 				ras = 0;
 				ft_strcpy(reponse, rep);
-                write_line_SPI(reponse);
-                write_line_SPI(amount_SPI);
-                
+                init_interrupt_ras();
+                send_string("date");
+				while (ras == 0);
+				ras = 0;
+				ft_strcpy(reponse, rep);
+                if (tmp == MAKE_TRADE1)
+                {
+                    write_line_SPI(reponse);
+                    write_line_SPI(amount_SPI);
+                }
 			}
 			else
 			{		
@@ -380,7 +458,7 @@ u8    check_line2()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '4';
@@ -398,7 +476,7 @@ u8    check_line2()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '5';
@@ -416,7 +494,7 @@ u8    check_line2()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '6';
@@ -449,7 +527,7 @@ u8    check_line3()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '7';
@@ -467,7 +545,7 @@ u8    check_line3()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '8';
@@ -485,7 +563,7 @@ u8    check_line3()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '9';
@@ -503,7 +581,7 @@ u8    check_line3()
             pin[compteur] = 0xC4;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount > 0)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount > 0)
         {
             c_amount();
             index_amount--;
@@ -530,7 +608,7 @@ u8    check_line4()
             compteur++;
             change_screen(screen);
         }
-        else if (screen == AMOUNT && index_amount < 13)
+        else if ((screen == AMOUNT || screen == AMOUNT2) && index_amount < 13)
         {
             decale_amount();
             amount[12] = '0';
@@ -542,6 +620,8 @@ u8    check_line4()
     set_col(1, 1, 0, 1);
     if (PORTBbits.RB3 == BUT_DOWN)
     {
+        if (screen != SHUT_DOWN)
+        {
 			screen = MAIN;
 			change_screen(screen);
 			init_amount(amount);
@@ -550,6 +630,7 @@ u8    check_line4()
 			compteur = 0;
 			index_amount = 0;
 			send_string("reset");
+        }
         return('#');
     }
     set_col(1, 1, 1, 0);

@@ -35,13 +35,41 @@
 #include "crypto.h"
 
 u8 test[100];
+extern u8 ras;
+extern Menu screen;
+extern u8 rep[];
+extern u8 point;
 
 int main(void)
 {
+    u32 compt = 0;
     init_keyboard();
 	lcd();
 	flash();
-	init_uart();
+    screen = BOOT;
+    change_screen(screen);
+    ras = 0;
+    init_uart();
+    init_uart_rfid();
+    point = 0;
+    init_interrupt_ras();
+    while (ras == 0)
+    {
+        send_string("start");
+        TMR2 = 0;
+        while (TMR2 < 50000);
+        compt++;
+        if (compt > 300)
+        {
+            screen = BOOT;
+            change_screen(screen);
+            point++;
+            point %= 3;
+            compt = 0;
+        }
+    }
+    screen = MAIN;
+    change_screen(screen);
     send_string("reset");
 	//init_uart_rfid();
 	//send_string_rfid("hola");
