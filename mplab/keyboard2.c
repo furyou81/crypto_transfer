@@ -259,6 +259,11 @@ u8    check_line1()
             change_screen(screen);
             send_string("shut_down");
         }
+        else if (screen == ACCOUNT)
+        {
+            screen = AMOUNT2;
+            change_screen(screen);
+        }
         return('3');
     }
     set_col(1, 1, 1, 0);
