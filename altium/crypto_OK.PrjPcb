@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=
+OutputPath=Project Outputs for crypto_OK
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -308,39 +308,39 @@ DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument6]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument7]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.REP
-DItemRevisionGUID=
-
-[GeneratedDocument8]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB1.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument9]
+[GeneratedDocument6]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument10]
+[GeneratedDocument7]
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2-BoardEdgeRout.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument8]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.DRR
 DItemRevisionGUID=
 
-[GeneratedDocument11]
+[GeneratedDocument9]
 DocumentPath=Project Outputs for crypto_OK\AutoCAD PCB\PCB2.DWG
 DItemRevisionGUID=
 
-[GeneratedDocument12]
+[GeneratedDocument10]
 DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.EXTREP
 DItemRevisionGUID=
 
-[GeneratedDocument13]
+[GeneratedDocument11]
 DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBP
 DItemRevisionGUID=
 
 [GeneratedDocument14]
@@ -348,42 +348,70 @@ DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBS
 DItemRevisionGUID=
 
 [GeneratedDocument15]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTL
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GKO
 DItemRevisionGUID=
 
 [GeneratedDocument16]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTO
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM1
 DItemRevisionGUID=
 
 [GeneratedDocument17]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTS
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM2
 DItemRevisionGUID=
 
 [GeneratedDocument18]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.LDP
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM3
 DItemRevisionGUID=
 
 [GeneratedDocument19]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.REP
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GPB
 DItemRevisionGUID=
 
 [GeneratedDocument20]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.RUL
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GPT
 DItemRevisionGUID=
 
 [GeneratedDocument21]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.TXT
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTL
 DItemRevisionGUID=
 
 [GeneratedDocument22]
-DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB1.txt
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTO
 DItemRevisionGUID=
 
 [GeneratedDocument23]
-DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB2.txt
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTP
 DItemRevisionGUID=
 
 [GeneratedDocument24]
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument25]
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument26]
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument27]
+DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument28]
+DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument29]
+DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB1.txt
+DItemRevisionGUID=
+
+[GeneratedDocument30]
+DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB2.txt
+DItemRevisionGUID=
+
+[GeneratedDocument31]
 DocumentPath=Schlib1.cmp
 DItemRevisionGUID=
 
@@ -398,7 +426,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=
+OutputDir=Project Outputs for crypto_OK
 
 [OutputGroup1]
 Name=Netlist Outputs

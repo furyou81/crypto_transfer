@@ -1,0 +1,3 @@
+Added Component: Designator=S1(SPST-2)
+Added Pin To Net: NetName=3.3V Pin=S1-2
+Added Member To Class: ClassName=PIC Member=Component S1 SW-SPST

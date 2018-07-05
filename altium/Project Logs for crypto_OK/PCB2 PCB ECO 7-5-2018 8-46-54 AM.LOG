@@ -1,0 +1,12 @@
+Removed Pin From Net: NetName=3.3V Pin=C20-1
+Removed Pin From Net: NetName=3.3V Pin=U4-4
+Added Component: Designator=S1(SPST-2)
+Added Pin To Net: NetName=3.3V Pin=S1-2
+Added Pin To Net: NetName=NetC20_1 Pin=C20-1
+Added Pin To Net: NetName=NetC20_1 Pin=S1-1
+Added Pin To Net: NetName=NetC20_1 Pin=U4-4
+Added Net: Name=NetC20_1
+Added Member To Class: ClassName=LCD Member=Component P1 LCD
+Added Member To Class: ClassName=PIC Member=Component P3 ISCP
+Added Member To Class: ClassName=PIC Member=Component S1 SW-SPST
+Added Member To Class: ClassName=Clavier Member=Component U5 clavier
