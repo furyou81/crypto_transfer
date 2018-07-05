@@ -1,0 +1,972 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD14\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">7/5/2018</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">6:18:45 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///Z:\Documents\cryp\altium\PCB3.PcbDoc" class="file"><acronym title="Z:\Documents\cryp\altium\PCB3.PcbDoc">Z:\Documents\cryp\altium\PCB3.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">177</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDTUXEQCBX5ABTF1KHBAMBMF4GUIS235M5KPZGVSIXI3UDNQ3RMZUM"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDVAE5IWESS05CMSNYYMWRRZIP2GPVLCGCR0PK2TGZHFOJ4KXZLJNN">Room RFID (Bounding Region = (116.6mm, 282.799mm, 126.1mm, 303.699mm) (InComponentClass('RFID'))</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDHVFYLHA3CUQDJVQT3EYV5NZTZLQZGCKDHUUR1IX0GUQYOD42BMM">Rule</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID51MBWYM40K5321T5PDUO314GLVEXRQQ3LNZRJ0DDLQH5HRAZON">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDQC2SFCGJZTIG4MXMSSHUWE3DPGNQXTGTOGWYUBDLXKBY2FRHQEH">Silk primitive without silk layer</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4AX2IZXD5WWBC5QNNIPEIHFYJPCQANIY0UBBBJH2RGADNVKNPSNI">Silk to Silk (Clearance=0.1mm) (All),(All)</a></td>
+<td class="column2">5</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDSHA1XKVID0R3CRUYMXU3UPECFFSLCNSH4KYOIHMPXW10VEJURBDL">Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)</a></td>
+<td class="column2">16</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDIANUBGYPI0LTON0GCP5QZV5S3YUZ0T33VQSVPDEUEGWJZCTVVRG">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">52</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDZ2BH5SXZDB2OMZXUZ24GA0BIEOSTJXPV4SOGDUF5DY3WJGEQSBZC">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZDLPEDVIAVXIGS2HLLG03GWO1FFBUOWOLVNWQ0DHBXWPWPIMDAPH">Hole Size Constraint (Min=0.3mm) (Max=4mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLTQLNCXQOPDJMOTQKFCOLIXWILUYARBPEFCUF5B05RB2UORNWQPH">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDPHW4ZSQUEX3WCP1JT24UMCGYBP3MOZWH2F1KJMQFFFM5BRS4BXM">Width Constraint (Min=0.2mm) (Max=3mm) (Preferred=0.3mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID32WTXM2ILBKUGH0WGKFIWXISNGGKCO1PAPZPI5HBHI21FCEOVUTK">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4DBVVJNZQ1H2MHSNNVNK4NA10NQKARRGKLA4TBHYHHID2ZWZR5XH">Clearance Constraint (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDCPZ4IRQNIO14OA0APAKLXCIDDEMX2BYRNVWI2IV2RIZ34I5ICCO">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">102</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID434ITB2T4KKAETJ53FKLG0W1H1FAXBQTHKH2JW5WK3GX1IXFYM">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">177</td>
+</tr>
+</table><br><hr><a name="IDVAE5IWESS05CMSNYYMWRRZIP2GPVLCGCR0PK2TGZHFOJ4KXZLJNN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room RFID (Bounding Region = (116.6mm, 282.799mm, 126.1mm, 303.699mm) (InComponentClass('RFID'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4128.858mil|Location2.X=4964.557mil|Location1.Y=1105.236mil|Location2.Y=11956.669mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4128.858mil|Location2.X=4964.557mil|Location1.Y=1105.236mil|Location2.Y=11956.669mil|Absolute=True">Room Definition Between Component on TopLayer And Rule on TopLayer</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDDQC2SFCGJZTIG4MXMSSHUWE3DPGNQXTGTOGWYUBDLXKBY2FRHQEH"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk primitive without silk layer</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4681.123mil|Location2.X=4717.286mil|Location1.Y=3068.918mil|Location2.Y=3076.751mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4681.123mil|Location2.X=4717.286mil|Location1.Y=3068.918mil|Location2.Y=3076.751mil|Absolute=True">Silk To Board Region Clearance (Out of silkscreen region) : Track (93.6mm,48mm)(93.6mm,57.3mm)  Top Overlay</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="ID4AX2IZXD5WWBC5QNNIPEIHFYJPCQANIY0UBBBJH2RGADNVKNPSNI"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk to Silk (Clearance=0.1mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3908.631mil|Location2.X=4028.598mil|Location1.Y=3697.803mil|Location2.Y=3777.784mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3908.631mil|Location2.X=4028.598mil|Location1.Y=3697.803mil|Location2.Y=3777.784mil|Absolute=True">Text "U5" (76.672mm,68.778mm)  Bottom Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3233.189mil|Location2.X=4228.622mil|Location1.Y=3750.905mil|Location2.Y=3760.905mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3233.189mil|Location2.X=4228.622mil|Location1.Y=3750.905mil|Location2.Y=3760.905mil|Absolute=True">Track (56.85mm,70mm)(81.88mm,70mm)  Bottom Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3045.118mil|Location2.X=3130.714mil|Location1.Y=3486.063mil|Location2.Y=3545.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3045.118mil|Location2.X=3130.714mil|Location1.Y=3486.063mil|Location2.Y=3545.42mil|Absolute=True">Text "C2" (52.2mm,63.4mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2986.063mil|Location2.X=3071.659mil|Location1.Y=3482.126mil|Location2.Y=3541.483mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2986.063mil|Location2.X=3071.659mil|Location1.Y=3482.126mil|Location2.Y=3541.483mil|Absolute=True">Text "C3" (50.7mm,63.3mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True">Text "R2" (40.059mm,69.369mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.26mil|Location2.X=2592.234mil|Location1.Y=3720.835mil|Location2.Y=3800.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.26mil|Location2.X=2592.234mil|Location1.Y=3720.835mil|Location2.Y=3800.815mil|Absolute=True">Text "R1" (38.157mm,69.363mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True">Text "C5" (47.749mm,69.075mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True">Text "C6" (46.247mm,69.052mm)  Top Overlay</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True">Text "C4" (49.251mm,69.063mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True">Text "C5" (47.749mm,69.075mm)  Top Overlay</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDSHA1XKVID0R3CRUYMXU3UPECFFSLCNSH4KYOIHMPXW10VEJURBDL"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Silk To Solder Mask (Clearance=0.1mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True">Text "C4" (49.251mm,69.063mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-5(50.27mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True">Text "C5" (47.749mm,69.075mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-5(50.27mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929mil|Location2.X=3014.596mil|Location1.Y=3709mil|Location2.Y=3768.357mil|Absolute=True">Text "C4" (49.251mm,69.063mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-6(49mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True">Text "C5" (47.749mm,69.075mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-6(49mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True">Text "C6" (46.247mm,69.052mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-6(49mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2869.874mil|Location2.X=2989.842mil|Location1.Y=3709.472mil|Location2.Y=3789.453mil|Absolute=True">Text "C5" (47.749mm,69.075mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-7(47.73mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True">Text "C6" (46.247mm,69.052mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-7(47.73mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True">Text "C7" (43.265mm,68.859mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-8(46.46mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.748mil|Location2.X=2930.716mil|Location1.Y=3708.567mil|Location2.Y=3788.548mil|Absolute=True">Text "C6" (46.247mm,69.052mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-8(46.46mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True">Text "C7" (43.265mm,68.859mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-9(45.19mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True">Text "C7" (43.265mm,68.859mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-10(43.92mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2693.331mil|Location2.X=2813.298mil|Location1.Y=3700.992mil|Location2.Y=3780.973mil|Absolute=True">Text "C7" (43.265mm,68.859mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-11(42.65mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True">Text "R2" (40.059mm,69.369mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-11(42.65mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True">Text "R2" (40.059mm,69.369mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-12(41.38mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.26mil|Location2.X=2592.234mil|Location1.Y=3720.835mil|Location2.Y=3800.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.26mil|Location2.X=2592.234mil|Location1.Y=3720.835mil|Location2.Y=3800.815mil|Absolute=True">Text "R1" (38.157mm,69.363mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-13(40.11mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2567.134mil|Location2.X=2687.102mil|Location1.Y=3721.063mil|Location2.Y=3801.044mil|Absolute=True">Text "R2" (40.059mm,69.369mm)  Top Overlay</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-13(40.11mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDIANUBGYPI0LTON0GCP5QZV5S3YUZ0T33VQSVPDEUEGWJZCTVVRG"><table>
+<tr>
+<th style="text-align : left" colspan="2" class="rule">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True">Pad U3-43(65mm,34.1mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2359.189mil|Location2.Y=2388.842mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2359.189mil|Location2.Y=2388.842mil|Absolute=True">Pad U3-44(65mm,34.9mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True">Pad U3-42(65mm,33.3mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True">Pad U3-43(65mm,34.1mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True">Pad U3-36(65mm,28.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3526.039mil|Location2.X=3593.094mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3526.039mil|Location2.X=3593.094mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True">Pad U3-37(65.013mm,29.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True">Pad U3-38(65mm,30.1mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3526.039mil|Location2.X=3593.094mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3526.039mil|Location2.X=3593.094mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True">Pad U3-37(65.013mm,29.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True">Pad U3-41(65mm,32.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True">Pad U3-42(65mm,33.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True">Pad U3-39(65mm,30.9mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True">Pad U3-38(65mm,30.1mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True">Pad U3-40(65mm,31.7mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True">Pad U3-39(65mm,30.9mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True">Pad U3-41(65mm,32.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True">Pad U3-40(65mm,31.7mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True">Pad U3-35(65mm,27.7mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True">Pad U3-36(65mm,28.5mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2044.228mil|Location2.Y=2073.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2044.228mil|Location2.Y=2073.882mil|Absolute=True">Pad U3-34(65mm,26.9mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3592.583mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True">Pad U3-35(65mm,27.7mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True">Pad U3-13(53.6mm,34.1mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2359.189mil|Location2.Y=2388.842mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2359.189mil|Location2.Y=2388.842mil|Absolute=True">Pad U3-12(53.6mm,34.9mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True">Pad U3-14(53.6mm,33.3mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2327.693mil|Location2.Y=2357.346mil|Absolute=True">Pad U3-13(53.6mm,34.1mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True">Pad U3-20(53.6mm,28.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True">Pad U3-19(53.6mm,29.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True">Pad U3-18(53.6mm,30.1mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2138.716mil|Location2.Y=2168.37mil|Absolute=True">Pad U3-19(53.6mm,29.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True">Pad U3-15(53.6mm,32.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2296.197mil|Location2.Y=2325.85mil|Absolute=True">Pad U3-14(53.6mm,33.3mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True">Pad U3-17(53.6mm,30.9mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2170.213mil|Location2.Y=2199.866mil|Absolute=True">Pad U3-18(53.6mm,30.1mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True">Pad U3-16(53.6mm,31.7mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2201.709mil|Location2.Y=2231.362mil|Absolute=True">Pad U3-17(53.6mm,30.9mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2264.701mil|Location2.Y=2294.354mil|Absolute=True">Pad U3-15(53.6mm,32.5mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2233.205mil|Location2.Y=2262.858mil|Absolute=True">Pad U3-16(53.6mm,31.7mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True">Pad U3-21(53.6mm,27.7mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2107.22mil|Location2.Y=2136.874mil|Absolute=True">Pad U3-20(53.6mm,28.5mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2044.228mil|Location2.Y=2073.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2044.228mil|Location2.Y=2073.882mil|Absolute=True">Pad U3-22(53.6mm,26.9mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3143.764mil|Location1.Y=2075.724mil|Location2.Y=2105.378mil|Absolute=True">Pad U3-21(53.6mm,27.7mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-2(62.5mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=3506.953mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=3506.953mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-1(63.3mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-3(61.7mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-2(62.5mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-4(60.9mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-3(61.7mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-9(56.9mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-8(57.7mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-7(58.5mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-8(57.7mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-6(59.3mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-7(58.5mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-5(60.1mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-6(59.3mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-4(60.9mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-5(60.1mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-10(56.1mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-9(56.9mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3162.339mil|Location2.X=3191.992mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3162.339mil|Location2.X=3191.992mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-11(55.3mm,36.6mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=2407.417mil|Location2.Y=2474.472mil|Absolute=True">Pad U3-10(56.1mm,36.6mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-24(56.1mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3162.339mil|Location2.X=3191.992mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3162.339mil|Location2.X=3191.992mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-23(55.3mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-25(56.9mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3193.835mil|Location2.X=3223.488mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-24(56.1mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-29(60.1mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-30(60.9mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-31(61.7mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=3412.465mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-30(60.9mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-26(57.7mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3225.331mil|Location2.X=3254.984mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-25(56.9mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-28(59.3mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3380.968mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-29(60.1mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-27(58.5mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-28(59.3mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3256.827mil|Location2.X=3286.48mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-26(57.7mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=3317.976mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-27(58.5mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-32(62.5mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3443.961mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-31(61.7mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=3506.953mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=3506.953mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-33(63.3mm,25.2mm)  Top Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=3475.457mil|Location1.Y=1958.598mil|Location2.Y=2025.653mil|Absolute=True">Pad U3-32(62.5mm,25.2mm)  Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3150.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3150.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-2(54.08mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3157.417mil|Location2.X=3200.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3157.417mil|Location2.X=3200.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-1(55.35mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3007.417mil|Location2.X=3050.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3007.417mil|Location2.X=3050.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-4(51.54mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3057.417mil|Location2.X=3100.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3057.417mil|Location2.X=3100.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-3(52.81mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3150.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3150.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-2(54.08mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3057.417mil|Location2.X=3100.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3057.417mil|Location2.X=3100.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-3(52.81mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-5(50.27mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3007.417mil|Location2.X=3050.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3007.417mil|Location2.X=3050.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-4(51.54mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-6(49mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2957.417mil|Location2.X=3000.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-5(50.27mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-7(47.73mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2907.417mil|Location2.X=2950.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-6(49mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-8(46.46mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2857.417mil|Location2.X=2900.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-7(47.73mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-9(45.19mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2807.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-8(46.46mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-10(43.92mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2757.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-9(45.19mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-11(42.65mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2750.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-10(43.92mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-12(41.38mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2700.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-11(42.65mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="width:50%; text-align:left" class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2557.417mil|Location2.X=2600.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-13(40.11mm,70mm)  Multi-Layer</acronym></a></td>
+<td style="width:50%; text-align:left" class="column2"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2607.417mil|Location2.X=2650.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Pad P1-12(41.38mm,70mm)  Multi-Layer</acronym></a></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDCPZ4IRQNIO14OA0APAKLXCIDDEMX2BYRNVWI2IV2RIZ34I5ICCO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3661.48mil|Location1.Y=1870.016mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=3661.48mil|Location1.Y=1870.016mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net X2 Between Pad U3-31 (61.7,25.2mm) And Pad C11-2 (67,22.7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3407.417mil|Location2.X=3661.48mil|Location1.Y=1511.748mil|Location2.Y=1917.386mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3407.417mil|Location2.X=3661.48mil|Location1.Y=1511.748mil|Location2.Y=1917.386mil|Absolute=True">Un-Routed Net Constraint: Net X2 Between Pad Y1-1 (64,14.1mm) And Pad C11-2 (67,22.7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3257.937mil|Location1.Y=1511.748mil|Location2.Y=1842.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3257.937mil|Location1.Y=1511.748mil|Location2.Y=1842.583mil|Absolute=True">Un-Routed Net Constraint: Net X1 Between Pad C10-2 (51.8,20.8mm) And Pad Y1-2 (54.5,14.1mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3412.465mil|Location1.Y=1795.213mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3412.465mil|Location1.Y=1795.213mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net X1 Between Pad C10-2 (51.8,20.8mm) And Pad U3-30 (60.9,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=4267.779mil|Location1.Y=2244.819mil|Location2.Y=2323.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=4267.779mil|Location1.Y=2244.819mil|Location2.Y=2323.685mil|Absolute=True">Un-Routed Net Constraint: Net PGED3 Between Pad U3-41 (65,32.5mm) And Pad P3-PGD (82,32.62mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=4267.779mil|Location1.Y=2296.197mil|Location2.Y=2423.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=4267.779mil|Location1.Y=2296.197mil|Location2.Y=2423.685mil|Absolute=True">Un-Routed Net Constraint: Net PGEC3 Between Pad U3-42 (65,33.3mm) And Pad P3-PGC (82,35.16mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3064.504mil|Location2.X=3286.48mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3064.504mil|Location2.X=3286.48mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_26 Between Pad U5-1 (53.19,6.4mm) And Pad U3-26 (57.7,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2964.504mil|Location2.X=3254.984mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2964.504mil|Location2.X=3254.984mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_25 Between Pad U5-2 (50.65,6.4mm) And Pad U3-25 (56.9,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.504mil|Location2.X=3223.488mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2864.504mil|Location2.X=3223.488mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_24 Between Pad U5-3 (48.11,6.4mm) And Pad U3-24 (56.1,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2764.504mil|Location2.X=3191.992mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2764.504mil|Location2.X=3191.992mil|Location1.Y=1222.378mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_23 Between Pad U5-4 (45.57,6.4mm) And Pad U3-23 (55.3,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2664.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2073.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2664.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2073.882mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_22 Between Pad U5-5 (43.03,6.4mm) And Pad U3-22 (53.6,26.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2564.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2105.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2564.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2105.378mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_21 Between Pad U5-6 (40.49,6.4mm) And Pad U3-21 (53.6,27.7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2464.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2464.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2136.874mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_20 Between Pad U5-7 (37.95,6.4mm) And Pad U3-20 (53.6,28.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2364.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2168.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2364.504mil|Location2.X=3143.764mil|Location1.Y=1222.378mil|Location2.Y=2168.37mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_19 Between Pad U5-8 (35.41,6.4mm) And Pad U3-19 (53.6,29.3mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3191.992mil|Location1.Y=2407.417mil|Location2.Y=2985.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3191.992mil|Location1.Y=2407.417mil|Location2.Y=2985.102mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_11 Between Pad U7-10 (5.23,49.47mm) And Pad U3-11 (55.3,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=3085.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3254.984mil|Location1.Y=2407.417mil|Location2.Y=3085.102mil|Absolute=True">Un-Routed Net Constraint: Net NetU3_9 Between Pad U7-8 (5.23,52.01mm) And Pad U3-9 (56.9,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2503.48mil|Location2.X=3143.764mil|Location1.Y=1897.181mil|Location2.Y=2325.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2503.48mil|Location2.X=3143.764mil|Location1.Y=1897.181mil|Location2.Y=2325.85mil|Absolute=True">Un-Routed Net Constraint: Net NetU2_6 Between Pad U2-6 (38.67,23.78mm) And Pad U3-14 (53.6,33.3mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2453.48mil|Location2.X=3286.48mil|Location1.Y=1897.181mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2453.48mil|Location2.X=3286.48mil|Location1.Y=1897.181mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net NetU2_5 Between Pad U2-5 (37.4,23.78mm) And Pad U3-8 (57.7,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2503.48mil|Location2.X=3380.968mil|Location1.Y=1690.409mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2503.48mil|Location2.X=3380.968mil|Location1.Y=1690.409mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net NetU2_2 Between Pad U2-2 (38.67,18.528mm) And Pad U3-5 (60.1,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2453.48mil|Location2.X=3592.583mil|Location1.Y=1690.429mil|Location2.Y=2136.874mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2453.48mil|Location2.X=3592.583mil|Location1.Y=1690.429mil|Location2.Y=2136.874mil|Absolute=True">Un-Routed Net Constraint: Net NetU2_1 Between Pad U2-1 (37.4,18.528mm) And Pad U3-36 (65,28.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=4000.064mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3477.299mil|Location2.X=4000.064mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR5_2 Between Pad U3-33 (63.3,25.2mm) And Pad R5-2 (75.6,115.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3877.891mil|Location2.X=4500.063mil|Location1.Y=5417.26mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3877.891mil|Location2.X=4500.063mil|Location1.Y=5417.26mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR5_1 Between Pad R5-1 (73.7,115.9mm) And Pad U1-4 (88.3,113mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=4173.292mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3445.803mil|Location2.X=4173.292mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR4_2 Between Pad U3-32 (62.5,25.2mm) And Pad R4-2 (80,115.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4051.119mil|Location2.X=4500.063mil|Location1.Y=5521.197mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4051.119mil|Location2.X=4500.063mil|Location1.Y=5521.197mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR4_1 Between Pad R4-1 (78.1,115.9mm) And Pad U1-3 (88.3,115.64mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=4346.52mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3288.323mil|Location2.X=4346.52mil|Location1.Y=1958.598mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR3_2 Between Pad U3-27 (58.5,25.2mm) And Pad R3-2 (84.4,115.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4224.347mil|Location2.X=4441.008mil|Location1.Y=5521.197mil|Location2.Y=5586.677mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4224.347mil|Location2.X=4441.008mil|Location1.Y=5521.197mil|Location2.Y=5586.677mil|Absolute=True">Un-Routed Net Constraint: Net NetR3_1 Between Pad R3-1 (82.5,115.9mm) And Pad U1-2 (86.8,115.64mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=4388.449mil|Location1.Y=1530.646mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3414.307mil|Location2.X=4388.449mil|Location1.Y=1530.646mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net NetP4_4 Between Pad U3-3 (61.7,36.6mm) And Pad P4-4 (85.315,14.23mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=4288.449mil|Location1.Y=1530.646mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3382.811mil|Location2.X=4288.449mil|Location1.Y=1530.646mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net NetP4_3 Between Pad U3-4 (60.9,36.6mm) And Pad P4-3 (82.775,14.23mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=2600.85mil|Location1.Y=3653.48mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=2600.85mil|Location1.Y=3653.48mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetP1_13 Between Pad R1-1 (38.5,68mm) And Pad P1-13 (40.11,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=3506.953mil|Location1.Y=2407.417mil|Location2.Y=3700.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=3506.953mil|Location1.Y=2407.417mil|Location2.Y=3700.85mil|Absolute=True">Un-Routed Net Constraint: Net NetP1_13 Between Pad R1-1 (38.5,68mm) And Pad U3-1 (63.3,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=2650.85mil|Location1.Y=3653.48mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=2650.85mil|Location1.Y=3653.48mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetP1_12 Between Pad R2-1 (40.4,68mm) And Pad P1-12 (41.38,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=3592.583mil|Location1.Y=2359.189mil|Location2.Y=3700.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=3592.583mil|Location1.Y=2359.189mil|Location2.Y=3700.85mil|Absolute=True">Un-Routed Net Constraint: Net NetP1_12 Between Pad R2-1 (40.4,68mm) And Pad U3-44 (65,34.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3157.417mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3157.417mil|Location2.X=3475.457mil|Location1.Y=2407.417mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetP1_1 Between Pad P1-1 (55.35,70mm) And Pad U3-2 (62.5,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3826.709mil|Location2.X=3988.252mil|Location1.Y=1952.693mil|Location2.Y=2000.063mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3826.709mil|Location2.X=3988.252mil|Location1.Y=1952.693mil|Location2.Y=2000.063mil|Absolute=True">Un-Routed Net Constraint: Net NetC21_2 Between Pad R7-1 (72.4,24.8mm) And Pad R6-1 (75.3,24.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3818.835mil|Location2.X=3874.079mil|Location1.Y=1783.402mil|Location2.Y=2000.063mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3818.835mil|Location2.X=3874.079mil|Location1.Y=1783.402mil|Location2.Y=2000.063mil|Absolute=True">Un-Routed Net Constraint: Net NetC21_2 Between Pad C21-2 (72.2,20.5mm) And Pad R7-1 (72.4,24.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3530.843mil|Location2.X=3763.252mil|Location1.Y=2704.662mil|Location2.Y=3056.559mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3530.843mil|Location2.X=3763.252mil|Location1.Y=2704.662mil|Location2.Y=3056.559mil|Absolute=True">Un-Routed Net Constraint: Net NetC20_1 Between Pad U4-4 (67.235,49.385mm) And Pad C20-1 (67.3,43.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3469.032mil|Location2.X=3673.291mil|Location1.Y=2569.819mil|Location2.Y=2752.032mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3469.032mil|Location2.X=3673.291mil|Location1.Y=2569.819mil|Location2.Y=2752.032mil|Absolute=True">Un-Routed Net Constraint: Net NetC20_1 Between Pad S1-1 (63.74,40.9mm) And Pad C20-1 (67.3,43.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2700.724mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2846.52mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2700.724mil|Location2.X=3317.976mil|Location1.Y=2407.417mil|Location2.Y=2846.52mil|Absolute=True">Un-Routed Net Constraint: Net NetC9_1 Between Pad C9-1 (43.8,46.3mm) And Pad U3-7 (58.5,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.961mil|Location2.X=2900.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.961mil|Location2.X=2900.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC6_2 Between Pad C6-2 (46.6,67.7mm) And Pad P1-7 (47.73,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.016mil|Location2.X=2950.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.016mil|Location2.X=2950.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC5_2 Between Pad C5-2 (48.1,67.7mm) And Pad P1-6 (49,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929.071mil|Location2.X=3000.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929.071mil|Location2.X=3000.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC4_2 Between Pad C4-2 (49.6,67.7mm) And Pad P1-5 (50.27,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2988.126mil|Location2.X=3050.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2988.126mil|Location2.X=3050.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC3_2 Between Pad C3-2 (51.1,67.7mm) And Pad P1-4 (51.54,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3047.181mil|Location2.X=3100.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3047.181mil|Location2.X=3100.85mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC2_2 Between Pad C2-2 (52.6,67.7mm) And Pad P1-3 (52.81,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3161.48mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3107.417mil|Location2.X=3161.48mil|Location1.Y=3641.669mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net NetC1_2 Between Pad P1-2 (54.08,70mm) And Pad C1-2 (54.3,67.7mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4015.685mil|Location2.X=4267.779mil|Location1.Y=1944.819mil|Location2.Y=2023.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4015.685mil|Location2.X=4267.779mil|Location1.Y=1944.819mil|Location2.Y=2023.685mil|Absolute=True">Un-Routed Net Constraint: Net MCLR Between Pad R6-2 (77.2,24.8mm) And Pad P3-RST (82,25mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=4063.055mil|Location1.Y=1952.693mil|Location2.Y=2199.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=4063.055mil|Location1.Y=1952.693mil|Location2.Y=2199.866mil|Absolute=True">Un-Routed Net Constraint: Net MCLR Between Pad U3-18 (53.6,30.1mm) And Pad R6-2 (77.2,24.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929.071mil|Location2.X=3035.496mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2929.071mil|Location2.X=3035.496mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C4-1 (49.6,65.8mm) And Pad C3-1 (51.1,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.016mil|Location2.X=2976.441mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2870.016mil|Location2.X=2976.441mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C5-1 (48.1,65.8mm) And Pad C4-1 (49.6,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2988.126mil|Location2.X=3094.551mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2988.126mil|Location2.X=3094.551mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C3-1 (51.1,65.8mm) And Pad C2-1 (52.6,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.961mil|Location2.X=2917.386mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2810.961mil|Location2.X=2917.386mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C6-1 (46.6,65.8mm) And Pad C5-1 (48.1,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3047.181mil|Location2.X=3161.48mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3047.181mil|Location2.X=3161.48mil|Location1.Y=3566.866mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-1 (52.6,65.8mm) And Pad C1-1 (54.3,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2800.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad P1-11 (42.65,70mm) And Pad P1-9 (45.19,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2858.331mil|Location1.Y=3558.992mil|Location2.Y=3614.236mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2858.331mil|Location1.Y=3558.992mil|Location2.Y=3614.236mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C7-1 (43.6,65.6mm) And Pad C6-1 (46.6,65.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3330.646mil|Location2.X=3380.968mil|Location1.Y=1814.898mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3330.646mil|Location2.X=3380.968mil|Location1.Y=1814.898mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C19-2 (59.8,21.3mm) And Pad U3-29 (60.1,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3759.905mil|Location1.Y=2200.724mil|Location2.Y=2248.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3759.905mil|Location1.Y=2200.724mil|Location2.Y=2248.094mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U3-39 (65,30.9mm) And Pad C17-1 (69.5,31.1mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3614.11mil|Location2.X=3866.205mil|Location1.Y=1708.599mil|Location2.Y=1842.583mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3614.11mil|Location2.X=3866.205mil|Location1.Y=1708.599mil|Location2.Y=1842.583mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C11-1 (67,20.8mm) And Pad C21-1 (72.2,18.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=2410.173mil|Location2.Y=2785.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=2410.173mil|Location2.Y=2785.102mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-20 (5.23,36.77mm) And Pad U7-14 (5.23,44.39mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2314.898mil|Location2.X=2606.362mil|Location1.Y=2078.677mil|Location2.Y=2212.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2314.898mil|Location2.X=2606.362mil|Location1.Y=2078.677mil|Location2.Y=2212.661mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C18-2 (34,30.2mm) And Pad C8-1 (40.2,28mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=2710.173mil|Location2.Y=3185.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=2710.173mil|Location2.Y=3185.102mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-14 (5.23,44.39mm) And Pad U7-6 (5.23,54.55mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=1410.173mil|Location2.Y=1785.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=1410.173mil|Location2.Y=1785.102mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-34 (5.23,18.99mm) And Pad U7-39 (7.77,11.37mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=2110.173mil|Location2.Y=2485.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=2110.173mil|Location2.Y=2485.102mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-20 (5.23,36.77mm) And Pad U7-25 (7.77,29.15mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3820.803mil|Location2.X=4015.811mil|Location1.Y=2799.15mil|Location2.Y=3200.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3820.803mil|Location2.X=4015.811mil|Location1.Y=2799.15mil|Location2.Y=3200.85mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U4-1 (73.9,47.1mm) And Pad C14-2 (76,55.3mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3378.016mil|Location1.Y=1720.409mil|Location2.Y=1862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3015.685mil|Location2.X=3378.016mil|Location1.Y=1720.409mil|Location2.Y=1862.268mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C10-1 (51.8,18.9mm) And Pad C19-2 (59.8,21.3mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2558.992mil|Location2.X=2641.401mil|Location1.Y=1690.409mil|Location2.Y=2126.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2558.992mil|Location2.X=2641.401mil|Location1.Y=1690.409mil|Location2.Y=2126.047mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C8-1 (40.2,28mm) And Pad U2-4 (41.21,18.528mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.472mil|Location1.Y=2233.205mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.472mil|Location1.Y=2233.205mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U3-16 (53.6,31.7mm) And Pad U3-6 (59.3,36.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4346.394mil|Location2.X=4472.504mil|Location1.Y=2992.063mil|Location2.Y=3596.52mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4346.394mil|Location2.X=4472.504mil|Location1.Y=2992.063mil|Location2.Y=3596.52mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad P2-2 (86.54,65mm) And Pad U6-2 (86.6,52.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=4267.779mil|Location1.Y=2144.819mil|Location2.Y=2248.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3712.535mil|Location2.X=4267.779mil|Location1.Y=2144.819mil|Location2.Y=2248.094mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C17-1 (69.5,31.1mm) And Pad P3-GND (82,30.08mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3818.835mil|Location2.X=4388.449mil|Location1.Y=1630.646mil|Location2.Y=1755.968mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3818.835mil|Location2.X=4388.449mil|Location1.Y=1630.646mil|Location2.Y=1755.968mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C21-1 (72.2,18.6mm) And Pad P4-2 (85.315,16.77mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2748.094mil|Location1.Y=2873.953mil|Location2.Y=3606.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2748.094mil|Location1.Y=2873.953mil|Location2.Y=3606.362mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C7-1 (43.6,65.6mm) And Pad C9-2 (43.8,48.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2740.22mil|Location1.Y=3558.992mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2657.417mil|Location2.X=2740.22mil|Location1.Y=3558.992mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad P1-11 (42.65,70mm) And Pad C7-1 (43.6,65.6mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3330.646mil|Location2.X=3661.48mil|Location1.Y=1795.213mil|Location2.Y=1862.268mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3330.646mil|Location2.X=3661.48mil|Location1.Y=1795.213mil|Location2.Y=1862.268mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C19-2 (59.8,21.3mm) And Pad C11-1 (67,20.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3592.583mil|Location1.Y=1958.598mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3351.315mil|Location2.X=3592.583mil|Location1.Y=1958.598mil|Location2.Y=2231.362mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U3-29 (60.1,25.2mm) And Pad U3-39 (65,30.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2603.48mil|Location2.X=3063.055mil|Location1.Y=1690.409mil|Location2.Y=1768.488mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2603.48mil|Location2.X=3063.055mil|Location1.Y=1690.409mil|Location2.Y=1768.488mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U2-4 (41.21,18.528mm) And Pad C10-1 (51.8,18.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2474.472mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3592.583mil|Location1.Y=2201.709mil|Location2.Y=2474.472mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U3-6 (59.3,36.6mm) And Pad U3-39 (65,30.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=1710.173mil|Location2.Y=2185.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1343.37mil|Location1.Y=1710.173mil|Location2.Y=2185.102mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-34 (5.23,18.99mm) And Pad U7-25 (7.77,29.15mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3700.724mil|Location2.X=3759.905mil|Location1.Y=2200.724mil|Location2.Y=2752.032mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3700.724mil|Location2.X=3759.905mil|Location1.Y=2200.724mil|Location2.Y=2752.032mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C20-2 (69.2,43.9mm) And Pad C17-1 (69.5,31.1mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3968.441mil|Location2.X=4472.504mil|Location1.Y=2992.063mil|Location2.Y=3200.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3968.441mil|Location2.X=4472.504mil|Location1.Y=2992.063mil|Location2.Y=3200.85mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C14-2 (76,55.3mm) And Pad U6-2 (86.6,52.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2558.992mil|Location2.X=2748.094mil|Location1.Y=2078.677mil|Location2.Y=2921.323mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2558.992mil|Location2.X=2748.094mil|Location1.Y=2078.677mil|Location2.Y=2921.323mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C8-1 (40.2,28mm) And Pad C9-2 (43.8,48.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1268.441mil|Location2.X=2362.268mil|Location1.Y=2110.173mil|Location2.Y=2212.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1268.441mil|Location2.X=2362.268mil|Location1.Y=2110.173mil|Location2.Y=2212.661mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad U7-25 (7.77,29.15mm) And Pad C18-2 (34,30.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=3210.173mil|Location2.Y=3385.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=1243.37mil|Location1.Y=3210.173mil|Location2.Y=3385.102mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad U7-4 (5.23,57.09mm) And Pad U7-2 (5.23,59.63mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3820.803mil|Location2.X=4271.717mil|Location1.Y=2913.323mil|Location2.Y=3089.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3820.803mil|Location2.X=4271.717mil|Location1.Y=2913.323mil|Location2.Y=3089.433mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad U4-3 (73.9,51.67mm) And Pad U6-1 (81.5,50.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3941.008mil|Location1.Y=3153.48mil|Location2.Y=3285.102mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1168.441mil|Location2.X=3941.008mil|Location1.Y=3153.48mil|Location2.Y=3285.102mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad U7-4 (5.23,57.09mm) And Pad C14-1 (74.1,55.3mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2553.48mil|Location2.X=2641.401mil|Location1.Y=1897.181mil|Location2.Y=1975.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2553.48mil|Location2.X=2641.401mil|Location1.Y=1897.181mil|Location2.Y=1975.26mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U2-7 (39.94,23.78mm) And Pad U2-8 (41.21,23.78mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=2614.236mil|Location1.Y=3578.677mil|Location2.Y=3626.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2492.063mil|Location2.X=2614.236mil|Location1.Y=3578.677mil|Location2.Y=3626.047mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad R1-2 (38.5,66.1mm) And Pad R2-2 (40.4,66.1mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3378.016mil|Location1.Y=1889.701mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3378.016mil|Location1.Y=1889.701mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U3-28 (59.3,25.2mm) And Pad C19-1 (59.8,23.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2707.417mil|Location2.X=2850.85mil|Location1.Y=3734.189mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad P1-10 (43.92,70mm) And Pad P1-8 (46.46,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2750.85mil|Location1.Y=3633.795mil|Location2.Y=3777.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2692.85mil|Location2.X=2750.85mil|Location1.Y=3633.795mil|Location2.Y=3777.622mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad C7-2 (43.6,67.5mm) And Pad P1-10 (43.92,70mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3685.102mil|Location1.Y=2200.724mil|Location2.Y=2262.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3525.528mil|Location2.X=3685.102mil|Location1.Y=2200.724mil|Location2.Y=2262.858mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U3-40 (65,31.7mm) And Pad C17-2 (67.6,31.1mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2603.48mil|Location2.X=2681.165mil|Location1.Y=1897.181mil|Location2.Y=2126.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2603.48mil|Location2.X=2681.165mil|Location1.Y=1897.181mil|Location2.Y=2126.047mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U2-8 (41.21,23.78mm) And Pad C8-2 (42.1,28mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2553.48mil|Location2.X=2591.401mil|Location1.Y=1690.409mil|Location2.Y=1975.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2553.48mil|Location2.X=2591.401mil|Location1.Y=1690.409mil|Location2.Y=1975.26mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U2-3 (39.94,18.528mm) And Pad U2-7 (39.94,23.78mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.701mil|Location2.X=2681.165mil|Location1.Y=2078.677mil|Location2.Y=2212.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.701mil|Location2.X=2681.165mil|Location1.Y=2078.677mil|Location2.Y=2212.661mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad C18-1 (35.9,30.2mm) And Pad C8-2 (42.1,28mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3637.732mil|Location2.X=3799.276mil|Location1.Y=1952.693mil|Location2.Y=2248.094mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3637.732mil|Location2.X=3799.276mil|Location1.Y=1952.693mil|Location2.Y=2248.094mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad C17-2 (67.6,31.1mm) And Pad R7-2 (70.5,24.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.472mil|Location1.Y=1958.598mil|Location2.Y=2231.362mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U3-17 (53.6,30.9mm) And Pad U3-28 (59.3,25.2mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.913mil|Location2.X=4288.449mil|Location1.Y=1630.646mil|Location2.Y=2123.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.913mil|Location2.X=4288.449mil|Location1.Y=1630.646mil|Location2.Y=2123.685mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad P3-VCC (82,27.54mm) And Pad P4-1 (82.775,16.77mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.866mil|Location1.Y=2201.709mil|Location2.Y=2650.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3076.709mil|Location2.X=3349.866mil|Location1.Y=2201.709mil|Location2.Y=2650.653mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U3-17 (53.6,30.9mm) And Pad S1-2 (58.66,40.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.913mil|Location2.X=4344.551mil|Location1.Y=2044.819mil|Location2.Y=3596.52mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.913mil|Location2.X=4344.551mil|Location1.Y=2044.819mil|Location2.Y=3596.52mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad P3-VCC (82,27.54mm) And Pad P2-1 (84,65mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4269.622mil|Location2.X=4441.008mil|Location1.Y=3521.591mil|Location2.Y=5480.378mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4269.622mil|Location2.X=4441.008mil|Location1.Y=3521.591mil|Location2.Y=5480.378mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad P2-1 (84,65mm) And Pad U1-1 (86.8,113mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=2740.22mil|Location1.Y=3578.677mil|Location2.Y=3681.165mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2566.866mil|Location2.X=2740.22mil|Location1.Y=3578.677mil|Location2.Y=3681.165mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad R2-2 (40.4,66.1mm) And Pad C7-2 (43.6,67.5mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3799.276mil|Location1.Y=1952.693mil|Location2.Y=2025.653mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3319.819mil|Location2.X=3799.276mil|Location1.Y=1952.693mil|Location2.Y=2025.653mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad U3-28 (59.3,25.2mm) And Pad R7-2 (70.5,24.8mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3751.906mil|Location2.X=4267.779mil|Location1.Y=1952.693mil|Location2.Y=2123.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3751.906mil|Location2.X=4267.779mil|Location1.Y=1952.693mil|Location2.Y=2123.685mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad R7-2 (70.5,24.8mm) And Pad P3-VCC (82,27.54mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2633.795mil|Location2.X=3143.764mil|Location1.Y=2078.677mil|Location2.Y=2231.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2633.795mil|Location2.X=3143.764mil|Location1.Y=2078.677mil|Location2.Y=2231.362mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad C8-2 (42.1,28mm) And Pad U3-17 (53.6,30.9mm)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.701mil|Location2.X=2539.433mil|Location1.Y=2165.291mil|Location2.Y=3626.047mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=Z:\Documents\cryp\altium\PCB3.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2389.701mil|Location2.X=2539.433mil|Location1.Y=2165.291mil|Location2.Y=3626.047mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad C18-1 (35.9,30.2mm) And Pad R1-2 (38.5,66.1mm)</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

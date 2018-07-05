@@ -1,0 +1,6 @@
+Added Component: Designator=P4(Conneteur UEXT)
+Added Pin To Net: NetName=3.3V Pin=P4-1
+Added Pin To Net: NetName=GND Pin=P4-2
+Added Pin To Net: NetName=NetP4_3 Pin=P4-3
+Added Pin To Net: NetName=NetP4_4 Pin=P4-4
+Added Member To Class: ClassName=RFID Member=Component P4 UEXT connector

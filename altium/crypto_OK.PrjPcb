@@ -28,7 +28,7 @@ PowerPortNamesTakePriority=0
 PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
-OutputPath=Project Outputs for crypto_OK
+OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
 
@@ -54,23 +54,6 @@ GenerateClassCluster=0
 DocumentUniqueId=PXDUSXNF
 
 [Document2]
-DocumentPath=Schlib1.SchLib
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=HNDULJEO
-
-[Document3]
 DocumentPath=FLASH.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -87,7 +70,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=LIURAPTR
 
-[Document4]
+[Document3]
 DocumentPath=LCD.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -104,7 +87,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=ROWWQWIV
 
-[Document5]
+[Document4]
 DocumentPath=PICV2.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -121,7 +104,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=LYFUUKTH
 
-[Document6]
+[Document5]
 DocumentPath=RFID.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -138,7 +121,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XAMPBSWH
 
-[Document7]
+[Document6]
 DocumentPath=CLAVIER.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -155,7 +138,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=BJYPBVBR
 
-[Document8]
+[Document7]
 DocumentPath=RASPBERRY_PI.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -172,7 +155,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=UVEFWCNJ
 
-[Document9]
+[Document8]
 DocumentPath=Job1.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -189,24 +172,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document10]
-DocumentPath=BOM.BomDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=
-
-[Document11]
+[Document9]
 DocumentPath=PcbLib1.PcbLib
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -223,7 +189,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=EAPKNPRT
 
-[Document12]
+[Document10]
 DocumentPath=Overview.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -240,7 +206,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XBCVCUTQ
 
-[Document13]
+[Document11]
 DocumentPath=PCB1.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -257,7 +223,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=FWYCFXAY
 
-[Document14]
+[Document12]
 DocumentPath=PCB2.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -274,7 +240,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=DWCUAOAX
 
-[Document15]
+[Document13]
 DocumentPath=CAMtastic1.Cam
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -291,7 +257,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document16]
+[Document14]
 DocumentPath=PCB3.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -306,7 +272,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=JFOBTHNK
+DocumentUniqueId=OKUFOBOK
 
 [GeneratedDocument1]
 DocumentPath=Project Outputs for crypto_OK\BOM\Bill of Materials-crypto_OK.xls
@@ -321,114 +287,30 @@ DocumentPath=Project Outputs for crypto_OK\Design Rule Check - PCB2.html
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.DRR
+DocumentPath=Project Outputs for crypto_OK\Design Rule Check - PCB3.html
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.LDP
-DItemRevisionGUID=
-
-[GeneratedDocument6]
-DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB1.TXT
-DItemRevisionGUID=
-
-[GeneratedDocument7]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2-BoardEdgeRout.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument8]
+[GeneratedDocument6]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.DRR
 DItemRevisionGUID=
 
-[GeneratedDocument9]
+[GeneratedDocument7]
 DocumentPath=Project Outputs for crypto_OK\AutoCAD PCB\PCB2.DWG
 DItemRevisionGUID=
 
-[GeneratedDocument10]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.EXTREP
-DItemRevisionGUID=
-
-[GeneratedDocument11]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument12]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBO
-DItemRevisionGUID=
-
-[GeneratedDocument13]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBP
-DItemRevisionGUID=
-
-[GeneratedDocument14]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GBS
-DItemRevisionGUID=
-
-[GeneratedDocument15]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GKO
-DItemRevisionGUID=
-
-[GeneratedDocument16]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument17]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM2
-DItemRevisionGUID=
-
-[GeneratedDocument18]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GM3
-DItemRevisionGUID=
-
-[GeneratedDocument19]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GPB
-DItemRevisionGUID=
-
-[GeneratedDocument20]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GPT
-DItemRevisionGUID=
-
-[GeneratedDocument21]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument22]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTO
-DItemRevisionGUID=
-
-[GeneratedDocument23]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTP
-DItemRevisionGUID=
-
-[GeneratedDocument24]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.GTS
-DItemRevisionGUID=
-
-[GeneratedDocument25]
+[GeneratedDocument8]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument26]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.REP
-DItemRevisionGUID=
-
-[GeneratedDocument27]
-DocumentPath=Project Outputs for crypto_OK\Gerber\PCB2.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument28]
+[GeneratedDocument9]
 DocumentPath=Project Outputs for crypto_OK\NC Drill\PCB2.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument29]
-DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB1.txt
-DItemRevisionGUID=
-
-[GeneratedDocument30]
-DocumentPath=Project Outputs for crypto_OK\Pick Place\Pick Place for PCB2.txt
-DItemRevisionGUID=
-
-[GeneratedDocument31]
+[GeneratedDocument10]
 DocumentPath=Schlib1.cmp
 DItemRevisionGUID=
 
@@ -443,7 +325,7 @@ GenerateBOM=1
 OutputJobsCount=0
 
 [Generic_EDE]
-OutputDir=Project Outputs for crypto_OK
+OutputDir=
 
 [OutputGroup1]
 Name=Netlist Outputs
