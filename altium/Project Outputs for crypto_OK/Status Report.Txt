@@ -1,30 +1,17 @@
 Project Outputs Generation Report
 ---------------------------------
-Start Output Generation At 8:58:15 AM On 7/5/2018
+Start Output Generation At 8:35:44 PM On 7/6/2018
 
-Output: Gerber Files
-Type  : Gerber
-From  : Variant [[No Variations]] of PCB Document [PCB2.PcbDoc]
-   Generated File[PCB2.GTL]
-   Generated File[PCB2.GBL]
-   Generated File[PCB2.GPB]
-   Generated File[PCB2.GPT]
-   Generated File[PCB2.GTO]
-   Generated File[PCB2.GTP]
-   Generated File[PCB2.GTS]
-   Generated File[PCB2.GBS]
-   Generated File[PCB2.GBP]
-   Generated File[PCB2.GBO]
-   Generated File[PCB2.GKO]
-   Generated File[PCB2.GM1]
-   Generated File[PCB2.GM2]
-   Generated File[PCB2.GM3]
-   Generated File[PCB2.RUL]
-   Generated File[PCB2.EXTREP]
-   Generated File[PCB2.REP]
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [PCB4.PcbDoc]
+   Generated File[PCB4.TXT]
+   Generated File[PCB4-BoardEdgeRout.TXT]
+   Generated File[PCB4.LDP]
+   Generated File[PCB4.DRR]
 
 
-Files Generated   : 17
+Files Generated   : 4
 Documents Printed : 0
 
-Finished Output Generation At 8:58:20 AM On 7/5/2018
+Finished Output Generation At 8:35:45 PM On 7/6/2018

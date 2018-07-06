@@ -1,0 +1,40 @@
+Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
+
+Y1         quartz            2714.567mil    240.157mil   2901.575mil    240.157mil   2901.575mil    240.157mil  T        180.00 Quartz 8MHz    
+U7         RASPB              177.165mil   1318.898mil      39.37mil      39.37mil    227.165mil   2268.898mil  T          0.00 Raspberry_pi_zero_w
+U6         Alim              3312.992mil   2027.559mil   3114.173mil   1901.575mil   3212.598mil   1988.189mil  T        270.00 alim           
+U5         keypad            1744.094mil    251.969mil   3023.622mil    153.543mil   2094.094mil    251.969mil  B        180.00 clavier        
+U4         regulateur         2764.37mil   1935.728mil   2854.331mil   2066.929mil   2854.331mil   2066.929mil  T        180.00 regulateur     
+U3         PIC32             2649.862mil    830.709mil   2874.016mil    988.189mil   2807.087mil   1055.118mil  T        270.00 PIC32_1        
+U2         flash             2134.055mil   1301.339mil   2059.055mil   1220.472mil   2059.055mil   1197.972mil  T          0.00 Flash          
+U1         LED_RGB            222.441mil   4528.346mil    251.969mil   4476.378mil    251.969mil   4476.378mil  B        180.00 ledRGB         
+S1         SPST-2            2665.354mil   1586.614mil   2665.354mil   1586.614mil   2765.354mil   1586.614mil  T        180.00 SW-SPST        
+R7         0603              3086.614mil    982.283mil   3086.614mil    944.882mil   3086.614mil    944.882mil  T         90.00 Res2           
+R6         0603              3218.504mil    885.827mil   3181.102mil    885.827mil   3181.102mil    885.827mil  T          0.00 Res2           
+R5         0603               114.173mil   4438.976mil    114.173mil   4476.378mil    114.173mil   4476.378mil  B        270.00 Res2           
+R4         0603                80.709mil   4582.677mil     118.11mil   4582.677mil     118.11mil   4582.677mil  B        180.00 Res2           
+R3         0603               360.236mil   4582.677mil    322.835mil   4582.677mil    322.835mil   4582.677mil  B        360.00 Res2           
+R2         0603              1602.362mil   2596.457mil   1602.362mil   2633.858mil   1602.362mil   2633.858mil  T        270.00 Res2           
+R1         0603              1527.559mil   2596.457mil   1527.559mil   2633.858mil   1527.559mil   2633.858mil  T        270.00 Res2           
+P4         Conneteur_UEXT    3316.732mil    393.307mil   3141.732mil     43.307mil   3266.732mil    593.307mil  T          0.00 UEXT connector 
+P3         ISCP              3255.905mil   1242.126mil   3255.905mil    992.126mil   3255.905mil   1492.126mil  T         90.00 ISCP           
+P2         lcd_bk            3318.898mil   2498.819mil   3318.898mil   2448.819mil   3318.898mil   2448.819mil  T         90.00 lcd backlight  
+P1         lcd               1879.134mil   2755.905mil   3223.622mil   2755.905mil   2179.134mil   2755.905mil  B        180.00 LCD            
+C21        0603              3218.504mil    818.898mil   3181.102mil    818.898mil   3181.102mil    818.898mil  T        360.00 Cap            
+C20        0603              2982.283mil   1744.094mil   2944.882mil   1744.094mil   2944.882mil   1744.094mil  T        360.00 Cap Pol1       
+C19        0603              3064.961mil    862.205mil   3027.559mil    862.205mil   3027.559mil    862.205mil  T        360.00 Cap            
+C18        0603              2612.205mil    456.693mil   2649.606mil    456.693mil   2649.606mil    456.693mil  T        180.00 Cap            
+C17        0603              2257.874mil    826.772mil   2220.472mil    826.772mil   2220.472mil    826.772mil  T        360.00 Cap            
+C14        0603              2797.244mil   2326.772mil   2759.843mil   2326.772mil   2759.843mil   2326.772mil  T        360.00 Cap Pol1       
+C11        0603              2816.929mil    389.764mil   2854.331mil    389.764mil   2854.331mil    389.764mil  T        180.00 Cap            
+C10        0603              2655.512mil    389.764mil    2618.11mil    389.764mil    2618.11mil    389.764mil  T        360.00 Cap            
+C9         0603               2618.11mil   1242.126mil    2618.11mil   1204.724mil    2618.11mil   1204.724mil  T         90.00 Cap            
+C8         0603              1944.882mil   1364.173mil   1944.882mil   1326.772mil   1944.882mil   1326.772mil  T         90.00 Cap            
+C7         0603              1728.347mil   2596.457mil   1728.347mil   2559.055mil   1728.347mil   2559.055mil  T         90.00 Cap            
+C6         0603               1881.89mil    2592.52mil    1881.89mil   2555.118mil    1881.89mil   2555.118mil  T         90.00 Cap            
+C5         0603              1940.945mil    2592.52mil   1940.945mil   2555.118mil   1940.945mil   2555.118mil  T         90.00 Cap            
+C4         0603                  2000mil    2592.52mil       2000mil   2555.118mil       2000mil   2555.118mil  T         90.00 Cap            
+C3         0603              2059.055mil    2592.52mil   2059.055mil   2555.118mil   2059.055mil   2555.118mil  T         90.00 Cap            
+C2         0603               2118.11mil    2592.52mil    2118.11mil   2555.118mil    2118.11mil   2555.118mil  T         90.00 Cap            
+C1         0603              2177.165mil    2592.52mil   2177.165mil   2555.118mil   2177.165mil   2555.118mil  T         90.00 Cap            
+
