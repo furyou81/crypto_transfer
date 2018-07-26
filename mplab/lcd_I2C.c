@@ -433,15 +433,12 @@ void choose_screen(Menu str)
         write_line(" ETH", 0, 0);
         write_line("          A to ACCEPT", 1, 0);
     }
-<<<<<<< HEAD
     else if (str == SHUT_DOWN)
     {
         write_line("   ", 1, 0);
         write_line(" You can remove", 1, 0);
         write_line("the power supply", 2, 0);
     }
-=======
->>>>>>> 5b598561895ae95a48bda9298a8d672590004899
 	else
     {
         write_line("  ERROR", 3, 0);
