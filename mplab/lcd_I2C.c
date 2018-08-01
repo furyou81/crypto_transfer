@@ -439,6 +439,25 @@ void choose_screen(Menu str)
         write_line(" You can remove", 1, 0);
         write_line("the power supply", 2, 0);
     }
+	else if (str == WIFI)
+	{
+		write_line("   ", 1, 0);
+        write_line("go to CRYPTO:", 1, 0);
+		write_line("pasword: raspberry  ", 0, 0);
+        write_line("host: 192.168.220.1 ", 0, 0);
+	}
+	else if (str == CO_SUCCESS)
+	{
+		write_line("   ", 1, 0);
+        write_line("Connection SUCCESS", 2, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (str == CO_FAILED)
+	{
+		write_line("   ", 1, 0);
+        write_line("Connection FAILED", 2, 0);
+		write_line("    A to continue", 1, 0);
+	}
 	else
     {
         write_line("  ERROR", 3, 0);

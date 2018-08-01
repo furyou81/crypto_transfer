@@ -222,8 +222,19 @@ u8    check_line1()
         }
         else if (screen == SETTINGS)
         {
-            //screen = WIFI;
+            screen = WIFI;
+			send_string("hotspot");
             change_screen(screen);
+			init_interrupt_ras();
+			ras = 0;
+			while (ras == 0);
+			ras = 0;
+			ft_strcpy(reponse, rep);
+			if (rep[0] != 'E')
+				screen = CO_SUCCESS;
+			else
+				screen = CO_FAILED;
+			change_screen(screen);
         }
         return('2');
     }
@@ -444,6 +455,11 @@ u8    check_line1()
 			init_amount();
 			init_aff_amount();
             send_string("reset");
+			screen = MAIN;
+			change_screen(screen);
+		}
+		else if (screen == CO_SUCCESS || screen == CO_FAILED)
+		{
 			screen = MAIN;
 			change_screen(screen);
 		}

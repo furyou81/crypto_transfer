@@ -16,7 +16,7 @@ void    init_uart()
     U2MODEbits.RTSMD = 0;               // U1RTS pin is in Flow Control mode
     U2MODEbits.UEN = 0b00;              // U1TX, U1RX are enabled
     U2MODEbits.WAKE = 1;                // Wake-up enabled
-    U2MODEbits.LPBACK = 0;              // Loopback mode is disabled
+    U2MODEbits.LPBACK = 0;              // Loopback morde is disabled
     U2MODEbits.RXINV = 0;               // U1RX IDLE state is '1'
     U2MODEbits.PDSEL = 0b00;            // 8-bit data, no parity
     U2MODEbits.STSEL = 0;               // 1 stop bit
