@@ -82,7 +82,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
     PORTBbits.RB1;
     PORTBbits.RB0;
     PORTBbits.RB4;
-	IFS0bits.INT1IF = 0;
+	IFS1bits.CNBIF = 0;
 //    IFS1bits.CNIF = 0; // Be sure to clear the CN interrupt status
 
     // flag before exiting the service routine.
@@ -116,11 +116,18 @@ void init_row() //ok
 
 void init_interrupt_keypad() //ok
 {
+
+
     PORTBbits.RB2; //read port
     PORTBbits.RB1;
     PORTBbits.RB0;
     PORTBbits.RB4;
 
+	ANSELCbits.ANSC0 = 0;
+	ANSELCbits.ANSC1 = 0;
+	ANSELCbits.ANSC2 = 0;
+	ANSELBbits.ANSB3 = 0;
+	
     //AD1PCFGbits.PCFG0 = 1; // pin analogue, set as a 'digital pin'
     //AD1PCFGbits.PCFG1 = 1;
     //AD1PCFGbits.PCFG2 = 1;
@@ -133,14 +140,14 @@ void init_interrupt_keypad() //ok
     CNENBbits.CNIEB0 = 1;
     CNENBbits.CNIEB4 = 1;
 
-	IPC1bits.INT1IP = 3;
-	IPC1bits.INT1IS = 2;
+	IPC8bits.CNIP = 3;
+	IPC8bits.CNIS = 2;
 
     //IPC6bits.CNIP = 3;
     //IPC6bits.CNIS = 2;
     
-	IFS0bits.INT1IF = 0;
-	IEC0bits.INT1IE = 1;
+	IFS1bits.CNBIF = 0;
+	IEC1bits.CNBIE = 1;
 	//IFS1bits.CNIF = 0;
     //IEC1bits.CNIE = 1;
     INTCONbits.MVEC = 1; // interrupt multivector enabled

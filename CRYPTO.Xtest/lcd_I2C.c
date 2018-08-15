@@ -44,7 +44,7 @@ void init_i2c()
     while (TMR2 < 500);
 
     start_i2c();
-    write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+    //write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
     write_i2c(0x3a);
     //write_i2c(0x1e);
     write_i2c(0x39);
@@ -63,30 +63,33 @@ void init_i2c()
 	stop_i2c();
 
 
-	TMR2 = 0;
-	while(TMR2 < 500);
+	//TMR2 = 0;
+	//while(TMR2 < 500);
 
 
-	start_i2c();
+	//start_i2c();
 
-	write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+	/*write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
 	write_i2c(0xfa);
-    stop_i2c();
+    stop_i2c();*/
 
-	TMR2 = 0;
-	while(TMR2 < 500);
+	//TMR2 = 0;
+	//while(TMR2 < 500);
 
-	start_i2c();
-	write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
-	write_i2c('H');
+	//start_i2c();
+	//write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+	/*write_i2c('H');
 	write_i2c('A');
 	write_i2c('M');
 	write_i2c('A');
 	write_i2c('U');
 	write_i2c('p');
-	write_i2c('Y');
-	stop_i2c();
-	while(1);
+	write_i2c('Y');*/
+	//write_line("few seconds . . .", 2, 0);
+	//choose_screen(screen);
+	//stop_i2c();
+	//while(1);
+
 }
 
 
@@ -102,11 +105,14 @@ void start_i2c()
     }
 	  TMR2 = 0;
    while (TMR2 < 200);
+   write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
 }
 
 void stop_i2c()
 {
     I2C1CONbits.PEN = 1;
+	TMR2 = 0;
+	while(TMR2 < 350);
 }
 
 void write_i2c(u8 c)
@@ -293,7 +299,7 @@ void choose_screen(Menu str)
     }
     else if (str == BOOT)
     {
-        write_line("   ", 1, 0); // string + nombre de lignes a sauter
+        write_line(" j ", 1, 0); // string + nombre de lignes a sauter
         write_line(" Please wait a", 1, 0);
         if (point == 0)
             write_line("few seconds . ", 2, 0);
@@ -513,7 +519,7 @@ void change_screen(Menu str)
     bug = 0;
     init_i2c();
     start_i2c();
-    write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
+    //write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
 //    write_i2c(0x02);
  //   write_i2c(0x40);
     //write_i2c(0x01);
@@ -543,17 +549,20 @@ void lcd(void) {
 
 
     /*Initialize I2C Peripheral*/
-    //SYSTEMConfigPerformance(8000000);
+
     init_i2c();
 
     init_keyboard();
-    start_i2c();
-        write_i2c((CONST << 2 ) | (SA0 << 1) | WR);
-       // write_i2c(0x81);
-       write_i2c(0xfa); // dire qu'on veut ecrire dans la DDRAM
-        //write_i2c(0x13);
-       init_pin();
-       init_amount();
-       choose_screen(screen);
-       stop_i2c();
+
+	init_pin();
+	init_amount();
+
+	start_i2c();
+	write_i2c(0xfa);
+	stop_i2c();
+
+	start_i2c();
+	choose_screen(screen);
+    stop_i2c();
+	//   while(1);
 }
