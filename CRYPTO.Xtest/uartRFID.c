@@ -237,6 +237,7 @@ void send_transaction_amount(u32 amount) {
 }
 
 void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {
+
     read_rfid();
     if (screen == MAKE_TRADE2)
     {

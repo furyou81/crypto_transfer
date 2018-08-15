@@ -49,7 +49,7 @@ int main(void)
 	flash();
     screen = BOOT;
     change_screen(screen);
-    ras = 1; // A REMETTRE A 0
+    ras = 0; // A REMETTRE A 0
     init_uart();
     init_uart_rfid();
     point = 0;
@@ -74,7 +74,8 @@ int main(void)
     send_string("reset");
 	//init_uart_rfid();
 	//send_string_rfid("hola");
-    while (1);
+		
+	while (1);
     return (EXIT_SUCCESS);
 
 //	TRISBbits.TRISB15 = 0;

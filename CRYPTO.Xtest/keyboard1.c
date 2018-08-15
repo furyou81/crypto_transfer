@@ -33,7 +33,7 @@ void check_input(u8 letter)
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
 {
-    u8  res = 'E'; // code erreur
+	    u8  res = 'E'; // code erreur
     if (PORTBbits.RB2 == BUT_UP)
     {
           test = 0;
@@ -123,10 +123,15 @@ void init_interrupt_keypad() //ok
     PORTBbits.RB0;
     PORTBbits.RB4;
 
-	ANSELCbits.ANSC0 = 0;
-	ANSELCbits.ANSC1 = 0;
-	ANSELCbits.ANSC2 = 0;
-	ANSELBbits.ANSB3 = 0;
+	//ANSELCbits.ANSC0 = 0;
+	//ANSELCbits.ANSC1 = 0;
+	//ANSELCbits.ANSC2 = 0;
+	//ANSELBbits.ANSB3 = 0;
+
+	ANSELBbits.ANSB2 = 0;
+	ANSELBbits.ANSB1 = 0;
+	ANSELBbits.ANSB0 = 0;
+//NSELBbits.ANSB4 = 0;
 	
     //AD1PCFGbits.PCFG0 = 1; // pin analogue, set as a 'digital pin'
     //AD1PCFGbits.PCFG1 = 1;
@@ -134,11 +139,13 @@ void init_interrupt_keypad() //ok
     //AD1PCFGbits.PCFG3 = 1;
 
      __builtin_disable_interrupts(); //pas d'interruptions possible
-    CNCONBbits.ON = 1;
+    //CNCONBbits.ON = 1;
     CNENBbits.CNIEB2 = 1; // enable CN on RB0
     CNENBbits.CNIEB1 = 1;
     CNENBbits.CNIEB0 = 1;
     CNENBbits.CNIEB4 = 1;
+
+	CNCONBbits.ON = 1;
 
 	IPC8bits.CNIP = 3;
 	IPC8bits.CNIS = 2;

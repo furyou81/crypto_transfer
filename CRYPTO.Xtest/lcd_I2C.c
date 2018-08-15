@@ -62,6 +62,9 @@ void init_i2c()
     write_i2c(0x01);
 	stop_i2c();
 
+	start_i2c();
+	write_i2c(0xfa);
+	stop_i2c();
 
 	//TMR2 = 0;
 	//while(TMR2 < 500);
@@ -157,7 +160,7 @@ void write_words(char str[], u8 new_line, u8 rank)
     {
         if (i == 1 && bug == 0)
         {
-            //write_i2c('e');
+            write_i2c('e');
             aff = 1;
         }
         write_i2c(str[i]);
@@ -299,7 +302,7 @@ void choose_screen(Menu str)
     }
     else if (str == BOOT)
     {
-        write_line(" j ", 1, 0); // string + nombre de lignes a sauter
+        write_line("   ", 1, 0); // string + nombre de lignes a sauter
         write_line(" Please wait a", 1, 0);
         if (point == 0)
             write_line("few seconds . ", 2, 0);
@@ -557,9 +560,9 @@ void lcd(void) {
 	init_pin();
 	init_amount();
 
-	start_i2c();
+	/*start_i2c();
 	write_i2c(0xfa);
-	stop_i2c();
+	stop_i2c();*/
 
 	start_i2c();
 	choose_screen(screen);
