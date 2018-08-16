@@ -388,10 +388,10 @@ void choose_screen(Menu str)
 	}
 	else if (str == ACCOUNT)
 	{
-		write_line("  ", 1, 0);
-		write_line("CUSTOMER", 1, 1);
+		write_line("1.CUSTOMER", 1, 0);
         write_line("SELLER", 1, 2);
 		write_line("REFUND", 1, 3);
+		write_line("BALANCE", 1, 4);
 	}
 	else if (str == CLIENT)
 	{
@@ -506,6 +506,33 @@ void choose_screen(Menu str)
 	{
 		write_line("   ", 1, 0);
         write_line("Connection FAILED", 2, 0);
+		write_line("    A to continue", 1, 0);
+	}
+	else if (screen == BALANCE_CHOICE)
+	{
+		write_line("   ", 1, 0);
+        write_line(" 1.CUSTOMER", 1, 0);
+		write_line("2.SELLER", 2, 0);
+	}
+	else if (str == BALANCE)
+	{
+		write_line("   ", 1, 0);
+        write_line("  PIN:   ", 0, 0);
+        write_pin();
+        write_line("      ", 0, 0);
+        write_line("", 1, 0);
+        write_line("        A to ACCEPT", 1, 0);
+	}
+	else if (str == BALANCE2)
+	{
+		write_line(" BALANCE:", 2, 0);
+        write_line("LOOKING FOR CARD...", 2, 0);
+	}
+	else if (str == BALANCE3)
+	{
+		write_line("   ", 1, 0);
+        write_line("Balance:", 1, 0);
+		write_line(rep, 1, 0);
 		write_line("    A to continue", 1, 0);
 	}
 	else

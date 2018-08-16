@@ -90,14 +90,14 @@ void read_rfid()
 
    while ((c = read_char_rfid()))
    {
-	   if (c == '>')
+	   /*if (c == '>')
 		   chevron++;
 	   if (screen == MAKE_TRADE2 && c == '>')
 		   break ;
 	   if (screen == CLIENT2 && chevron <= 1)
 		   continue ;
 	    if (screen == CLIENT2 && chevron >= 3)
-			break ;
+			break ;*/
        buf[i] = c;
 	   if (i > 4 && buf[i] == ':' && buf[i - 1] == 'R' && buf[i - 2] == 'R' && buf[i - 3] == 'E' && screen == CLIENT2)
 	   {
@@ -133,7 +133,6 @@ void	read_ras(char *buf)
 		buf[i] = c;
 		i++;
 	}
-	send_string("yooooo");
     buf[i] = '\0';
 }
 
