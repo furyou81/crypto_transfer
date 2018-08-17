@@ -6,6 +6,8 @@ extern u8 rep[];
 u8 done = 0;
 u8 ras = 0;
 u8 key = 0;
+extern u8 pwd[5];
+extern u8 pin[5];
 //RF2 => U1RX
 //RF3 => U1TX
 
@@ -146,6 +148,43 @@ void	ft_strcpy(u8 *dst, u8 *src)
 		i++;
 	}
 	dst[i] = '\0';
+}
+
+void	send_old_pin()
+{
+	send_string_rfid("kA,");
+	send_string_rfid(pwd);
+	send_string_rfid("FFFFFFFF");
+	send_char_rfid(13);
+	TMR2 = 0;
+	while (TMR2 < 10000);
+}
+
+void	send_new_pin()
+{
+	u8 *cmd1 = "ew3,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	u8 i = 0;
+	done = 0;
+	while (cmd1[i])
+	{
+		send_char_rfid(cmd1[i]);
+		i++;
+	}
+	send_char_rfid(13);
+	init_interrupt_rfid();
+	while (done == 0);
+	done = 0;
+	i = 0;
+	u8 *cmd2 = "ew7,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	while (cmd2[i])
+	{
+		send_char_rfid(cmd2[i]);
+		i++;
+	}
+	send_char_rfid(13);
+	init_interrupt_rfid();
+	while (done == 0);
+	done = 0;
 }
 
 void	send_private_key(char *buf)

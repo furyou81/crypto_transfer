@@ -6,6 +6,7 @@
 int test;
 u8 pin[5];
 u8 compteur = 0;
+extern u8 pwd[5];
 
 void init_pin()
 {
