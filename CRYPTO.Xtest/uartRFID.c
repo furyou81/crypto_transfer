@@ -152,17 +152,41 @@ void	ft_strcpy(u8 *dst, u8 *src)
 
 void	send_old_pin()
 {
-	send_string_rfid("kA,");
-	send_string_rfid(pwd);
-	send_string_rfid("FFFFFFFF");
+	char string[] = "kA,FFFFFFFFFFFF";
+	u8 i = 0;
+	send_char_rfid('k');
+	TMR2 = 0;
+	while (TMR2 < 30000);
+	send_char_rfid('A');
+	TMR2 = 0;
+	while (TMR2 < 30000);
 	send_char_rfid(13);
 	TMR2 = 0;
-	while (TMR2 < 10000);
+	while (TMR2 < 30000);
+	string[3] = pin[0];
+	string[4] = pin[1];
+	string[5] = pin[2];
+	string[6] = pin[3];
+	send_string(string);
+	while (string[i])
+	{
+		send_char_rfid(string[i]);
+		TMR2 = 0;
+		while (TMR2 < 30000);
+		i++;
+	}
+	send_char_rfid(13);
+	TMR2 = 0;
+	while (TMR2 < 30000);
 }
 
 void	send_new_pin()
 {
-	u8 *cmd1 = "ew3,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	u8 cmd1[] = "ew3,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	cmd1[4] = pin[0];
+	cmd1[5] = pin[1];
+	cmd1[6] = pin[2];
+	cmd1[7] = pin[3];
 	u8 i = 0;
 	done = 0;
 	while (cmd1[i])
@@ -171,17 +195,26 @@ void	send_new_pin()
 		i++;
 	}
 	send_char_rfid(13);
+	TMR2 = 0;
+	while (TMR2 < 10000);
 	init_interrupt_rfid();
 	while (done == 0);
 	done = 0;
+	/*if (screen == ERROR)
+		return ;*/
 	i = 0;
-	u8 *cmd2 = "ew7,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	u8 cmd2[] = "ew7,FFFFFFFFFFFFFF0780FFFFFFFFFFFF";
+	cmd2[4] = pin[0];
+	cmd2[5] = pin[1];
+	cmd2[6] = pin[2];
+	cmd2[7] = pin[3];
 	while (cmd2[i])
 	{
 		send_char_rfid(cmd2[i]);
 		i++;
 	}
 	send_char_rfid(13);
+	while (TMR2 < 10000);
 	init_interrupt_rfid();
 	while (done == 0);
 	done = 0;

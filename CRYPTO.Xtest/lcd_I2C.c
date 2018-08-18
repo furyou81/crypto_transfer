@@ -396,13 +396,13 @@ void choose_screen(Menu str)
 	else if (str == CLIENT)
 	{
 		write_line("   ", 1, 0);
-        write_line("NEW PIN: ", 0, 0);
+        write_line(" PIN:    ", 0, 0);
         write_pin();
         write_line("      ", 0, 0);
         write_line("", 1, 0);
         write_line("        A to ACCEPT", 1, 0);
 	}
-	else if (str == OLD_PIN)
+	/*else if (str == OLD_PIN)
 	{
 		write_line("   ", 1, 0);
         write_line("OLD PIN: ", 0, 0);
@@ -410,7 +410,7 @@ void choose_screen(Menu str)
         write_line("      ", 0, 0);
         write_line("", 1, 0);
         write_line("        A to ACCEPT", 1, 0);
-	}
+	}*/
 	else if (screen == CLIENT2)
 	{
 		write_line("   ", 1, 0);

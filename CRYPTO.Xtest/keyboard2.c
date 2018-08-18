@@ -154,7 +154,7 @@ u8    check_line1()
 		}
 		else if (screen == ACCOUNT)
 		{
-			screen = CLIENT_PIN;
+			screen = CLIENT;
 			change_screen(screen);
 		}
         else if (screen == SELLER)
@@ -419,7 +419,8 @@ u8    check_line1()
 				screen = BALANCE2;
 				change_screen(screen);
 				init_uart_rfid();
-				cmd_rfid("er1,5");
+				send_old_pin();
+				cmd_rfid("er4,5");
 				init_interrupt_rfid();
 				init_interrupt_ras();
 				ras = 0;
@@ -444,7 +445,6 @@ u8    check_line1()
 				init_uart_rfid();
 				send_old_pin();
 				init_pwd();
-				send_new_pin();
 				init_interrupt_ras();
 				send_string("create_customer_account");
 				send_string("private_key");
