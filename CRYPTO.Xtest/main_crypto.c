@@ -42,7 +42,8 @@ extern u8 point;
 
 int main(void)
 {
-	
+	init_led();
+	orange();
     u32 compt = 0;
     init_keyboard();
 	lcd();
