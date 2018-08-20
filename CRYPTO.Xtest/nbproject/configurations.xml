@@ -22,6 +22,7 @@
       <itemPath>uart.c</itemPath>
       <itemPath>uartRFID.c</itemPath>
       <itemPath>led.c</itemPath>
+      <itemPath>tools.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

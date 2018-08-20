@@ -6,7 +6,6 @@
 int test;
 u8 pin[5];
 u8 compteur = 0;
-extern u8 pwd[5];
 
 void init_pin()
 {
@@ -24,17 +23,12 @@ void check_input(u8 letter)
     //base(letter); // for uart debug
     if (letter == 'E') // TODO: Afficher erreur sur ecran
         return ;
-   // if (letter == 'C' && compteur > 0)
-   //     compteur--;
-  //  else if (compteur < 4) {
-  //      pin[compteur] = letter;
-  //      compteur++;
-  //  }
 }
 
 void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
 {
-	    u8  res = 'E'; // code erreur
+	u8  res = 'E'; // code erreur
+	
     if (PORTBbits.RB2 == BUT_UP)
     {
           test = 0;
@@ -83,8 +77,7 @@ void __ISR(_CHANGE_NOTICE_VECTOR, IPL3SOFT) ChangeNoticeHandler(void)
     PORTBbits.RB1;
     PORTBbits.RB0;
     PORTBbits.RB4;
-	IFS1bits.CNBIF = 0;
-//    IFS1bits.CNIF = 0; // Be sure to clear the CN interrupt status
+	IFS1bits.CNBIF = 0; // clear the CN interrupt status
 
     // flag before exiting the service routine.
 }

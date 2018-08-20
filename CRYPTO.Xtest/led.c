@@ -1,10 +1,3 @@
-/*
- * File:   led.c
- * Author: bocal
- *
- * Created on May 20, 2018, 3:28 PM
- */
-
 #include "crypto.h"
 
 void blue()
@@ -35,7 +28,7 @@ void pink()
     LATBbits.LATB15 = 0;
 }
 
-void orange()
+void bluegreen()
 {
     LATBbits.LATB13 = 1;
     LATCbits.LATC7 = 0;

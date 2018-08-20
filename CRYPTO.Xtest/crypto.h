@@ -37,7 +37,7 @@ enum Menu
 	CLIENT, SELLER, CLIENT2, SUCCED, SELLER2, CREATE, DELETE, BALANCE, RESET,
 	ACCOUNT, PRIVATE1, PRIVATE2, PRIVATE3, PUBLIC1, PUBLIC2, PUBLIC3, ERROR,
     REP, TRANS, AMOUNT2, SETTINGS, SHUT_DOWN, BOOT, WIFI, CO_SUCCESS, CO_FAILED,
-	BALANCE2, BALANCE3, BALANCE_CHOICE, CLIENT_PIN, OLD_PIN
+	BALANCE2, BALANCE3, BALANCE_CHOICE
 };
 
 void    init_uart();
@@ -47,12 +47,6 @@ void send_char(char c);
 char read_char(void);
 
 void base(u8 c);
-
-void init_pwd();
-
-void	send_old_pin();
-
-void	send_new_pin();
 
 #endif	/* CRYPTO_H */
 

@@ -107,14 +107,6 @@ void    set_col(u8 a, u8 b, u8 c, u8 d)
     LATBbits.LATB3 = d;
 }
 
-void	init_pwd()
-{
-	pwd[0] = 'F';
-	pwd[1] = 'F';
-	pwd[2] = 'F';
-	pwd[3] = 'F';
-	pwd[4] = '\0';
-}
 
 u8    check_line1()
 {
@@ -128,7 +120,7 @@ u8    check_line1()
             screen = AMOUNT;
         change_screen(screen);
         }
-		else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+		else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '1';
             compteur++;
@@ -154,7 +146,7 @@ u8    check_line1()
 		}
 		else if (screen == ACCOUNT)
 		{
-			screen = CLIENT;
+			screen = BALANCE_CHOICE;
 			change_screen(screen);
 		}
         else if (screen == SELLER)
@@ -183,15 +175,10 @@ u8    check_line1()
             screen = ACCOUNT;
             change_screen(screen);
         }
-		else if (screen == BALANCE_CHOICE)
+		else if (screen = BALANCE_CHOICE)
 		{
 			send_string("balance_customer");
 			screen = BALANCE;
-			change_screen(screen);
-		}
-		else if (screen == CLIENT_PIN)
-		{
-			screen = CLIENT;
 			change_screen(screen);
 		}
         return('1');
@@ -206,7 +193,7 @@ u8    check_line1()
             screen = HISTORY;
         change_screen(screen);
         }
-        else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '2';
             compteur++;
@@ -230,7 +217,8 @@ u8    check_line1()
 			change_screen(screen);
 		}
         else if (screen == ACCOUNT)
-        {     
+        {
+            
             screen = SELLER;
             change_screen(screen);
         }
@@ -255,7 +243,7 @@ u8    check_line1()
 				screen = CO_FAILED;
 			change_screen(screen);
         }
-		else if (screen == BALANCE_CHOICE)
+		else if (screen = BALANCE_CHOICE)
 		{
 			send_string("balance_seller");
 			init_interrupt_ras();
@@ -266,17 +254,12 @@ u8    check_line1()
 			screen = BALANCE3;
 			change_screen(screen);
 		}
-		else if (screen == CLIENT_PIN)
-		{
-			screen = OLD_PIN;
-			change_screen(screen);
-		}
         return('2');
     }
     set_col(1, 1, 0, 1);
     if (PORTBbits.RB2 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '3';
             compteur++;
@@ -329,7 +312,7 @@ u8    check_line1()
 			init_amount(amount);
 			index_amount = 0;
         }
-		else if (((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur > 3) || (screen == AMOUNT2))
+        else if (((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur > 3) || (screen == AMOUNT2))
         {
 			if (screen == MAKE_TRADE1 || screen == AMOUNT2)
 			{
@@ -419,8 +402,7 @@ u8    check_line1()
 				screen = BALANCE2;
 				change_screen(screen);
 				init_uart_rfid();
-				send_old_pin();
-				cmd_rfid("er4,5");
+				cmd_rfid("er1,5");
 				init_interrupt_rfid();
 				init_interrupt_ras();
 				ras = 0;
@@ -430,21 +412,10 @@ u8    check_line1()
 				screen = BALANCE3;
 				change_screen(screen);
 			}
-			else if (screen == OLD_PIN)
-			{
-				ft_strcpy(pwd,pin);
-				init_pin();
-				compteur = 0;
-				screen = CLIENT;
-				change_screen(screen);
-			}
 			else
 			{		
 				screen = CLIENT2;
 				change_screen(screen);
-				init_uart_rfid();
-				send_old_pin();
-				init_pwd();
 				init_interrupt_ras();
 				send_string("create_customer_account");
 				send_string("private_key");
@@ -472,7 +443,7 @@ u8    check_line1()
                 }
 				progress = 0;
 			}
-			init_pin();
+			init_pin(pin);
 			compteur = 0;
         }
 		else if (screen == PRIVATE1)
@@ -524,10 +495,6 @@ u8    check_line1()
 		{
 			screen = MAIN;
 			change_screen(screen);
-			init_pin();
-			init_amount();
-			init_aff_amount();
-			compteur = 0;
 			send_string("reset");
 		}
         return('A');
@@ -540,7 +507,7 @@ u8    check_line2()
     set_col(0, 1, 1, 1);
     if (PORTBbits.RB1 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '4';
             compteur++;
@@ -563,7 +530,7 @@ u8    check_line2()
     set_col(1, 0, 1, 1);
     if (PORTBbits.RB1 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '5';
             compteur++;
@@ -581,7 +548,7 @@ u8    check_line2()
     set_col(1, 1, 0, 1);
     if (PORTBbits.RB1 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '6';
             compteur++;
@@ -614,7 +581,7 @@ u8    check_line3()
     set_col(0, 1, 1, 1);
     if (PORTBbits.RB0 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '7';
             compteur++;
@@ -632,7 +599,7 @@ u8    check_line3()
     set_col(1, 0, 1, 1);
     if (PORTBbits.RB0 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '8';
             compteur++;
@@ -650,7 +617,7 @@ u8    check_line3()
     set_col(1, 1, 0, 1);
     if (PORTBbits.RB0 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur < 4)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
             pin[compteur] = '9';
             compteur++;
@@ -668,7 +635,7 @@ u8    check_line3()
     set_col(1, 1, 1, 0);
     if (PORTBbits.RB0 == BUT_DOWN)
     {
-        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE || screen == OLD_PIN) && compteur > 0)
+        if (screen == MAKE_TRADE1 && compteur > 0)
         {
             compteur--;
             pin[compteur] = 0xC4;
@@ -719,8 +686,7 @@ u8    check_line4()
 			change_screen(screen);
 			init_amount(amount);
 			init_aff_amount(aff_amount);
-			init_pin();
-			init_pwd();
+			init_pin(pin);
 			compteur = 0;
 			index_amount = 0;
 			send_string("reset");

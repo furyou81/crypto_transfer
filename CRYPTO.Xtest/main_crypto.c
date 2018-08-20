@@ -42,11 +42,16 @@ extern u8 point;
 
 int main(void)
 {
-	init_led();
-	orange();
     u32 compt = 0;
+
+	init_timer();
+	
+	init_led();
+	bluegreen();
+
     init_keyboard();
 	lcd();
+
 	flash();
     screen = BOOT;
     change_screen(screen);
@@ -58,8 +63,12 @@ int main(void)
     while (ras == 0)
     {
         send_string("start");
-        TMR2 = 0;
-        while (TMR2 < 50000);
+
+    //  TMR2 = 0;
+    //  while (TMR2 < 50000);
+
+		set_delay(50000);
+
         compt++;
         if (compt > 300)
         {
@@ -73,13 +82,11 @@ int main(void)
     screen = MAIN;
     change_screen(screen);
     send_string("reset");
-	//init_uart_rfid();
-	//send_string_rfid("hola");
 		
 	while (1);
     return (EXIT_SUCCESS);
 
-//	TRISBbits.TRISB15 = 0;
+	//TRISBbits.TRISB15 = 0;
 	//LATBbits.LATB15 = 0;
 }
 
