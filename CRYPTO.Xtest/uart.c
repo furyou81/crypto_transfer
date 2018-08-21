@@ -66,8 +66,6 @@ void base(u8 c)
 {
     u8 base[16] = "0123456789ABCDEF";
     u8 hex[2];
- //   u8 tmp = c;
-
 
     hex[1] = base[c % 16];
     c = c / 16;
@@ -81,14 +79,6 @@ void base(u8 c)
     send_char(0x20); // espace
 }
 
-u8 size_nb(u32 nb) {
-    u8 s = 0;
-    while (nb > 0) {
-        nb = nb / 10;
-        s++;
-    }
-    return (s);
-}
 void base10(u32 nb)
 {
     u8 base[16] = "0123456789ABCDEF";
@@ -131,5 +121,4 @@ void start_transaction(u8 amount[]) {
 	send_string(amount);
 	send_char('}');
 	//base10(amount); // on envoi le montant de la transaction
-    
 }

@@ -182,16 +182,6 @@ void write_words(char str[], u8 new_line, u8 rank)
     }
 }
 
-int ft_strlen(char str[])
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-        i++;
-	return (i);
-}
-
 /*Max tab[10]*/
 void  write_nb(u32 nb)
 {

@@ -32,7 +32,6 @@ void    init_amount()
         i++;
     }
     amount[i] = '\0';
-
 }
 
 void    init_aff_amount()
@@ -107,7 +106,6 @@ void    set_col(u8 a, u8 b, u8 c, u8 d)
     LATBbits.LATB3 = d;
 }
 
-
 u8    check_line1()
 {
     set_col(0, 1, 1, 1);
@@ -118,7 +116,7 @@ u8    check_line1()
             write_i2c('a');
 
             screen = AMOUNT;
-        change_screen(screen);
+			change_screen(screen);
         }
 		else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
@@ -146,7 +144,7 @@ u8    check_line1()
 		}
 		else if (screen == ACCOUNT)
 		{
-			screen = BALANCE_CHOICE;
+			screen = CLIENT; // Creation d'un compte client (cle publique/privee).
 			change_screen(screen);
 		}
         else if (screen == SELLER)
@@ -191,7 +189,7 @@ u8    check_line1()
             write_i2c('a');
 
             screen = HISTORY;
-        change_screen(screen);
+			change_screen(screen);
         }
         else if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur < 4)
         {
@@ -296,7 +294,7 @@ u8    check_line1()
         return('3');
     }
     set_col(1, 1, 1, 0);
-     if (PORTBbits.RB2 == BUT_DOWN)
+    if (PORTBbits.RB2 == BUT_DOWN)
     {
         if (screen == AMOUNT && index_amount > 0)
         {
@@ -318,6 +316,9 @@ u8    check_line1()
 			{
                 u8 i = 0;
                 Menu tmp = screen;
+
+				set_key_reader(); // On set le lecteur RFID sur le code PIN qui vient d'etre saisi
+
                 if (screen == AMOUNT2)
                 {
                     aff_amount[4] = '.';
@@ -399,6 +400,8 @@ u8    check_line1()
 			}
 			else if (screen == BALANCE)
 			{
+				set_key_reader(); // On set le lecteur RFID sur le code PIN qui vient d'etre saisi
+
 				screen = BALANCE2;
 				change_screen(screen);
 				init_uart_rfid();
@@ -413,7 +416,9 @@ u8    check_line1()
 				change_screen(screen);
 			}
 			else
-			{		
+			{
+				set_key_reader(); // On set le lecteur RFID sur le code PIN qui vient d'etre saisi
+				
 				screen = CLIENT2;
 				change_screen(screen);
 				init_interrupt_ras();
@@ -635,7 +640,7 @@ u8    check_line3()
     set_col(1, 1, 1, 0);
     if (PORTBbits.RB0 == BUT_DOWN)
     {
-        if (screen == MAKE_TRADE1 && compteur > 0)
+        if ((screen == MAKE_TRADE1 || screen == CLIENT || screen == BALANCE) && compteur > 0)
         {
             compteur--;
             pin[compteur] = 0xC4;

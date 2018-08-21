@@ -20,7 +20,7 @@ void    init_uart_rfid()
     U1BRG = 130;
     U1MODEbits.SIDL = 0;                // Continue operation in SLEEP mode
     U1MODEbits.IREN = 0;                // IrDA is disabled
-   // U1MODEbits.RTSMD = 0;               // U1RTS pin is in Flow Control mode
+   // U1MODEbits.RTSMD = 0;             // U1RTS pin is in Flow Control mode
     U1MODEbits.UEN = 0b00;              // U1TX, U1RX are enabled
     U1MODEbits.WAKE = 1;                // Wake-up enabled
     U1MODEbits.LPBACK = 0;              // Loopback mode is disabled
@@ -125,7 +125,6 @@ void	read_ras(char *buf)
 {
     u8 c;
     u32 i = 0;
-
 	
 	//while (ras == 0);
 	//ras = 0;
@@ -135,18 +134,6 @@ void	read_ras(char *buf)
 		i++;
 	}
     buf[i] = '\0';
-}
-
-void	ft_strcpy(u8 *dst, u8 *src)
-{
-	u8 i = 0;
-
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
 }
 
 void	send_private_key(char *buf)
@@ -236,31 +223,35 @@ void send_transaction_amount(u32 amount) {
     base10(amount);
 }
 
+/* Change la cle du lecteur par le code PIN saisi */
 void	set_key_reader()
 {
 	char string[] = "kA,FFFFFFFFFFFF";
 	u8 i = 0;
 
-
-	TMR2 = 0;
-	while (TMR2 < 30000);
+	set_delay(30000);
 	string[3] = pin[0];
 	string[4] = pin[1];
 	string[5] = pin[2];
 	string[6] = pin[3];
 	send_string(string);
 
-	/*
 	while (string[i])
 	{
 		send_char_rfid(string[i]);
-		TMR2 = 0;
-		while (TMR2 < 30000);
+		set_delay(30000);
 		i++;
 	}
 	send_char_rfid(13);
-	TMR2 = 0;
-	while (TMR2 < 30000);*/
+	i = 0;
+	while (i < 30)
+	{
+		set_delay(30000);
+		set_delay(30000);
+		set_delay(30000);
+		set_delay(30000);
+		i++;
+	}
 }
 
 void __ISR(_UART1_VECTOR, IPL6SOFT) IntUart2Handler(void) {

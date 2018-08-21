@@ -64,9 +64,6 @@ int main(void)
     {
         send_string("start");
 
-    //  TMR2 = 0;
-    //  while (TMR2 < 50000);
-
 		set_delay(50000);
 
         compt++;
@@ -82,11 +79,8 @@ int main(void)
     screen = MAIN;
     change_screen(screen);
     send_string("reset");
-		
+	
 	while (1);
     return (EXIT_SUCCESS);
-
-	//TRISBbits.TRISB15 = 0;
-	//LATBbits.LATB15 = 0;
 }
 

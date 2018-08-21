@@ -35,10 +35,10 @@ void off()
 
 void initSPI(void)
 {
-    TRISAbits.TRISA1 = 0; // CE / CS
-    on();                     // Set CS high (idle state)
-	SDI1R = 0b0111; // SDI1 MISO RPA9
-	RPC8R = 0b0011; // SDO1 MOSI RPC8
+    TRISAbits.TRISA1 = 0;		// CE / CS
+    on();						// Set CS high (idle state)
+	SDI1R = 0b0111;				// SDI1 MISO RPA9
+	RPC8R = 0b0011;				// SDO1 MOSI RPC8
     IEC1bits.SPI1EIE = 0;       // SPI interrupts disabled
     IEC1bits.SPI1RXIE = 0;
     IEC1bits.SPI1TXIE = 0;
@@ -70,10 +70,10 @@ void initSPI(void)
 
 u8 rSPI(u8 data)
 {
-    SPI1STATbits.SPIROV = 0; // reset overflow flag
-    while (!SPI1STATbits.SPITBE); // while buf is not empty wait
+    SPI1STATbits.SPIROV = 0;		// reset overflow flag
+    while (!SPI1STATbits.SPITBE);	// while buf is not empty wait
     SPI1BUF = data;
-    while (!SPI1STATbits.SPIRBF);   // Wait for transfer to be completed
+    while (!SPI1STATbits.SPIRBF);	// Wait for transfer to be completed
     return (SPI1BUF);
 }
 
@@ -86,13 +86,6 @@ u8 read_status()
     base(status);
     off();
     return (status);
-    // u8 i;
-   // for (i = 7; i >= 0; i--)
-   // {
-   //     send_char(((status & (1 << i)) >> i) + '0');
-   // }
-   // while(SPI2STATbits.SPIBUSY);
-
 }
 
 u8 read_status_uart()
@@ -101,7 +94,6 @@ u8 read_status_uart()
     on();
     rSPI(RDSR);
     status = rSPI(0x78); // nimporte quoi
-    //base(status);
     off();
     return (status);
 }
@@ -170,12 +162,8 @@ void sector_erase(u32 adress)
     rSPI((adress & (0xFF << 7)) >> 7);
     rSPI(adress & (0xFF));
     
-  //  TMR2 = 0;
-  //  while (TMR2 < 10000);
     off();
 	wait_ready();
-   // TMR2 = 0;
-    //while (TMR2 < 1000);
 }
 
 

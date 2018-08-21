@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=balanceok
+PROJECTNAME=CRYPTO.Xtest
 
 # Active Configuration
 DEFAULTCONF=default
