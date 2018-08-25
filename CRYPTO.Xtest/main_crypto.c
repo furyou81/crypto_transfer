@@ -79,7 +79,6 @@ int main(void)
     screen = MAIN;
     change_screen(screen);
     send_string("reset");
-	
 	while (1);
     return (EXIT_SUCCESS);
 }

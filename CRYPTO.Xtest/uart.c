@@ -2,6 +2,7 @@
 
 
 extern Menu screen;
+extern u8 is_refund;
 //RF4 => U2RX
 //RF5 => U2TX
 
@@ -112,7 +113,7 @@ void base10(u32 nb)
 void start_transaction(u8 amount[]) {
     //TMR2 = 0;
     //while (TMR2 < 20000);
-    if (screen == AMOUNT2)
+    if (is_refund == 1)
        send_string("refund");
     else
         send_string("new_transaction");

@@ -14,6 +14,7 @@ u8 index_amount = 0;
 extern u8 progress;
 extern u8 nb_transaction;
 extern u8 ras;
+extern u8 is_refund;
 //u8 private_key[] = "0x6dc32f47f2c34b1d07d3cbeb1fd6a8b4354c520e1d1e0c8109d38c5f585f244e";
 //u8 public_key[] = "0x961C0820ac2C7975C54f2225AfbECE63A3273Af3";
 u8 private_key[100];
@@ -22,6 +23,7 @@ u8 rep[100];
 u8 reponse[100];
 u8 point = 0;
 u8 pwd[5];
+u8 transaction = 0;
 
 void    init_amount()
 {
@@ -173,7 +175,7 @@ u8    check_line1()
             screen = ACCOUNT;
             change_screen(screen);
         }
-		else if (screen = BALANCE_CHOICE)
+		else if (screen == BALANCE_CHOICE)
 		{
 			send_string("balance_customer");
 			screen = BALANCE;
@@ -241,7 +243,7 @@ u8    check_line1()
 				screen = CO_FAILED;
 			change_screen(screen);
         }
-		else if (screen = BALANCE_CHOICE)
+		else if (screen == BALANCE_CHOICE)
 		{
 			send_string("balance_seller");
 			init_interrupt_ras();
@@ -277,7 +279,8 @@ u8    check_line1()
         }
         else if (screen == ACCOUNT)
         {
-            screen = AMOUNT2;
+            screen = AMOUNT;
+			is_refund = 1;
             change_screen(screen);
         }
         else if (screen == SETTINGS)
@@ -288,7 +291,7 @@ u8    check_line1()
         }
         else if (screen == ACCOUNT)
         {
-            screen = AMOUNT2;
+            screen = AMOUNT;
             change_screen(screen);
         }
         return('3');
@@ -376,6 +379,8 @@ u8    check_line1()
 				ft_strcpy(reponse, rep);
 				screen = REP;
 				change_screen(screen);
+				if (reponse[12] == 's')
+					transaction = 1;
                 init_interrupt_ras();
                 while (i < 100)
                 {
@@ -392,7 +397,7 @@ u8    check_line1()
 				while (ras == 0);
 				ras = 0;
 				ft_strcpy(reponse, rep);
-                if (tmp == MAKE_TRADE1)
+                if (tmp == MAKE_TRADE1 && transaction)
                 {
                     write_line_SPI(reponse);
                     write_line_SPI(amount_SPI);

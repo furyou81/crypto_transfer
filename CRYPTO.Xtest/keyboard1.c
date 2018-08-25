@@ -2,10 +2,11 @@
 #define BUT_UP      1
 #include "crypto.h"
 
-
+extern u8 transaction;
 int test;
 u8 pin[5];
 u8 compteur = 0;
+u8 is_refund = 0;
 
 void init_pin()
 {
@@ -16,6 +17,8 @@ void init_pin()
         i++;
     }
     pin[i] = '\0';
+	is_refund = 0;
+	transaction = 0;
 }
 
 void check_input(u8 letter)
