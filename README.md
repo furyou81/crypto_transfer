@@ -1,4 +1,14 @@
-# crypto_transfer
+# crypto_transfer project
+
+crypto transfert is a cryptocurrency payment terminal that we designed from scratch:
+  - selecting the components and the PIC32
+  - schematics and designing the PCB with Altium
+  - coding the drivers (I2C, SPI, UART, ... ) in C with Mplab
+  - coding the server with Node JS to interact with the Ethereum blockchain
+  - proof of concept then prototyping
+  - designing the case with Fusion 360
+
+# Some pictures of the project
 
 ## Box
 ![Alt text](/project_pictures/box.jpg?raw=true "Box")
