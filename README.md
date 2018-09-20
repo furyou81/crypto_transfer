@@ -5,6 +5,7 @@ crypto transfert is a cryptocurrency payment terminal that we designed from scra
   - schematics and designing the PCB with Altium
   - coding the drivers (I2C, SPI, UART, ... ) in C with Mplab
   - coding the server with Node JS to interact with the Ethereum blockchain
+  - coding a hotspot interface in PHP to configure the wifi on the payment terminal
   - proof of concept then prototyping
   - designing the case with Fusion 360
 
